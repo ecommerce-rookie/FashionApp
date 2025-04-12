@@ -1,11 +1,11 @@
-﻿using Infrastructure.Shared.Extensions;
+﻿using Domain.Aggregates.UserAggregate.Enums;
+using Infrastructure.Shared.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Persistence.Extensions;
 using Persistence.SeedWorks.Implements;
 using System.Security.Claims;
-using static Domain.Enums.UserEnums;
 
 namespace ASM.Application.Infrastructure.Persistence.Interceptors;
 

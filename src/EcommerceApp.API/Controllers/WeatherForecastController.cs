@@ -2,7 +2,7 @@ using Domain.Models.Common;
 using Infrastructure.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Domain.Enums.ProductEnums;
+using static Domain.Aggregates.ProductAggregate.Enums.ProductEnums;
 
 namespace EcommerceApp.API.Controllers;
 

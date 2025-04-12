@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Domain.Enums
+namespace Domain.Aggregates.ProductAggregate.Enums
 {
     public static class ProductEnums
     {
