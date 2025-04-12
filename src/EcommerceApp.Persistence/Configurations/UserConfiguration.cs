@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.Entity;
+﻿using Domain.Aggregates.ProductAggregate.ValuesObjects;
+using Domain.Aggregates.UserAggregate.Entities;
+using Domain.Aggregates.UserAggregate.Enums;
+using Domain.Aggregates.UserAggregate.ValuesObject;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations
 {
@@ -9,35 +13,49 @@ namespace Persistence.Configurations
         {
             base.Configure(builder);
 
-            builder.HasKey(u => u.Id);
+            builder.HasKey(e => e.Id);
+
+            builder.ToTable(nameof(User));
 
             builder.Property(e => e.Id)
-               .ValueGeneratedNever();
+                .ValueGeneratedNever().HasColumnName("id");
 
-            builder.Property(u => u.Email)
-                   .IsRequired()
-                   .HasMaxLength(50);
+            builder.Property(e => e.Avatar)
+                .HasConversion(
+                    v => v != null ? v.Url : string.Empty,
+                    v => v != null ? ImageUrl.Create(v) : null
+                )
+                .HasColumnType("character varying")
+                .HasColumnName("avatar");
 
-            builder.Property(u => u.LastName)
-                   .IsRequired()
-                   .HasMaxLength(50);
+            builder.Property(e => e.Email)
+                .HasConversion(
+                    v => v.Value, 
+                    v => new EmailAddress(v)
+                )
+                .HasMaxLength(50)
+                .HasColumnName("email");
 
-            builder.Property(u => u.Phone)
-                   .HasMaxLength(12);
+            builder.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .HasColumnName("firstName");
 
-            builder.Property(u => u.Avatar);
+            builder.Property(e => e.LastName)
+                .HasMaxLength(50)
+                .HasColumnName("lastName");
 
-            builder.Property(u => u.Status)
-                   .IsRequired()
-                   .HasMaxLength(50);
+            builder.Property(e => e.Phone)
+                .HasMaxLength(12)
+                .HasColumnName("phone");
 
-            builder.Property(u => u.FirstName)
-                   .HasMaxLength(50);
+            builder.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasConversion<string>()
+                .HasColumnName("status");
 
-            builder.Property(u => u.Gender)
-                   .HasMaxLength(10);
-
-            builder.Property(u => u.DeletedAt);
+            builder.Property(e => e.DeletedAt)
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("deletedAt");
         }
     }
 }

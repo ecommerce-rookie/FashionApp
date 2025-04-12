@@ -1,72 +1,81 @@
-﻿using Domain.Aggregates.UserAggregate.Enums;
+﻿using Domain.Aggregates.OrderAggregate.Entities;
+using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Aggregates.ProductAggregate.ValuesObjects;
+using Domain.Aggregates.UserAggregate.Enums;
+using Domain.Aggregates.UserAggregate.ValuesObject;
 using Domain.SeedWorks.Abstractions;
 using Domain.SeedWorks.Events;
 using Persistence.SeedWorks.Abstractions;
 
 namespace Domain.Aggregates.UserAggregate.Entities
 {
-    public sealed class User : BaseDomainEvents<Guid>, IAggregateRoot, ISoftDelete
+    public partial class User : BaseDomainEvents<Guid>, IAggregateRoot, ISoftDelete
     {
-        public string Email { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string Phone { get; private set; }
-        public string Avatar { get; private set; }
-        public string Status { get; private set; }
-        public DateTime? DeletedAt { get; private set; }
-        public string Gender { get; private set; }
+        public EmailAddress Email { get; set; } = null!;
+
+        public string LastName { get; set; } = null!;
+
+        public string? Phone { get; set; }
+
+        public ImageUrl? Avatar { get; set; }
+
+        public UserStatus? Status { get; set; }
+
+        public string? FirstName { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
+
+        public virtual ICollection<Order>? Orders { get; set; }
+
+        public virtual ICollection<Product>? Products { get; set; } = new List<Product>();
+
         public bool IsDeleted { get; set; }
+        
+        public User() { }
 
-        private User(Guid id, string email, string firstName, string lastName, string phone,
-                     string avatar, string status, DateTime createdAt, DateTime? updatedAt,
-                     DateTime? deletedAt, string gender)
-        {
-            Id = id;
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
-            Phone = phone;
-            Avatar = avatar;
-            Status = status;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-            DeletedAt = deletedAt;
-            Gender = gender;
-        }
+        //private User(Guid id, string email, string firstName, string lastName, string phone,
+        //             string avatar, UserStatus status, DateTime createdAt, DateTime? updatedAt,
+        //             DateTime? deletedAt)
+        //{
+        //    Id = id;
+        //    Email = EmailAddress.Create(email);
+        //    FirstName = firstName;
+        //    LastName = lastName;
+        //    Phone = phone;
+        //    Avatar = ImageUrl.Create(avatar);
+        //    Status = status;
+        //    DeletedAt = deletedAt;
+        //}
 
-        public static User RegisterNew(string email, string firstName, string lastName,
-                                       string phone, string avatar, string gender)
-        {
-            var user = new User(
-                Guid.NewGuid(),
-                email,
-                firstName,
-                lastName,
-                phone,
-                avatar,
-                status: UserStatus.NotVerify.ToString(),
-                createdAt: DateTime.UtcNow,
-                updatedAt: null,
-                deletedAt: null,
-                gender: gender
-            );
+        //public static User RegisterNew(string email, string firstName, string lastName,
+        //                               string phone, string avatar, string gender)
+        //{
+        //    var user = new User(
+        //        Guid.NewGuid(),
+        //        email,
+        //        firstName,
+        //        lastName,
+        //        phone,
+        //        avatar,
+        //        status: UserStatus.NotVerify.ToString()
+        //    );
 
-            return user;
-        }
+        //    return user;
+        //}
 
         public void UpdateProfile(string firstName, string lastName, string phone, string avatar)
         {
             FirstName = firstName;
             LastName = lastName;
             Phone = phone;
-            Avatar = avatar;
+            Avatar = ImageUrl.Create(avatar);
             UpdatedAt = DateTime.UtcNow;
 
         }
 
         public void ChangeStatusAccount(UserStatus userStatus)
         {
-            Status = userStatus.ToString();
+            Status = userStatus;
             DeletedAt = DateTime.UtcNow;
         }
     }

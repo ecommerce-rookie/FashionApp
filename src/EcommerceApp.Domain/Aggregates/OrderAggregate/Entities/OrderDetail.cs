@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Aggregates.ProductAggregate.ValuesObjects;
 
-namespace Persistence.Entity;
+namespace Domain.Aggregates.OrderAggregate.Entities;
 
 public partial class OrderDetail
 {
@@ -11,7 +11,7 @@ public partial class OrderDetail
 
     public int? Quantity { get; set; }
 
-    public long? Price { get; set; }
+    public Money? Price { get; set; }
 
     public Guid? ProductId { get; set; }
 

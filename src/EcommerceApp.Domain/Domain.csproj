@@ -8,16 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Aggregates\OrderAggregate\Events\" />
-    <Folder Include="Aggregates\OrderAggregate\Enums\" />
     <Folder Include="Aggregates\OrderAggregate\Constants\" />
-    <Folder Include="Aggregates\OrderAggregate\Entities\" />
-    <Folder Include="Aggregates\OrderAggregate\ValuesObject\" />
-    <Folder Include="Aggregates\ProductAggregate\Constants\" />
     <Folder Include="Aggregates\ProductAggregate\Events\" />
-    <Folder Include="Aggregates\ProductAggregate\ValuesObject\" />
-    <Folder Include="Aggregates\UserAggregate\Constants\" />
     <Folder Include="Aggregates\UserAggregate\Events\" />
-    <Folder Include="Aggregates\UserAggregate\ValuesObject\" />
   </ItemGroup>
 
   <ItemGroup>

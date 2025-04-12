@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using RookieShop.Persistence;
 using System.Reflection;
 
 namespace Application
@@ -19,6 +20,7 @@ namespace Application
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(TxBehavior<,>), ServiceLifetime.Scoped);
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>), ServiceLifetime.Scoped);
                 cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             });

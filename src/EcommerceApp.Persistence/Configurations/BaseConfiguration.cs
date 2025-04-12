@@ -10,13 +10,18 @@ public abstract class BaseConfiguration<T, TKey> : IEntityTypeConfiguration<T>
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {
         builder.Property(e => e.CreatedAt)
-            .HasDefaultValue(DateTime.UtcNow);
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("createdAt");
 
         builder.Property(e => e.UpdatedAt)
-            .HasDefaultValue(DateTime.UtcNow);
+            .HasColumnType("timestamp with time zone")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnName("updatedAt");
 
         builder.Property(e => e.Version)
-            .HasDefaultValue(Guid.NewGuid())
+            .HasDefaultValueSql("gen_random_uuid()")
+            .HasColumnName("version")
             .IsConcurrencyToken();
     }
 }

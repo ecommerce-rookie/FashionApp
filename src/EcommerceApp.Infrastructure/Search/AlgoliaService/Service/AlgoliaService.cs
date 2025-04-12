@@ -1,5 +1,5 @@
 ﻿using Algolia.Search.Clients;
-using Domain.Repositories;
+using Domain.Repositories.BaseRepositories;
 using Infrastructure.Search.AlgoliaService.Settings;
 using Microsoft.Extensions.Options;
 

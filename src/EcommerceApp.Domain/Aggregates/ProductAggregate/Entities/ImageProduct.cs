@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Aggregates.ProductAggregate.ValuesObjects;
 
-namespace Persistence.Entity;
+namespace Domain.Aggregates.ProductAggregate.Entities;
 
 public partial class ImageProduct
 {
-    public string Image { get; set; } = null!;
+    public ImageUrl Image { get; set; } = null!;
 
     public Guid ProductId { get; set; }
 

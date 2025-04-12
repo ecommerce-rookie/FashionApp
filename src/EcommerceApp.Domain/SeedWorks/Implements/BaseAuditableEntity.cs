@@ -4,6 +4,6 @@
     {
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public Guid Version { get; set; } = Guid.NewGuid();
+        public Guid Version { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace Persistence
                 options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();
             });
-            //builder.Services.AddScoped<IDomainEventContext>(p => (IDomainEventContext)p.GetRequiredService<EcommerceReadContext>());
+            
             builder.Services.AddScoped<IDomainEventContext, EcommerceWriteContext>();
         }
     }
