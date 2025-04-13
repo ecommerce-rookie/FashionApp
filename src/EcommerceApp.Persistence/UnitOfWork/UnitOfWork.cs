@@ -80,27 +80,30 @@ namespace Persistence.UnitOfWork
                     await _context.Database.BeginTransactionAsync(cancellationToken);
                 }
 
+                // Excute logic
+                var result = await operation();
+
                 try
                 {
-                    // Excute logic
-                    var result = await operation();
+                    
 
                     // Commit if open transaction
                     if (_context.Database.CurrentTransaction != null)
                     {
                         await _context.Database.CommitTransactionAsync(cancellationToken);
                     }
-
-                    return result;
-                } catch
+                } catch(Exception ex) 
                 {
                     // If error, rollback
                     if (_context.Database.CurrentTransaction != null)
                     {
                         await _context.Database.RollbackTransactionAsync(cancellationToken);
                     }
-                    throw;
+
+                    Console.WriteLine(ex.ToString());
                 }
+
+                return result;
             });
         }
 

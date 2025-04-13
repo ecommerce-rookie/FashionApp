@@ -38,6 +38,10 @@ namespace Infrastructure.Storage.Cloudinary.Internals
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum ImageFolder
         {
+            [Description("avatar")]
+            Avatar,
+            [Description("product")]
+            Product,
             [Description("test")]
             Test,
         }

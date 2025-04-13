@@ -12,10 +12,10 @@ public sealed class ProductPrice : ValueObject
 
     public ProductPrice() { }
 
-    private ProductPrice(decimal unitPrice, decimal purchasePrice)
+    public ProductPrice(decimal unitPrice, decimal? purchasePrice)
     {
         UnitPrice = Money.Create(unitPrice);
-        PurchasePrice = Money.Create(purchasePrice);
+        PurchasePrice = purchasePrice == null ? Money.Create(unitPrice) : Money.Create((decimal)purchasePrice);
     }
 
     public static ProductPrice Create(decimal unitPrice, decimal purchasePrice)

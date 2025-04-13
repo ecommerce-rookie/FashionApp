@@ -11,6 +11,9 @@ namespace Persistence.Contexts
 {
     public partial class EcommerceContext : DbContext, IDomainEventContext, IEcommerceContext
     {
+        public EcommerceContext()
+        {
+        }
 
         public EcommerceContext(DbContextOptions<EcommerceContext> options)
             : base(options)
@@ -40,12 +43,18 @@ namespace Persistence.Contexts
             return domainEvents;
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("Host=ep-lucky-salad-a1n7zc5c-pooler.ap-southeast-1.aws.neon.tech;Port=5432;Database=ecommerce;Username=ecommerce_owner;Password=npg_xLb9HfjNu5mg;Pooling=true;SSL Mode=Require;Trust Server Certificate=true;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.WriteDbContextAssembly);
-            //modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.ReadDbContextAssembly);
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.DbContextAssembly);
 
             OnModelCreatingPartial(modelBuilder);

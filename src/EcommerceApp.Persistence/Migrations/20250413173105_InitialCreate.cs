@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -84,13 +83,13 @@ namespace Persistence.Migrations
                     name = table.Column<string>(type: "text", nullable: false),
                     unitPrice = table.Column<decimal>(type: "numeric", nullable: true),
                     purchasePrice = table.Column<decimal>(type: "numeric", nullable: true),
-                    description = table.Column<string>(type: "character varying", nullable: false),
+                    description = table.Column<string>(type: "character varying", nullable: true),
                     status = table.Column<string>(type: "text", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: true),
                     quantity = table.Column<int>(type: "integer", nullable: true),
                     createdBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    color = table.Column<string>(type: "text", nullable: true),
-                    size = table.Column<string>(type: "text", nullable: true),
+                    colors = table.Column<List<string>>(type: "jsonb", nullable: false),
+                    sizes = table.Column<List<string>>(type: "jsonb", nullable: false),
                     gender = table.Column<string>(type: "text", nullable: true),
                     createdAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),

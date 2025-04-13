@@ -23,9 +23,10 @@
 
   <ItemGroup>
     <Folder Include="Features\OrderFeatures\Commands\" />
+    <Folder Include="Features\OrderFeatures\Events\" />
     <Folder Include="Features\OrderFeatures\Queries\" />
-    <Folder Include="Features\ProductFeatures\Events\" />
     <Folder Include="Features\UserFeatures\Commands\" />
+    <Folder Include="Features\UserFeatures\Events\" />
     <Folder Include="Features\UserFeatures\Queries\" />
     <Folder Include="Utilities\" />
     <Folder Include="Services\" />

@@ -3,20 +3,20 @@ using Domain.Aggregates.ProductAggregate.Events;
 using Infrastructure.Cache;
 using MediatR;
 
-namespace Application.Features.CategoryFeatures.Events;
+namespace Application.Features.ProductFeatures.Events;
 
-public class CachedCategoryInvalidationHandler : INotificationHandler<ModifiedCategoryEvent>
+public class CachedProductInvalidationHandler : INotificationHandler<ModifiedProductEvent>
 {
     private readonly ICacheService _cacheService;
 
-    public CachedCategoryInvalidationHandler(ICacheService cacheService)
+    public CachedProductInvalidationHandler(ICacheService cacheService)
     {
         _cacheService = cacheService;
     }
 
-    public async Task Handle(ModifiedCategoryEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(ModifiedProductEvent notification, CancellationToken cancellationToken)
     {
-        var key = nameof(Category);
+        var key = nameof(Product);
 
         await InvalidateCache(key);
     }

@@ -10,5 +10,10 @@ namespace Persistence.Repository
         public ProductRepository(EcommerceContext context) : base(context)
         {
         }
+
+        public async Task<bool> CheckDuplicatedName(string name)
+        {
+            return await _dbSet.AnyAsync(p => p.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }

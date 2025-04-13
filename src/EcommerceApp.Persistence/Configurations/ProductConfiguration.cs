@@ -51,11 +51,14 @@ namespace Persistence.Configurations
                    .HasConversion<string>()
                    .HasColumnName("status");
 
-            builder.Property(p => p.Color)
-                    .HasColumnName("color");
+            builder.Property(p => p.Colors)
+                    .HasColumnType("jsonb")
+                    .HasColumnName("colors");
 
-            builder.Property(p => p.Size)
-                    .HasColumnName("size");
+            builder.Property(p => p.Sizes)
+                    .HasColumnType("jsonb")
+                    .HasColumnName("sizes");
+
 
             builder.Property(p => p.Gender)
                     .HasConversion<string>()

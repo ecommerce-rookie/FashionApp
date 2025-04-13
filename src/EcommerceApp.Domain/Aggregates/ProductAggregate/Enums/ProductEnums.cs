@@ -10,11 +10,9 @@ namespace Domain.Aggregates.ProductAggregate.Enums
         Available = 1,
         [Description("Out of stock")]
         OutOfStock = 2,
-        [Description("Unavailable")]
-        Unavailable = 3,
         [Description("Blocked")]
-        Blocked = 4,
+        Blocked = 3,
         [Description("Deleted")]
-        Deleted = 5,
+        Deleted = 4,
     }
 }

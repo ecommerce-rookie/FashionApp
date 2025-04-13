@@ -15,4 +15,9 @@ public partial class Category : BaseAuditableEntity<int>
         Name = name;
     }
 
+    public void Update(string name)
+    {
+        Name = name;
+    }
+
 }

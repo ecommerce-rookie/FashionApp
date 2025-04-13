@@ -50,14 +50,14 @@ namespace Application.Features.CategoryFeatures.Commands
                 return new APIResponse()
                 {
                     Status = HttpStatusCode.Created,
-                    Message = MessageCommon.CreateSuccesfully
+                    Message = MessageCommon.DeleteSuccessfully
                 };
             }
 
             return new APIResponse()
             {
                 Status = HttpStatusCode.InternalServerError,
-                Message = MessageCommon.CreateFailed
+                Message = MessageCommon.DeleteFailed
             };
         }
 

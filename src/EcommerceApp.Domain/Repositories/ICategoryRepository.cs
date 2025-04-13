@@ -5,5 +5,6 @@ namespace Domain.Repositories
 {
     public interface ICategoryRepository : ISqlRepository<Category>
     {
+        Task<bool> CheckCategoryExist(int categoryId);
     }
 }
