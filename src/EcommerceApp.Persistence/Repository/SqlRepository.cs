@@ -74,6 +74,13 @@ namespace Persistence.Repository
             _dbSet.Remove(entity);
         }
 
+        public async Task Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+
+            await Task.CompletedTask;
+        }
+
         public Task Update(T entity)
         {
             var entry = _context.Entry(entity);

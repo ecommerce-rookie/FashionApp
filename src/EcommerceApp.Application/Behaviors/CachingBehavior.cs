@@ -1,7 +1,9 @@
-﻿using Infrastructure.Cache;
+﻿using Domain.Models.Common;
+using Infrastructure.Cache;
 using Infrastructure.Cache.Attributes;
 using Infrastructure.Shared.Helpers;
 using MediatR;
+using System.Collections;
 using System.Reflection;
 
 namespace Application.Behaviors
@@ -37,8 +39,13 @@ namespace Application.Behaviors
             // Call the next handler in the pipeline
             var response = await next();
 
-            // If the response is not null, set it in the cache
-            await _cache.SetAsync(cacheAttribute.Key, key, response, cacheAttribute.ExpirationTime);
+            // Check if error occurred or response.Data is empty
+            if ((response is APIResponse apiResponse && apiResponse.IsSuccess && apiResponse.Data != null) ||
+            (response is IEnumerable enumerables && enumerables.Cast<dynamic>().Any()))
+            {
+                // Set the cache with the response
+                await _cache.SetAsync(cacheAttribute.Key, key, response, cacheAttribute.ExpirationTime);
+            }
 
             return response;
         }

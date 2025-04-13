@@ -1,6 +1,6 @@
 ﻿using Domain.Repositories;
 using Domain.Repositories.BaseRepositories;
-using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 using Persistence.Repository;
 
@@ -8,7 +8,7 @@ namespace Persistence.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EcommerceWriteContext _context;
+        public readonly EcommerceContext _context;
 
         private readonly ICategoryRepository _categoryRepository = null!;
         private readonly IImageProductRepository _imageProductRepository = null!;
@@ -17,7 +17,7 @@ namespace Persistence.UnitOfWork
         private readonly IOrderDetailRepository _orderDetailRepository = null!;
         private readonly IUserRepository _userRepository = null!;
 
-        public UnitOfWork(EcommerceWriteContext context)
+        public UnitOfWork(EcommerceContext context)
         {
             _context = context;
         }
@@ -66,6 +66,44 @@ namespace Persistence.UnitOfWork
             }
 
         }
+
+        public async Task<T> ExecuteTransactionalAsync<T>(Func<Task<T>> operation, CancellationToken cancellationToken)
+        {
+            // Get execution strategy from EF Core
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
+            {
+                // if not exist, creating new transaction
+                if (_context.Database.CurrentTransaction == null)
+                {
+                    await _context.Database.BeginTransactionAsync(cancellationToken);
+                }
+
+                try
+                {
+                    // Excute logic
+                    var result = await operation();
+
+                    // Commit if open transaction
+                    if (_context.Database.CurrentTransaction != null)
+                    {
+                        await _context.Database.CommitTransactionAsync(cancellationToken);
+                    }
+
+                    return result;
+                } catch
+                {
+                    // If error, rollback
+                    if (_context.Database.CurrentTransaction != null)
+                    {
+                        await _context.Database.RollbackTransactionAsync(cancellationToken);
+                    }
+                    throw;
+                }
+            });
+        }
+
 
     }
 }

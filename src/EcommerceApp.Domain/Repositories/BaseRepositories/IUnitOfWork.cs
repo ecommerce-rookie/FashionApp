@@ -12,5 +12,6 @@
         Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
         Task BeginTransaction(CancellationToken cancellationToken);
         Task<bool> CommitTransaction(CancellationToken cancellationToken);
+        Task<T> ExecuteTransactionalAsync<T>(Func<Task<T>> operation, CancellationToken cancellationToken);
     }
 }

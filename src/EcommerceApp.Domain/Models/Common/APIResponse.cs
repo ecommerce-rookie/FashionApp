@@ -8,6 +8,7 @@ namespace Domain.Models.Common
         public HttpStatusCode Status { get; set; }
         public string? Message { get; set; } = string.Empty;
         public T? Data { get; set; }
+        public bool IsSuccess => Status == HttpStatusCode.OK || Status == HttpStatusCode.Created || Status == HttpStatusCode.Accepted;
 
         public override string ToString()
         {

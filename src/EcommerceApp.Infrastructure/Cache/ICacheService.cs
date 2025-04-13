@@ -51,5 +51,12 @@
         /// <param name="key"></param>
         /// <returns></returns>
         Task RemoveAsync(string type, string key);
+
+        /// <summary>
+        /// Remove cache value by type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        Task RemoveTypeAsync(string type);
     }
 }

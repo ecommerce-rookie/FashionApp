@@ -8,9 +8,9 @@
             : base("One or more validation failures have occurred.")
         {
             Errors = new Dictionary<string, string[]>
-        {
-            { propertyName, new[] { errorMessage } }
-        };
+            {
+                { propertyName, new[] { errorMessage } }
+            };
         }
 
         public ValidationException(IDictionary<string, string[]> errors)

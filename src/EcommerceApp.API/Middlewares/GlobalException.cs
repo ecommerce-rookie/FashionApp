@@ -1,6 +1,6 @@
 ﻿using Application.Messages;
+using Domain.Exceptions;
 using Domain.Models.Common;
-using FluentValidation;
 using System.Net;
 
 namespace Application.Middlewares
@@ -13,7 +13,9 @@ namespace Application.Middlewares
             try
             {
                 await next(context);
-            } catch (ValidationException ex)
+            } catch (NotFoundException ex) {
+                await HandleNotFoundException(context, ex);
+            } catch (FluentValidation.ValidationException ex)
             {
                 await HandleValidationException(context, ex);
             } catch (Exception ex)
@@ -23,7 +25,22 @@ namespace Application.Middlewares
 
         }
 
-        private Task HandleValidationException(HttpContext context, ValidationException ex)
+        private Task HandleNotFoundException(HttpContext context, NotFoundException ex)
+        {
+            var errorResponse = new APIResponse()
+            {
+                Status = HttpStatusCode.BadRequest,
+                Message = MessageCommon.SomethingErrors,
+                Data = ex.Message
+            };
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = ((int)HttpStatusCode.BadRequest);
+
+            return context.Response.WriteAsync(errorResponse.ToString());
+        }
+
+        private Task HandleValidationException(HttpContext context, FluentValidation.ValidationException ex)
         {
             var errors = ex.Errors.Select(x => new ErrorValidation()
             {

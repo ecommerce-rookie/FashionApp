@@ -1,11 +1,12 @@
 ﻿using Application.Models;
+using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Models.Common;
 using Infrastructure.Cache.Attributes;
 using MediatR;
 
 namespace Application.Features.ProductFeatures.Queries
 {
-    [Cache("Product", 60 * 3)]
+    [Cache(nameof(Product), 60 * 3)]
     public class GetProductQuery : IRequest<PagedList<ProductResponseModel>>
     {
 

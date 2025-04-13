@@ -15,21 +15,36 @@ namespace Persistence
         {
             var postgresSetting = builder.Configuration.GetSection(nameof(PostgresSetting)).Get<PostgresSetting>() ?? throw new Exception($"{nameof(PostgresSetting)} is not config!");
 
-            builder.Services.AddDbContextPool<EcommerceWriteContext>(options =>
-            {
-                options
-                    .UseNpgsql(postgresSetting.ConnectionString,
-                        opt =>
-                        {
-                            opt.CommandTimeout(postgresSetting.CommandTimeout);
-                            opt.EnableRetryOnFailure(postgresSetting.RetryCount, TimeSpan.FromSeconds(postgresSetting.RetryDelay), null);
-                        });
-                options.EnableSensitiveDataLogging();
-                options.EnableDetailedErrors();
-                options.AddInterceptors(new AuditableEntityInterceptor());
-            });
+            //builder.Services.AddDbContextPool<EcommerceWriteContext>(options =>
+            //{
+            //    options
+            //        .UseNpgsql(postgresSetting.ConnectionString,
+            //            opt =>
+            //            {
+            //                opt.CommandTimeout(postgresSetting.CommandTimeout);
+            //                opt.EnableRetryOnFailure(postgresSetting.RetryCount, TimeSpan.FromSeconds(postgresSetting.RetryDelay), null);
+            //            });
+            //    options.EnableSensitiveDataLogging();
+            //    options.EnableDetailedErrors();
+            //    options.AddInterceptors(new AuditableEntityInterceptor());
+            //});
 
-            builder.Services.AddDbContext<EcommerceReadContext>(options =>
+            //builder.Services.AddDbContext<EcommerceReadContext>(options =>
+            //{
+            //    options
+            //        .UseNpgsql(postgresSetting.ConnectionString,
+            //            opt =>
+            //            {
+            //                opt.CommandTimeout(postgresSetting.CommandTimeout);
+            //                opt.EnableRetryOnFailure(postgresSetting.RetryCount, TimeSpan.FromSeconds(postgresSetting.RetryDelay), null);
+            //                opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
+            //            })
+            //        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //    options.EnableSensitiveDataLogging();
+            //    options.EnableDetailedErrors();
+            //});
+
+            builder.Services.AddDbContext<EcommerceContext>(options =>
             {
                 options
                     .UseNpgsql(postgresSetting.ConnectionString,
@@ -38,13 +53,12 @@ namespace Persistence
                             opt.CommandTimeout(postgresSetting.CommandTimeout);
                             opt.EnableRetryOnFailure(postgresSetting.RetryCount, TimeSpan.FromSeconds(postgresSetting.RetryDelay), null);
                             opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
-                        })
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                        });
                 options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();
             });
-            
-            builder.Services.AddScoped<IDomainEventContext, EcommerceWriteContext>();
+
+            builder.Services.AddScoped<IDomainEventContext, EcommerceContext>();
         }
     }
 }

@@ -45,35 +45,35 @@ public sealed class TxBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
         _logger.LogInformation("[{Behavior}]  {Request} begin transaction for command {CommandName}", behavior, request,
             request.GetType().Name);
 
-        await _unitOfWork.BeginTransaction(cancellationToken);
 
-        var response = await next();
-
-        _logger.LogInformation("[{Behavior}] {Request} transaction begin for command {CommandName}",
-            behavior, request, request.GetType().Name);
-
-        var domainEvents = _eventContext.GetDomainEvents().ToList();
-
-        _logger.LogInformation(
-            "[{Behavior}] {Request} transaction begin for command {CommandName} with {DomainEventsCount} domain events",
-            behavior,
-            request, request.GetType().Name, domainEvents.Count);
-
-        var tasks = domainEvents.Select(async
-            domainEvent =>
+        return await _unitOfWork.ExecuteTransactionalAsync(async () =>
         {
-            await _publisher.Publish(domainEvent, cancellationToken);
+            var response = await next();
 
-            _logger.LogDebug(
-                "[{Behavior}] Published domain event {DomainEventName} with payload {DomainEventContent}",
-                behavior, domainEvent.GetType().FullName,
-                JsonSerializer.Serialize(domainEvent));
-        });
+            _logger.LogInformation("[{Behavior}] {Request} transaction begin for command {CommandName}",
+                behavior, request, request.GetType().Name);
 
-        await Task.WhenAll(tasks);
+            var domainEvents = _eventContext.GetDomainEvents().ToList();
 
-        await _unitOfWork.CommitTransaction(cancellationToken);
+            _logger.LogInformation(
+                "[{Behavior}] {Request} transaction begin for command {CommandName} with {DomainEventsCount} domain events",
+                behavior,
+                request, request.GetType().Name, domainEvents.Count);
 
-        return response;
+            var tasks = domainEvents.Select(async
+                domainEvent =>
+            {
+                await _publisher.Publish(domainEvent, cancellationToken);
+
+                _logger.LogDebug(
+                    "[{Behavior}] Published domain event {DomainEventName} with payload {DomainEventContent}",
+                    behavior, domainEvent.GetType().FullName,
+                    JsonSerializer.Serialize(domainEvent));
+            });
+
+            await Task.WhenAll(tasks);
+
+            return response;
+        }, cancellationToken);
     }
 }

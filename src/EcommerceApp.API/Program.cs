@@ -4,6 +4,7 @@ using Domain.Constants;
 using Infrastructure;
 using Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication;
+using Persistence;
 using RookieShop.Infrastructure.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddApplication();
 builder.AddInfrastructure();
+builder.AddPersistance();
 
 var app = builder.Build();
 

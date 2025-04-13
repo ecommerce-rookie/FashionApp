@@ -97,5 +97,36 @@ namespace Infrastructure.Cache.Services
 
         }
 
+        public async Task RemoveTypeAsync(string type)
+        {
+            var keys = await ScanKeysByPrefixAsync(type);
+
+            const int batchSize = 20;
+
+            foreach (var batch in keys.Chunk(batchSize))
+            {
+                await _cache.KeyDeleteAsync(batch.ToArray());
+            }
+        }
+
+
+        private async Task<IEnumerable<RedisKey>> ScanKeysByPrefixAsync(string prefix)
+        {
+            var endpoints = _cache.Multiplexer.GetEndPoints();
+            var server = _cache.Multiplexer.GetServer(endpoints.First());
+
+            var keys = new List<RedisKey>();
+
+            // pattern format: "type:*"
+            var pattern = $"{prefix}:*";
+
+            await foreach (var key in server.KeysAsync(pattern: pattern))
+            {
+                keys.Add(key);
+            }
+
+            return keys;
+        }
+
     }
 }

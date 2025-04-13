@@ -9,6 +9,7 @@ namespace Domain.Repositories.BaseRepositories
         Task UpdateRange(IEnumerable<T> entities);
         Task AddRange(IEnumerable<T> entities);
         Task Delete(dynamic[] id);
+        Task Delete(T entity);
         Task<PagedList<T>> GetAll(int page, int eachPage,
                                             string sortBy, bool isAscending = false,
                                             params Expression<Func<T, object>>[]? includeProperties);

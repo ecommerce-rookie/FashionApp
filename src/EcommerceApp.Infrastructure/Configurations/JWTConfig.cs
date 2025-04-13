@@ -29,31 +29,31 @@ namespace Infrastructure.Configurations
                 options.Authority = "https://localhost:5001";
                 options.Audience = "ecommerce-api";
                 options.RequireHttpsMetadata = false;
-            })
-            .AddOpenIdConnect("oidc", options =>
-            {
-                options.Authority = openIdSetting?.Authority;
-                options.ClientId = openIdSetting?.ClientId;
-                options.ClientSecret = openIdSetting?.ClientSecret;
-                options.ResponseType = "code";
-
-                options.SaveTokens = true;
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
-                options.Scope.Add("offline_access");
-                options.Scope.Add(AuthScope.Read);
-
-                // Quan trọng: trả về đúng swagger sau khi login
-                //options.Events = new OpenIdConnectEvents
-                //{
-                //    OnRedirectToIdentityProvider = context =>
-                //    {
-                //        context.Properties.RedirectUri = "/swagger";
-                //        return Task.CompletedTask;
-                //    }
-                //};
-                options.CallbackPath = "/swagger/index.html";
             });
+            //.AddOpenIdConnect("oidc", options =>
+            //{
+            //    options.Authority = openIdSetting?.Authority;
+            //    options.ClientId = openIdSetting?.ClientId;
+            //    options.ClientSecret = openIdSetting?.ClientSecret;
+            //    options.ResponseType = "code";
+
+            //    options.SaveTokens = true;
+            //    options.Scope.Add("openid");
+            //    options.Scope.Add("profile");
+            //    options.Scope.Add("offline_access");
+            //    options.Scope.Add(AuthScope.Read);
+
+            //    // Quan trọng: trả về đúng swagger sau khi login
+            //    //options.Events = new OpenIdConnectEvents
+            //    //{
+            //    //    OnRedirectToIdentityProvider = context =>
+            //    //    {
+            //    //        context.Properties.RedirectUri = "/swagger";
+            //    //        return Task.CompletedTask;
+            //    //    }
+            //    //};
+            //    options.CallbackPath = "/swagger/index.html";
+            //});
 
         }
     }
