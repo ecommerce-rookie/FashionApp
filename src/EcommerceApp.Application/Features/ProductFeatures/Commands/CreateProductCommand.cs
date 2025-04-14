@@ -45,6 +45,7 @@ namespace Application.Features.ProductFeatures.Commands
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public CreateProductCommandValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -143,7 +144,7 @@ namespace Application.Features.ProductFeatures.Commands
 
             if (result)
             {
-                await _publisher.Publish(new ModifiedProductEvent(), cancellationToken);
+                await _publisher.Publish(new CreatedProductEvent(), cancellationToken);
 
                 return new APIResponse()
                 {

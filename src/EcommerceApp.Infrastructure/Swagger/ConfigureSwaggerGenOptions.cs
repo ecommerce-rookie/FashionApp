@@ -43,8 +43,8 @@ public sealed class ConfigureSwaggerGenOptions(IApiVersionDescriptionProvider pr
                 {
                     AuthorizationCode = new()
                     {
-                        TokenUrl = new($"{openIdSettings.Authority}/connect/token"),
-                        AuthorizationUrl = new($"{openIdSettings.Authority}/connect/authorize"),
+                        TokenUrl = new($"{openIdSettings?.Authority}/connect/token"),
+                        AuthorizationUrl = new($"{openIdSettings?.Authority}/connect/authorize"),
                         Scopes = new Dictionary<string, string>
                         {
                             { AuthScope.Read, "Read Access to API" },

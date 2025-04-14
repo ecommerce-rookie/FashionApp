@@ -2,6 +2,8 @@
 using Application.Features.CategoryFeatures.Queries;
 using Application.Features.ProductFeatures.Queries;
 using Asp.Versioning;
+using Infrastructure.ProducerTasks.CloudTaskProducers;
+using Infrastructure.ProducerTasks.EmailTaskProducers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,26 @@ namespace API.Controllers
     public class ProductController : Controller
     {
         private readonly ISender _sender;
+        private readonly ICloudTaskProducer _cloudTaskProducer;
+        private readonly IEmailTaskProducer _emailTaskProducer;
 
-        public ProductController(ISender sender)
+        public ProductController(ISender sender, ICloudTaskProducer cloudTask, IEmailTaskProducer emailTask)
         {
             _sender = sender;
+            _cloudTaskProducer = cloudTask;
+            _emailTaskProducer = emailTask;
+        }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> Test()
+        {
+            //Console.WriteLine("Test Cloud");
+            //_cloudTaskProducer.AddDeleteImageOnCloudinary("https://example.com/image.jpg");
+
+            //Console.WriteLine("Test Email");
+            //_emailTaskProducer.SendEmail("a", "b", "c");
+
+            return Ok("Test");
         }
 
         [HttpGet]

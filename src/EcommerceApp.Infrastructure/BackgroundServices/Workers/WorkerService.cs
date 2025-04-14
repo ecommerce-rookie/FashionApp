@@ -2,12 +2,13 @@
 using Domain.Models.Settings;
 using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure.BackgroundServices.Workers
 {
-    public class CommonWorkerService : Microsoft.Extensions.Hosting.BackgroundService
+    public class WorkerService<TQueue> : BackgroundService where TQueue : IBackgroundTaskQueue
     {
-        private readonly IBackgroundTaskQueue _taskQueue; // Queue for tasks that workers will process
+        private readonly TQueue _taskQueue; // Queue for tasks that workers will process
         private readonly int _defaultMinWorkerCount = 1; // Minimum number of workers to maintain
         private readonly int _scaledMaxWorkerCount = 10; // Maximum number of workers to scale up to
         private readonly int _taskThresholdToScaleUp = 50; // Number of pending tasks to trigger scaling up
@@ -17,10 +18,14 @@ namespace Infrastructure.BackgroundServices.Workers
         private readonly TimeSpan _scaleInterval = TimeSpan.FromMinutes(30); // Time interval for monitoring and scaling workers
         private readonly WorkerSetting _workerSettings; // Worker settings from app configuration
 
-        public CommonWorkerService(IBackgroundTaskQueue taskQueue, IOptions<WorkerSetting> options)
+        private readonly string _name;
+
+        public WorkerService(TQueue taskQueue, IOptions<WorkerSetting> options)
         {
             _taskQueue = taskQueue; // Inject the task queue
             _workerSettings = options.Value; // Inject the worker settings
+
+            _name = typeof(TQueue).Name;
 
             // Update configuration values if provided
             _defaultMinWorkerCount = _workerSettings.MinWorkerCount ?? _defaultMinWorkerCount;
@@ -28,6 +33,9 @@ namespace Infrastructure.BackgroundServices.Workers
             _scaleInterval = TimeSpan.FromMinutes(_workerSettings.ScaleInterval ?? _scaleInterval.Minutes);
             _taskThresholdToScaleUp = _workerSettings.TaskThresholdToScaleUp ?? _taskThresholdToScaleUp;
             _taskThresholdToScaleDown = _workerSettings.TaskThresholdToScaleDown ?? _taskThresholdToScaleDown;
+
+            // Logs
+            Console.WriteLine($"[WorkerService] {_name} initialized with settings: MinWorkers={_defaultMinWorkerCount}, MaxWorkers={_scaledMaxWorkerCount}, ScaleInterval={_scaleInterval.Minutes} minutes, ScaleUpThreshold={_taskThresholdToScaleUp}, ScaleDownThreshold={_taskThresholdToScaleDown}");
         }
 
         // Main execution loop for the background service
@@ -108,7 +116,7 @@ namespace Infrastructure.BackgroundServices.Workers
                     try
                     {
                         // Dequeue a work item and process it
-                        var workItem = await _taskQueue.DequeueCommonAsync(cts.Token);
+                        var workItem = await _taskQueue.DequeueAsync(cts.Token);
                         await workItem(cts.Token);
                     } catch (OperationCanceledException)
                     {

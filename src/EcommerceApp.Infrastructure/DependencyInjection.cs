@@ -1,11 +1,16 @@
 ﻿using Domain.Models.Settings;
 using Infrastructure.Authentication.Services;
 using Infrastructure.BackgroundServices.BackgroundTask;
+using Infrastructure.BackgroundServices.TaskQueues;
 using Infrastructure.BackgroundServices.Workers;
 using Infrastructure.Cache;
 using Infrastructure.Cache.Services;
 using Infrastructure.Configurations;
 using Infrastructure.Email;
+using Infrastructure.ProducerTasks.CloudTaskProducers;
+using Infrastructure.ProducerTasks.EmailTaskProducers;
+using Infrastructure.Storage;
+using Infrastructure.Storage.Cloudinary.Services;
 using Infrastructure.Versions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,8 +43,16 @@ namespace Infrastructure
             builder.AddSystem();
 
             // Set up background services
-            builder.Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-            //builder.Services.AddHostedService<CommonWorkerService>();
+            builder.Services.AddSingleton<CloudTaskQueue>();
+            builder.Services.AddSingleton<EmailTaskQueue>();
+
+            // Set up worker
+            builder.Services.AddHostedService<WorkerService<EmailTaskQueue>>();
+            builder.Services.AddHostedService<WorkerService<CloudTaskQueue>>();
+
+            // Set up producer internal
+            builder.Services.AddSingleton<IEmailTaskProducer, EmailTaskProducer>();
+            builder.Services.AddSingleton<ICloudTaskProducer, CloudTaskProducer>();
 
             // Set up authen service
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
@@ -47,6 +60,9 @@ namespace Infrastructure
 
             // Set up api versioning
             builder.Services.AddAPIVersioning();
+
+            // Set up services
+            builder.Services.AddScoped<IStorageService, CloudinaryService>();
 
             // Anothers
             builder.Services.AddAuthorization();

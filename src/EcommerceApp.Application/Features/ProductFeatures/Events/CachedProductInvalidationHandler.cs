@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.ProductFeatures.Events;
 
-public class CachedProductInvalidationHandler : INotificationHandler<ModifiedProductEvent>
+public class CachedProductInvalidationHandler : INotificationHandler<CreatedProductEvent>
 {
     private readonly ICacheService _cacheService;
 
@@ -14,7 +14,7 @@ public class CachedProductInvalidationHandler : INotificationHandler<ModifiedPro
         _cacheService = cacheService;
     }
 
-    public async Task Handle(ModifiedProductEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(CreatedProductEvent notification, CancellationToken cancellationToken)
     {
         var key = nameof(Product);
 

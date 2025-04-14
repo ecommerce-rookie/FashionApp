@@ -4,28 +4,28 @@ namespace Infrastructure.BackgroundServices.BackgroundTask
 {
     public class BackgroundTaskQueue : IBackgroundTaskQueue
     {
-        private readonly Channel<Func<CancellationToken, Task>> _commonQueue;
+        private readonly Channel<Func<CancellationToken, Task>> _queue;
 
         public BackgroundTaskQueue()
         {
-            _commonQueue = Channel.CreateUnbounded<Func<CancellationToken, Task>>();
+            _queue = Channel.CreateUnbounded<Func<CancellationToken, Task>>();
         }
 
-        public Task QueueCommonWorkItem(Func<CancellationToken, Task> workItem)
+        public Task QueueWorkItem(Func<CancellationToken, Task> workItem)
         {
             if (workItem == null) throw new ArgumentNullException(nameof(workItem));
-            _commonQueue.Writer.TryWrite(workItem);
+            _queue.Writer.TryWrite(workItem);
             return Task.CompletedTask;
         }
 
-        public async Task<Func<CancellationToken, Task>> DequeueCommonAsync(CancellationToken cancellationToken)
+        public async Task<Func<CancellationToken, Task>> DequeueAsync(CancellationToken cancellationToken)
         {
-            var workItem = await _commonQueue.Reader.ReadAsync(cancellationToken);
+            var workItem = await _queue.Reader.ReadAsync(cancellationToken);
 
             return workItem;
         }
 
-        public int PendingTaskCount => _commonQueue.Reader.Count;
+        public int PendingTaskCount => _queue.Reader.Count;
     }
 
 }

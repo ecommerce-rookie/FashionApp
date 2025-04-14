@@ -30,7 +30,8 @@ namespace Persistence.Configurations
 
             builder.HasOne(d => d.Product)
                    .WithMany(d => d.ImageProducts)
-                   .HasForeignKey(ip => ip.ProductId);
+                   .HasForeignKey(ip => ip.ProductId)
+                   .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 

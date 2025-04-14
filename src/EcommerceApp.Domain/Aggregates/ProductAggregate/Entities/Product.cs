@@ -9,14 +9,13 @@ namespace Domain.Aggregates.ProductAggregate.Entities;
 
 public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
 {
-
     public string Name { get; private set; } = null!;
 
     public ProductPrice? Price { get; private set; }
 
     public string? Description { get; private set; }
 
-    public ProductStatus? Status { get; private set; }
+    public ProductStatus Status { get; private set; }
 
     public int? CategoryId { get; private set; }
 
@@ -55,6 +54,21 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
         CategoryId = categoryId;
         Quantity = quantity == null ? 0 : quantity;
         Colors = colors ?? [];
+        Sizes = sizes;
+        Gender = gender;
+    }
+
+    public void Update(Guid id, string name, decimal unitPrice, decimal purchasePrice, string description,
+        ProductStatus status, int categoryId, int quantity, List<string> colors, List<string> sizes, Gender gender)
+    {
+        Id = id;
+        Name = name;
+        Price = new ProductPrice(unitPrice, purchasePrice);
+        Description = description;
+        Status = (status == ProductStatus.Available && (quantity == 0) ? ProductStatus.OutOfStock : status);
+        CategoryId = categoryId;
+        Quantity = quantity;
+        Colors = colors;
         Sizes = sizes;
         Gender = gender;
     }

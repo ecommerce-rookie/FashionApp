@@ -10,5 +10,13 @@ namespace Persistence.Repository
         public ImageProductRepository(EcommerceContext context) : base(context)
         {
         }
+
+        public async Task DeleteRange(IEnumerable<ImageProduct> images)
+        {
+            _dbSet.RemoveRange(images);
+
+            await Task.CompletedTask;
+        }
+
     }
 }

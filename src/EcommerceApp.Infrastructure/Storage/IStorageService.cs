@@ -8,5 +8,6 @@ namespace Infrastructure.Storage
     {
         Task<UploadResult> UploadImage(IFormFile file, ImageFolder folder, ImageFormat format, string? fileName);
         Task<UploadResult> UploadImage(byte[] file, ImageFolder folder, ImageFormat format, string? fileName);
+		Task<Dictionary<string, string>> DeleteImages(IEnumerable<string> nameImages);
     }
 }

@@ -61,5 +61,19 @@ namespace Infrastructure.Storage.Cloudinary.Services
 
             return result;
         }
+
+        public async Task<Dictionary<string, string>> DeleteImages(IEnumerable<string> nameImages)
+        {
+            var deleteParams = new DelResParams()
+            {
+                PublicIds = nameImages.ToList(),
+                Type = "upload",
+                ResourceType = ResourceType.Image
+            };
+
+            var result = await _cloudinary.DeleteResourcesAsync(deleteParams);
+
+            return result.Deleted;
+        }
     }
 }

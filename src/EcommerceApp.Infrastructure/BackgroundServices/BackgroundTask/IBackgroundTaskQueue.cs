@@ -2,9 +2,9 @@
 {
     public interface IBackgroundTaskQueue
     {
-        Task QueueCommonWorkItem(Func<CancellationToken, Task> workItem);
+        Task QueueWorkItem(Func<CancellationToken, Task> workItem);
 
-        Task<Func<CancellationToken, Task>> DequeueCommonAsync(CancellationToken cancellationToken);
+        Task<Func<CancellationToken, Task>> DequeueAsync(CancellationToken cancellationToken);
 
         int PendingTaskCount { get; }
     }
