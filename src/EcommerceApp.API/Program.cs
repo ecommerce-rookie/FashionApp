@@ -2,10 +2,8 @@ using Application;
 using Application.Middlewares;
 using Domain.Constants;
 using Infrastructure;
-using Infrastructure.Configurations;
-using Microsoft.AspNetCore.Authentication;
+using Infrastructure.DocumentApi;
 using Persistence;
-using RookieShop.Infrastructure.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +23,10 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
-//{
-//    app.UseScalar();
-//}
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+{
+    app.UseScalar();
+}
 
 app.UseMiddleware<GlobalException>();
 
@@ -66,6 +64,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseOpenApi();
+//app.UseOpenApi();
 
 app.Run();

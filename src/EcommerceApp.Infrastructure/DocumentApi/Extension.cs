@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
-namespace Infrastructure.Configurations
+namespace Infrastructure.DocumentApi
 {
     public static class ScalarConfig
     {

@@ -1,35 +1,31 @@
 ﻿using Application.Messages;
-using Domain.Aggregates.ProductAggregate.Events;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
-using MediatR;
 using System.Net;
 
-namespace Application.Features.ProductFeatures.Commands
+namespace Application.Features.UserFeatures.Commands
 {
-    public class DeleteProductCommand : ICommand<APIResponse>
+    public class DeleteUserCommand : ICommand<APIResponse>
     {
         public Guid Id { get; set; }
         public bool? Hard { get; set; }
     }
 
-    public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand, APIResponse>
+    public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, APIResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPublisher _publisher;
 
-        public DeleteProductCommandHandler(IUnitOfWork unitOfWork, IPublisher publisher)
+        public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _publisher = publisher;
         }
 
-        public async Task<APIResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<APIResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var product = await _unitOfWork.ProductRepository.GetById(request.Id);
+            var user = await _unitOfWork.UserRepository.GetById(request.Id);
 
-            if (product == null)
+            if(user == null)
             {
                 return new APIResponse
                 {
@@ -41,18 +37,16 @@ namespace Application.Features.ProductFeatures.Commands
 
             if (request.Hard.HasValue)
             {
-                await _unitOfWork.ProductRepository.Delete(product);
+                await _unitOfWork.UserRepository.Delete(user);
             } else
             {
-                product.Delete();
+                user.Delete();
             }
 
             var result = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             if (result)
             {
-                await _publisher.Publish(new ModifiedProductEvent(), cancellationToken);
-
                 return new APIResponse()
                 {
                     Status = HttpStatusCode.OK,

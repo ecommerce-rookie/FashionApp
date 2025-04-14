@@ -11,19 +11,19 @@ namespace Domain.Aggregates.UserAggregate.Entities
 {
     public partial class User : BaseDomainEvents<Guid>, IAggregateRoot, ISoftDelete
     {
-        public EmailAddress Email { get; set; } = null!;
+        public EmailAddress Email { get; private set; } = null!;
 
-        public string LastName { get; set; } = null!;
+        public string? FirstName { get; private set; }
 
-        public string? Phone { get; set; }
+        public string LastName { get; private set; } = null!;
 
-        public ImageUrl? Avatar { get; set; }
+        public string? Phone { get; private set; }
 
-        public UserStatus? Status { get; set; }
+        public ImageUrl? Avatar { get; private set; }
 
-        public string? FirstName { get; set; }
+        public UserStatus? Status { get; private set; }
 
-        public DateTime? DeletedAt { get; set; }
+        public DateTime? DeletedAt { get; private set; }
 
         public virtual ICollection<Order>? Orders { get; set; }
 
@@ -33,49 +33,36 @@ namespace Domain.Aggregates.UserAggregate.Entities
         
         public User() { }
 
-        //private User(Guid id, string email, string firstName, string lastName, string phone,
-        //             string avatar, UserStatus status, DateTime createdAt, DateTime? updatedAt,
-        //             DateTime? deletedAt)
-        //{
-        //    Id = id;
-        //    Email = EmailAddress.Create(email);
-        //    FirstName = firstName;
-        //    LastName = lastName;
-        //    Phone = phone;
-        //    Avatar = ImageUrl.Create(avatar);
-        //    Status = status;
-        //    DeletedAt = deletedAt;
-        //}
-
-        //public static User RegisterNew(string email, string firstName, string lastName,
-        //                               string phone, string avatar, string gender)
-        //{
-        //    var user = new User(
-        //        Guid.NewGuid(),
-        //        email,
-        //        firstName,
-        //        lastName,
-        //        phone,
-        //        avatar,
-        //        status: UserStatus.NotVerify.ToString()
-        //    );
-
-        //    return user;
-        //}
-
-        public void UpdateProfile(string firstName, string lastName, string phone, string avatar)
+        public User(Guid id, string email, string? firstName, string lastName, string? phone,
+                     string avatar, UserStatus status)
         {
+            Id = id;
+            Email = EmailAddress.Create(email);
+            FirstName = firstName ?? string.Empty;
+            LastName = lastName;
+            Phone = phone ?? string.Empty;
+            Avatar = ImageUrl.Create(avatar);
+            Status = status;
+        }
+
+        public void Update(string email, string firstName, string lastName, string phone,
+                     string avatar, UserStatus status)
+        {
+            Email = EmailAddress.Create(email);
             FirstName = firstName;
             LastName = lastName;
             Phone = phone;
             Avatar = ImageUrl.Create(avatar);
-            UpdatedAt = DateTime.UtcNow;
-
+            Status = status;
         }
 
         public void ChangeStatusAccount(UserStatus userStatus)
         {
             Status = userStatus;
+        }
+
+        public void Delete()
+        {
             DeletedAt = DateTime.UtcNow;
         }
     }

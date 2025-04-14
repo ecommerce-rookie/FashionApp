@@ -1,11 +1,11 @@
 ﻿using Domain.Models.Settings;
 using Infrastructure.Authentication.Services;
-using Infrastructure.BackgroundServices.BackgroundTask;
 using Infrastructure.BackgroundServices.TaskQueues;
 using Infrastructure.BackgroundServices.Workers;
 using Infrastructure.Cache;
 using Infrastructure.Cache.Services;
 using Infrastructure.Configurations;
+using Infrastructure.DocumentApi.swagger;
 using Infrastructure.Email;
 using Infrastructure.ProducerTasks.CloudTaskProducers;
 using Infrastructure.ProducerTasks.EmailTaskProducers;
@@ -14,7 +14,6 @@ using Infrastructure.Storage.Cloudinary.Services;
 using Infrastructure.Versions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using RookieShop.Infrastructure.Swagger;
 
 namespace Infrastructure
 {
@@ -33,8 +32,7 @@ namespace Infrastructure
             builder.Services.AddJWT(builder.Configuration);
 
             // Set up Swagger
-            //builder.Services.AddSwagger();
-            builder.AddOpenApi();
+            builder.Services.AddSwagger(builder.Configuration);
 
             // Set up email
             builder.Services.AddFluentEmail(builder.Configuration);

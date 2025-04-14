@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Carter" Version="8.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EcommerceApp.Application\Application.csproj" />
     <ProjectReference Include="..\EcommerceApp.Domain\Domain.csproj" />
     <ProjectReference Include="..\EcommerceApp.Infrastructure\Infrastructure.csproj" />

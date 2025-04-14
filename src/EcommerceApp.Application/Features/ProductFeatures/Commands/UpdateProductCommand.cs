@@ -11,7 +11,6 @@ using FluentValidation;
 using Infrastructure.Shared.Extensions;
 using Infrastructure.Storage;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using System.Net;
 using static Infrastructure.Storage.Cloudinary.Internals.CloudinaryOptions;
 

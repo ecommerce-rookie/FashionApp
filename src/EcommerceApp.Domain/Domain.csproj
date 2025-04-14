@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Aggregates\OrderAggregate\Events\" />
     <Folder Include="Aggregates\OrderAggregate\Constants\" />
-    <Folder Include="Aggregates\UserAggregate\Events\" />
   </ItemGroup>
 
   <ItemGroup>
