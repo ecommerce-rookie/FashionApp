@@ -8,12 +8,14 @@ using Infrastructure.Storage;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Text.Json.Serialization;
 using static Infrastructure.Storage.Cloudinary.Internals.CloudinaryOptions;
 
 namespace Application.Features.UserFeatures.Commands
 {
     public class UpdateUserCommand : ICommand<APIResponse>
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         public string? Email { get; set; }

@@ -6,11 +6,13 @@ using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 using MediatR;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Application.Features.CategoryFeatures.Commands
 {
     public class UpdateCategoryCommand : ICommand<APIResponse>
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string Name { get; set; } = null!;
     }

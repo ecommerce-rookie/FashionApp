@@ -12,12 +12,14 @@ using Infrastructure.Shared.Extensions;
 using Infrastructure.Storage;
 using MediatR;
 using System.Net;
+using System.Text.Json.Serialization;
 using static Infrastructure.Storage.Cloudinary.Internals.CloudinaryOptions;
 
 namespace Application.Features.ProductFeatures.Commands
 {
     public class UpdateProductCommand : ICommand<APIResponse>
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         public string? Name { get; set; }

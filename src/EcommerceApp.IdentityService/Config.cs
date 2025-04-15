@@ -91,7 +91,7 @@ namespace EcommerceApp.IdentityService
                     ClientId = "swagger-client",
                     ClientSecrets = { new Secret("swagger-secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "https://localhost:7031/swagger/index.html", "https://localhost:7031/swagger" },
+                    RedirectUris = { "https://localhost:7031/ap1/v1", "https://localhost:7031/api/v2", "https://localhost:7031/swagger/oauth2-redirect.html" },
                     AllowedScopes = { "openid", "profile", AuthScope.Read, AuthScope.Write, "offline_access" },
                     AllowOfflineAccess = true,
                     RequirePkce = true,

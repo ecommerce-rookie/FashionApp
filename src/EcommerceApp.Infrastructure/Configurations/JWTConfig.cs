@@ -52,7 +52,7 @@ namespace Infrastructure.Configurations
             //    //        return Task.CompletedTask;
             //    //    }
             //    //};
-            //    options.CallbackPath = "/swagger/index.html";
+            //    options.CallbackPath = "/api/v1";
             //});
 
         }

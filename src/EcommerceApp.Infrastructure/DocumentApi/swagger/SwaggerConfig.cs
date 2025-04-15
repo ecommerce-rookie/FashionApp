@@ -55,9 +55,11 @@ namespace Infrastructure.DocumentApi.swagger
                             {
                                 { AuthScope.Read, "Read Access to API" },
                                 { AuthScope.Write, "Write Access to API" }
-                            }
-                        }
-                    }
+                            },
+                            RefreshUrl = new Uri($"https://localhost:5001/connect/token"),
+                        },
+                    },
+                    Description = "OAuth2 Authorization Code Flow"
                 });
 
                 swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -67,7 +69,7 @@ namespace Infrastructure.DocumentApi.swagger
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "oauth2"
+                                Id = "oauth2",
                             }
                         },
                         new[] { AuthScope.Read, AuthScope.Write }

@@ -26,6 +26,7 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseScalar();
+    //app.UseSwaggerUI();
 }
 
 app.UseMiddleware<GlobalException>();
@@ -63,7 +64,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-//app.UseOpenApi();
 
 app.Run();
