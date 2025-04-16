@@ -12,12 +12,9 @@ namespace Infrastructure.Storage.Cloudinary.Services
     public class CloudinaryService : IStorageService
     {
         private readonly CloudinaryDotNet.Cloudinary _cloudinary;
-        private readonly DefaultSystem _defaultSystem;
 
         public CloudinaryService(IOptions<CloudinarySetting> config, IOptions<DefaultSystem> options)
         {
-            _defaultSystem = options.Value;
-
             var account = new Account(
                 config.Value.CloudName,
                 config.Value.ApiKey,

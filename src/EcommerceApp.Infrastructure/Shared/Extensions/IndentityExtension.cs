@@ -1,4 +1,5 @@
-﻿using Domain.Constants;
+﻿using Domain.Aggregates.UserAggregate.Enums;
+using Domain.readonlyants;
 using System.Security.Claims;
 using System.Security.Principal;
 
@@ -50,14 +51,14 @@ namespace Infrastructure.Shared.Extensions
             return claims.FirstOrDefault(s => s.Type.Equals(UserClaimType.Email))?.Value ?? string.Empty;
         }
 
-        public static int? GetRoleFromToken(this IPrincipal user)
+        public static UserRole? GetRoleFromToken(this IPrincipal user)
         {
             if (user == null)
-                return -1;
+                return null;
 
             var identity = user.Identity as ClaimsIdentity;
             IEnumerable<Claim> claims = identity!.Claims;
-            return int.Parse(claims.FirstOrDefault(s => s.Type.Equals(UserClaimType.Role))?.Value!);
+            return claims.FirstOrDefault(s => s.Type.Equals(UserClaimType.Role))?.Value.GetEnum<UserRole>();
         }
     }
 }

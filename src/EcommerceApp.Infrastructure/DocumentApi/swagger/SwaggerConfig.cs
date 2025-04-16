@@ -49,14 +49,14 @@ namespace Infrastructure.DocumentApi.swagger
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri($"https://localhost:5001/connect/token"),
-                            AuthorizationUrl = new Uri($"https://localhost:5001/connect/authorize"),
+                            TokenUrl = new Uri($"{openIdSettings.Authority}/connect/token"),
+                            AuthorizationUrl = new Uri($"{openIdSettings.Authority}/connect/authorize"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { AuthScope.Read, "Read Access to API" },
                                 { AuthScope.Write, "Write Access to API" }
                             },
-                            RefreshUrl = new Uri($"https://localhost:5001/connect/token"),
+                            RefreshUrl = new Uri($"{openIdSettings.Authority}/connect/token"),
                         },
                     },
                     Description = "OAuth2 Authorization Code Flow"

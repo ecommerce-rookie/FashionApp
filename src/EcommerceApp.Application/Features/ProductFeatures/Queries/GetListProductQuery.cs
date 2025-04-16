@@ -53,7 +53,7 @@ namespace Application.Features.ProductFeatures.Queries
                 }),
                 request.Page,
                 request.EachPage,
-                request.SortBy.ToString() ?? ProductSortBy.Newest.ToString(),
+                request.SortBy?.ToString() ?? ProductSortBy.CreatedAt.ToString(),
                 request?.IsAscending ?? true
             );
 

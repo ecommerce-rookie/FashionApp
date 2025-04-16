@@ -29,4 +29,18 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\EcommerceApp.ServiceDefaults\ServiceDefaults.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\css\authentication.css">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\js\authentication.js">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Pages\Shared\Components\Authen\" />
+	  <Folder Include="wwwroot\images\" />
+	</ItemGroup>
 </Project>

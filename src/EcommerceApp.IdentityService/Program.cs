@@ -30,6 +30,8 @@ try
         return;
     }
 
+    SeedData.EnsureSeedData(app);
+
     app.Run();
 } catch (Exception ex) when (ex is not HostAbortedException)
 {

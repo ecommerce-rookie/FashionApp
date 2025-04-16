@@ -36,8 +36,6 @@ namespace Application.Features.ProductFeatures.Commands
 
         public int? Quantity { get; set; }
 
-        public List<string>? Colors { get; set; }
-
         public List<string>? Sizes { get; set; }
 
         public Gender? Gender { get; set; }
@@ -140,7 +138,7 @@ namespace Application.Features.ProductFeatures.Commands
             product.Update(product.Id, request.Name ?? product.Name, request.UnitPrice ?? (decimal)product.Price?.UnitPrice.Amount!,
                 request.PurchasePrice ?? (decimal)product.Price?.PurchasePrice.Amount!, request.Description ?? product.Description!.ToString(),
                 request.Status ?? (ProductStatus)product.Status!, request.CategoryId ?? (int)product.CategoryId!, 
-                request.Quantity ?? (int)product.Quantity!, request.Colors ?? product.Colors, request.Sizes ?? product.Sizes, 
+                request.Quantity ?? (int)product.Quantity!, request.Sizes ?? product.Sizes, 
                 request.Gender ?? (Gender)product.Gender!);
 
             // Update images if any

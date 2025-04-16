@@ -22,4 +22,9 @@ builder.AddProject<Projects.API>("ecommerceapp-api");
     //.WithReference(db)
     //.WithReference(blobStorage);
 
+builder.AddProject<Projects.StoreFront>("storefront");
+    //.WithReference(redis)
+    //.WithReference(db)
+    //.WithReference(blobStorage);
+
 builder.Build().Run();

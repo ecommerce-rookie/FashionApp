@@ -33,8 +33,6 @@ namespace Application.Features.ProductFeatures.Commands
 
         public int? Quantity { get; set; }
 
-        public List<string>? Colors { get; set; }
-
         public List<string>? Sizes { get; set; }
 
         public Gender Gender { get; set; }
@@ -88,7 +86,7 @@ namespace Application.Features.ProductFeatures.Commands
                 return false;
             }
 
-            return quantity == 0 && status == ProductStatus.Available;
+            return !(quantity == 0 && status == ProductStatus.Available);
         }
 
         private async Task<bool> CheckDuplicatedName(string name, CancellationToken cancellationToken)
@@ -122,7 +120,7 @@ namespace Application.Features.ProductFeatures.Commands
         {
             var userId = _authenticationService.User.UserId;
 
-            if (_authenticationService.User.Role != (int)UserRole.Staff)
+            if (_authenticationService.User.Role != UserRole.Staff)
             {
                 return new APIResponse()
                 {
@@ -132,9 +130,11 @@ namespace Application.Features.ProductFeatures.Commands
             }
 
             var product = new Product(Guid.NewGuid(), request.Name!, request.UnitPrice, request.PurchasePrice, request.Description,
-                request.Status, request.CategoryId, request.Quantity, request.Colors, request.Sizes!, request.Gender);
+                request.Status, request.CategoryId, request.Quantity, request.Sizes!, request.Gender);
 
-            for(int i = 0; i < request.Files.Count(); i++)
+            await _unitOfWork.ProductRepository.Add(product);
+
+            for (int i = 0; i < request.Files.Count(); i++)
             {
                 var image = await _storageService.UploadImage(request.Files.ElementAt(i), ImageFolder.Product, request.Files.ElementAt(i).ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
                 await _unitOfWork.ImageProductRepository.Add(ImageProduct.Create(image.Url.ToString(), product.Id, i + 1));

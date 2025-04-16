@@ -22,13 +22,13 @@ namespace Infrastructure.Configurations
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = "oidc";
+                //opt.DefaultChallengeScheme = "oidc";
             })
                 .AddJwtBearer(options =>
             {
                 options.Authority = "https://localhost:5001";
-                options.Audience = "ecommerce-api";
-                options.RequireHttpsMetadata = false;
+                options.Audience = "api";
+                options.RequireHttpsMetadata = true;
             });
             //.AddOpenIdConnect("oidc", options =>
             //{

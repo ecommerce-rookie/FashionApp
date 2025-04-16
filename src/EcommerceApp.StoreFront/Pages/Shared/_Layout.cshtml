@@ -1,0 +1,32 @@
+﻿@using StoreFront.Domain.Constants
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EcommerceApp.StoreFront</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/store-front.css" asp-append-version="true" />
+
+    <page-styles />
+</head>
+<body>
+    <div class="page-container">
+        @await Html.PartialAsync(PageConstants.Header)
+
+        @await Html.PartialAsync(PageConstants.Navigation)
+
+        @RenderBody()
+
+        @await Html.PartialAsync(PageConstants.Footer)
+    </div>
+
+    <script src="~/lib/jquery/jquery-3.5.1.min.js"></script>
+    <script src="~/lib/jquery/jquery-migrate-1.4.1.min.js"></script>
+    <page-scripts />
+    <script src="~/js/main.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

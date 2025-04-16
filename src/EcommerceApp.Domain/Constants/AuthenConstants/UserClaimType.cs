@@ -1,16 +1,17 @@
-﻿namespace Domain.Constants
+﻿using System.Security.Claims;
+
+namespace Domain.readonlyants
 {
     public class UserClaimType
     {
-        public const string UserId = nameof(UserId);
-        public const string Role = nameof(Role);
-        public const string Status = nameof(Status);
-        public const string SessionId = nameof(SessionId);
-
+        public const string Provider = "http://schemas.microsoft.com/identity/claims/identityprovider";
+        public const string UserId = ClaimTypes.NameIdentifier;
+        public const string Role = ClaimTypes.Role;
+        public const string Status = "status";
+        public const string SessionId = "sid";
 
         public const string Avatar = nameof(Avatar);
-        public const string Email = nameof(Email);
-        public const string AccessToken = nameof(AccessToken);
-
+        public const string Email = "email";
+        public const string UserName = "preferred_username";
     }
 }

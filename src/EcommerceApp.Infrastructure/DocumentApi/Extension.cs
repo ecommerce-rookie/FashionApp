@@ -20,25 +20,21 @@ namespace Infrastructure.DocumentApi
 
             app.MapScalarApiReference(options =>
             {
-                options.EndpointPathPrefix = "/api/{documentName}";
+                options.EndpointPathPrefix = "/scalar/{documentName}";
                 options.WithOAuth2Authentication(opt =>
                 {
                     opt.ClientId = "swagger-client";
                     opt.Scopes = new List<string>
                     {
-                        { AuthScope.Read }
+                        { AuthScope.Read },
+                        {
+                            "profile"
+                        },
+                        {
+                            "openid"
+                        }
                     };
                 });
-                //{
-                //    TokenUrl = new Uri($"https://localhost:5001/connect/token"),
-                //    AuthorizationUrl = new Uri($"https://localhost:5001/connect/authorize"),
-                //    Scopes = new Dictionary<string, string>
-                //    {
-                //        { AuthScope.Read, "Read Access to API" },
-                //        { AuthScope.Write, "Write Access to API" }
-                //    },
-                //    RefreshUrl = new Uri($"https://localhost:5001/connect/token"),
-                //});
             });
         }
     }

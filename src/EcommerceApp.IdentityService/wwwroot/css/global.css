@@ -1,0 +1,18 @@
+﻿:root {
+    --black: #000000;
+    --white: #ffffff;
+    --off-white: #f8f8f8;
+    --light-gray: #e0e0e0;
+    --mid-gray: #888888;
+    --dark-gray: #333333;
+    --error: #ff3333;
+    --font-display: 'Bodoni Moda', serif;
+    --font-body: 'Jost', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

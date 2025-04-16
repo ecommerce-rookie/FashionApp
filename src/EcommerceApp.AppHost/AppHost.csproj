@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EcommerceApp.API\API.csproj" />
     <ProjectReference Include="..\EcommerceApp.IdentityService\IdentityService.csproj" />
+    <ProjectReference Include="..\EcommerceApp.ServiceDefaults\ServiceDefaults.csproj" />
+    <ProjectReference Include="..\EcommerceApp.StoreFront\StoreFront.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,9 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Services;
 using EcommerceApp.IdentityService.Data;
 using EcommerceApp.IdentityService.Models;
+using IdentityService;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -12,6 +15,8 @@ namespace EcommerceApp.IdentityService
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
+
+            //builder.Services.AddScoped<IProfileService, CustomProfileService>();
 
             // Config database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -40,12 +45,20 @@ namespace EcommerceApp.IdentityService
                 .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<ApplicationUser>();
 
+            //builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomProfileService>();
+            //builder.Services.AddScoped<IProfileService, CustomProfileService>();
+
+
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.ClientId = "195772379007-5orn6uk7tvg8ndh8dguqreel0l5957c1.apps.googleusercontent.com";
                     options.ClientSecret = "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";
+                    options.Scope.Add("email");
+                    options.Scope.Add("profile");
+
+                    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
                 });
 
             return builder.Build();

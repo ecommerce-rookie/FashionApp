@@ -1,0 +1,22 @@
+﻿@model StoreFront.Domain.Models.PageModels.BreadcrumbViewModel
+
+<!-- BEGIN INNER TOP -->
+<div class="inner-top">
+    <div class="inner-top__main wrapper">
+        <div class="inner-top__cols">
+            <div class="inner-top__left">
+                <h1 class="inner-top__title">@Model.Title</h1>
+                <div class="breadcrumbs">
+                    <ul class="breadcrumbs__list">
+                        <li class="breadcrumbs__item">
+                            <a class="breadcrumbs__link" asp-page="@Model.Url" >@Model.Item</a>
+                        </li>
+                        <li class="breadcrumbs__item">@Model.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <img class="inner-top__bg" src="~/img/svg/vector-inner-top.svg" data-lazy="img/svg/vector-inner-top.svg" alt="">
+    </div>
+</div>
+<!-- INNER TOP END -->

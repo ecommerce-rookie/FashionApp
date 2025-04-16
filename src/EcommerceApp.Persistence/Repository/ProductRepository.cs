@@ -13,7 +13,7 @@ namespace Persistence.Repository
 
         public async Task<bool> CheckDuplicatedName(string name)
         {
-            return await _dbSet.AnyAsync(p => p.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            return await _dbSet.AnyAsync(p => p.Name.Equals(name));
         }
 
         public async Task<Product?> GetDetail(Guid id)

@@ -23,8 +23,6 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
 
     public Guid? CreatedBy { get; private set; }
 
-    public List<string> Colors { get; private set; } = [];
-
     public List<string> Sizes { get; private set; } = [];
 
     public Gender? Gender { get; private set; }
@@ -44,7 +42,7 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
     }
 
     public Product(Guid id, string name, decimal unitPrice, decimal? purchasePrice, string? description,
-        ProductStatus status, int categoryId, int? quantity, List<string>? colors, List<string> sizes, Gender gender)
+        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender)
     {
         Id = id;
         Name = name;
@@ -53,13 +51,12 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
         Status = (status == ProductStatus.Available && (quantity == null || quantity == 0) ? ProductStatus.OutOfStock : status);
         CategoryId = categoryId;
         Quantity = quantity == null ? 0 : quantity;
-        Colors = colors ?? [];
         Sizes = sizes;
         Gender = gender;
     }
 
     public void Update(Guid id, string name, decimal unitPrice, decimal purchasePrice, string description,
-        ProductStatus status, int categoryId, int quantity, List<string> colors, List<string> sizes, Gender gender)
+        ProductStatus status, int categoryId, int quantity, List<string> sizes, Gender gender)
     {
         Id = id;
         Name = name;
@@ -68,7 +65,6 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
         Status = (status == ProductStatus.Available && (quantity == 0) ? ProductStatus.OutOfStock : status);
         CategoryId = categoryId;
         Quantity = quantity;
-        Colors = colors;
         Sizes = sizes;
         Gender = gender;
     }

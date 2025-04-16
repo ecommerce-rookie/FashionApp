@@ -1,5 +1,8 @@
-﻿namespace Domain.Aggregates.ProductAggregate.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Aggregates.ProductAggregate.Enums
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CurrencyEnum
     {
         VND = 1,

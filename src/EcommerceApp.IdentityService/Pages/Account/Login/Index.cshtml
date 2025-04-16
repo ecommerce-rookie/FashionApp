@@ -1,89 +1,290 @@
-@page
+﻿@page
 @model EcommerceApp.IdentityService.Pages.Login.Index
 
-<div class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
+@* <div class="login-page"> *@
+@*     <div class="lead"> *@
+@*         <h1>Login</h1> *@
+@*         <p>Choose how to login</p> *@
+@*     </div> *@
+
+@*     <partial name="_ValidationSummary" /> *@
+
+@*     <div class="row"> *@
+
+@*         @if (Model.View.EnableLocalLogin) *@
+@*         { *@
+@*             <div class="col-sm-6"> *@
+@*                 <div class="card"> *@
+@*                     <div class="card-header"> *@
+@*                         <h2>Local Account</h2> *@
+@*                     </div> *@
+
+@*                     <div class="card-body"> *@
+@*                         <form asp-page="/Account/Login/Index"> *@
+@*                             <input type="hidden" asp-for="Input.ReturnUrl" /> *@
+
+@*                             <div class="form-group"> *@
+@*                                 <label asp-for="Input.Username"></label> *@
+@*                                 <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus> *@
+@*                             </div> *@
+@*                             <div class="form-group"> *@
+@*                                 <label asp-for="Input.Password"></label> *@
+@*                                 <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off"> *@
+@*                             </div> *@
+                            
+@*                             @if (Model.View.AllowRememberLogin) *@
+@*                             { *@
+@*                                 <div class="form-group"> *@
+@*                                     <div class="form-check"> *@
+@*                                         <input class="form-check-input" asp-for="Input.RememberLogin"> *@
+@*                                         <label class="form-check-label" asp-for="Input.RememberLogin"> *@
+@*                                             Remember My Login *@
+@*                                         </label> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                             } *@
+                            
+@*                             <button class="btn btn-primary" name="Input.Button" value="login">Login</button> *@
+@*                             <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button> *@
+@*                         </form> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         } *@
+
+@*         @if (Model.View.VisibleExternalProviders.Any()) *@
+@*         { *@
+@*             <div class="col-sm-6"> *@
+@*                 <div class="card"> *@
+@*                     <div class="card-header"> *@
+@*                         <h2>External Account</h2> *@
+@*                     </div> *@
+@*                     <div class="card-body"> *@
+@*                         <ul class="list-inline"> *@
+@*                             @foreach (var provider in Model.View.VisibleExternalProviders) *@
+@*                             { *@
+@*                                 <li class="list-inline-item"> *@
+@*                                     <a class="btn btn-secondary" *@
+@*                                        asp-page="/ExternalLogin/Challenge" *@
+@*                                        asp-route-scheme="@provider.AuthenticationScheme" *@
+@*                                        asp-route-returnUrl="@Model.Input.ReturnUrl"> *@
+@*                                         @provider.DisplayName *@
+@*                                     </a> *@
+@*                                 </li> *@
+@*                             } *@
+@*                         </ul> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         } *@
+
+@*         @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any()) *@
+@*         { *@
+@*             <div class="alert alert-warning"> *@
+@*                 <strong>Invalid login request</strong> *@
+@*                 There are no login schemes configured for this request. *@
+@*             </div> *@
+@*         } *@
+@*     </div> *@
+@* </div> *@
+
+@{
+    ViewData["Title"] = "Authentication";
+
+    ViewData["Styles"] = new List<string>
+    {
+        "~/css/authentication.css",
+    };
+}
+<partial name="_ValidationSummary" />
+<div class="noise-overlay"></div>
+
+<div class="container">
+    <div class="brand-signature">
+        <div class="brand-mark">A</div>
+        <div class="brand-name">ATELIER</div>
     </div>
 
-    <partial name="_ValidationSummary" />
+    <div class="auth-container">
+        <div class="visual-column">
+            <div class="editorial-element circle"></div>
+            <div class="editorial-element line-vertical"></div>
+            <div class="editorial-element line-horizontal"></div>
+            <div class="editorial-element dot-pattern"></div>
+            <div class="editorial-element frame"></div>
 
-    <div class="row">
+            <div class="fashion-quote">
+                <div class="quote-text">
+                    Fashion is not something that exists in dresses only. Fashion is in the sky,
+                    in the street.
+                </div>
+                <div class="quote-author">COCO CHANEL</div>
+            </div>
 
-        @if (Model.View.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Local Account</h2>
-                    </div>
+            <div class="season-tag">SS/25</div>
+        </div>
 
-                    <div class="card-body">
-                        <form asp-page="/Account/Login/Index">
-                            <input type="hidden" asp-for="Input.ReturnUrl" />
+        <div class="form-column">
+            <div class="form-wrapper">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-form="login">
+                        <span class="tab-text">SIGN IN</span>
+                        <span class="tab-line"></span>
+                    </button>
+                    <button class="tab-btn" data-form="register">
+                        <span class="tab-text">JOIN</span>
+                        <span class="tab-line"></span>
+                    </button>
+                </div>
 
-                            <div class="form-group">
-                                <label asp-for="Input.Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                <div class="forms-container">
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form active" asp-page="/Account/Login/Index">
+                        <input type="hidden" asp-for="Input.ReturnUrl" />
+
+                        <div class="form-header">
+                            <div class="form-title">WELCOME BACK</div>
+                            <div class="form-subtitle">Enter your credentials to continue</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="text" id="loginEmail" class="form-input" asp-for="Input.Username" required>
+                                <label for="loginEmail" class="form-label">EMAIL</label>
+                                <div class="input-line"></div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="password" id="loginPassword" class="form-input" asp-for="Input.Password" required>
+                                <label for="loginPassword" class="form-label">PASSWORD</label>
+                                <button type="button" class="toggle-password" data-for="loginPassword">
+                                    <span class="toggle-icon"></span>
+                                </button>
+                                <div class="input-line"></div>
                             </div>
-                            
-                            @if (Model.View.AllowRememberLogin)
-                            {
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" asp-for="Input.RememberLogin">
-                                        <label class="form-check-label" asp-for="Input.RememberLogin">
-                                            Remember My Login
-                                        </label>
-                                    </div>
-                                </div>
-                            }
-                            
-                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
-                        </form>
-                    </div>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe" asp-for="Input.RememberLogin">
+                                <span class="custom-checkbox"></span>
+                                <span class="checkbox-label">REMEMBER ME</span>
+                            </label>
+                            <a href="#" class="forgot-link">FORGOT PASSWORD?</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn" name="Input.Button" value="login">
+                            <span class="btn-text">ENTER</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+
+                        <div class="social-login">
+                            <div class="social-divider">
+                                <span>OR</span>
+                            </div>
+                            <div class="social-buttons">
+                                <button type="button" class="social-btn">
+                                    <span>G</span>
+                                </button>
+                                <button type="button" class="social-btn">
+                                    <span>F</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-header">
+                            <div class="form-title">BECOME A MEMBER</div>
+                            <div class="form-subtitle">Create your exclusive account</div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="text" id="registerName" class="form-input" required>
+                                <label for="registerName" class="form-label">FULL NAME</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="error-message" id="registerNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="email" id="registerEmail" class="form-input" required>
+                                <label for="registerEmail" class="form-label">EMAIL</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="error-message" id="registerEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="password" id="registerPassword" class="form-input" required>
+                                <label for="registerPassword" class="form-label">PASSWORD</label>
+                                <button type="button" class="toggle-password" data-for="registerPassword">
+                                    <span class="toggle-icon"></span>
+                                </button>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="error-message" id="registerPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="password" id="confirmPassword" class="form-input" required>
+                                <label for="confirmPassword" class="form-label">CONFIRM PASSWORD</label>
+                                <button type="button" class="toggle-password" data-for="confirmPassword">
+                                    <span class="toggle-icon"></span>
+                                </button>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="termsAgree">
+                                <span class="custom-checkbox"></span>
+                                <span class="checkbox-label">
+                                    I AGREE TO THE <a href="#"
+                                                      class="terms-link">TERMS</a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">JOIN NOW</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </form>
                 </div>
             </div>
-        }
+        </div>
+    </div>
 
-        @if (Model.View.VisibleExternalProviders.Any())
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>External Account</h2>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.View.VisibleExternalProviders)
-                            {
-                                <li class="list-inline-item">
-                                    <a class="btn btn-secondary"
-                                       asp-page="/ExternalLogin/Challenge"
-                                       asp-route-scheme="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.Input.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
+    <div class="corner-elements">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+    </div>
 
-        @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this request.
-            </div>
-        }
+    <div class="floating-elements">
+        <div class="floating-element fe-1"></div>
+        <div class="floating-element fe-2"></div>
+        <div class="floating-element fe-3"></div>
     </div>
 </div>
+
+
+@{
+    ViewData["Scripts"] = new List<string>
+    {
+        "~/js/authentication.js",
+    };
+}

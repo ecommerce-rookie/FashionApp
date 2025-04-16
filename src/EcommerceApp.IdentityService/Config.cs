@@ -1,4 +1,5 @@
 ﻿using Domain.Constants.Common;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
 
 namespace EcommerceApp.IdentityService
@@ -10,7 +11,7 @@ namespace EcommerceApp.IdentityService
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email(),
+                new IdentityResources.Email()
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -24,9 +25,11 @@ namespace EcommerceApp.IdentityService
         [
             new()
             {
-                Name = "api.ecommerce",
+                Name = "api",
                 DisplayName = "Ecommerce API",
-                Scopes = { AuthScope.Read, AuthScope.Write }
+                Scopes = { AuthScope.Read, AuthScope.Write, "profile", "openid" },
+                UserClaims = new[] { JwtClaimTypes.Role, JwtClaimTypes.Confirmation, JwtClaimTypes.PreferredUserName, 
+                    JwtClaimTypes.EmailVerified, JwtClaimTypes.Email },
             }
         ];
 
@@ -90,12 +93,39 @@ namespace EcommerceApp.IdentityService
                 {
                     ClientId = "swagger-client",
                     ClientSecrets = { new Secret("swagger-secret".Sha256()) },
+                    ClientName = "Swagger UI Client",
+
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "https://localhost:7031/ap1/v1", "https://localhost:7031/api/v2", "https://localhost:7031/swagger/oauth2-redirect.html" },
-                    AllowedScopes = { "openid", "profile", AuthScope.Read, AuthScope.Write, "offline_access" },
-                    AllowOfflineAccess = true,
                     RequirePkce = true,
-                    RequireClientSecret = false
+                    RequireClientSecret = false,
+
+                    RedirectUris = { "https://localhost:7031/ap1/v1", "https://localhost:7031/swagger/oauth2-redirect.html", "https://localhost:7031/scalar/v1" },
+
+                    AllowedScopes = { "openid", "profile", AuthScope.Read, AuthScope.Write, "offline_access", "cnf" },
+                    RequireConsent = true,
+                    AllowedCorsOrigins = { "https://localhost:7031" },
+
+                    AllowOfflineAccess = true,
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
+                },
+
+                new Client 
+                {
+                    ClientId = "store-front",
+                    ClientSecrets = { new Secret("store-front-secret".Sha256()) },
+                    ClientName = "Store Front Client",
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+
+                    RedirectUris = { "https://localhost:7101/auth/callback" },
+
+                    AllowedScopes = { "openid", "profile", "offline_access" },
+                    RequireConsent = false,
+                    AllowedCorsOrigins = { "https://localhost:7101" },
+
+                    AllowOfflineAccess = true,
                 }
 
             };

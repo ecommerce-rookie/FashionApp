@@ -19,7 +19,7 @@ namespace Infrastructure.Authentication.Services
         {
             Email = _httpContextAccessor.HttpContext?.User.GetEmailFromToken() ?? string.Empty,
             UserId = _httpContextAccessor.HttpContext?.User.GetUserIdFromToken() ?? Guid.Empty,
-            Role = _httpContextAccessor.HttpContext?.User.GetRoleFromToken() ?? 0,
+            Role = _httpContextAccessor.HttpContext?.User.GetRoleFromToken() ?? null,
             SessionId = _httpContextAccessor.HttpContext?.User.GetSessionIdFromToken() ?? Guid.Empty,
             IsAuthenticated = _httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false
         };

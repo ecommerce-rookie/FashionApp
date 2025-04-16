@@ -3,8 +3,10 @@ using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.ProductFeatures.Queries;
 using Asp.Versioning;
+using Domain.Constants;
 using Domain.Models.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -30,13 +32,14 @@ namespace API.Controllers
         {
             var result = await _sender.Send(query, cancellationToken);
 
-            Response.Headers.Append("X-Total-Count", JsonConvert.SerializeObject(result.Metadata));
+            Response.Headers.Append(SystemConstant.HeaderPagination, JsonConvert.SerializeObject(result.Metadata));
 
             return Ok(result);
         }
 
         [HttpPost("")]
         [ProducesResponseType(typeof(APIResponse<Guid>), StatusCodes.Status201Created)]
+        [Authorize]
         public async Task<IActionResult> CreateProduct([FromForm] CreateProductCommand command, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(command, cancellationToken);
@@ -58,6 +61,7 @@ namespace API.Controllers
 
         [HttpPut("{id:guid}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<Guid>>), StatusCodes.Status200OK)]
+        [Authorize]
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductCommand command, CancellationToken cancellationToken)
         {
             command.Id = id;
@@ -68,6 +72,7 @@ namespace API.Controllers
 
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse>), StatusCodes.Status200OK)]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteProductCommand()

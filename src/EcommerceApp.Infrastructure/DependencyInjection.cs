@@ -59,8 +59,8 @@ namespace Infrastructure
             // Set up api versioning
             builder.Services.AddAPIVersioning();
 
-            // Set up services
-            builder.Services.AddScoped<IStorageService, CloudinaryService>();
+            // Set up storage service
+            builder.Services.AddStorage(builder.Configuration);
 
             // Anothers
             builder.Services.AddAuthorization();
