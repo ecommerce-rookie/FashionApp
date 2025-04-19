@@ -238,7 +238,28 @@ namespace Persistence.Repository
             var result = await query.Select(selector).ToPagedListAsync(page, eachPage);
 
             return await Task.FromResult(result);
+        }
 
+        public IQueryable<T> Query(Expression<Func<T, bool>> predicate,
+                                                int page, int eachPage,
+                                                string sortBy, bool isAscending = true,
+                                                params Expression<Func<T, object>>[]? includeProperties)
+        {
+            var query = _dbSet
+                .Where(predicate)
+                .AsQueryable()
+                .AsNoTracking()
+                .AsSplitQuery();
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return query.PaginateAndSort(page, eachPage, sortBy, isAscending);
         }
     }
 }

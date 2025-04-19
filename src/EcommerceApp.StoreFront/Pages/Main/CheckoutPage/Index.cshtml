@@ -1,0 +1,48 @@
+﻿@page "/checkout"
+@model StoreFront.Pages.Main.CheckoutPage.IndexModel
+@using StoreFront.Domain.Constants
+@using StoreFront.Domain.Models.PageModels
+
+@{
+    ViewData["Title"] = "Check out";
+}
+
+
+<main class="main">
+
+    @await Html.PartialAsync(PageConstants.Breadcrumb, new BreadcrumbViewModel()
+    {
+        Item = "Product",
+        Url = PageConstants.ShopPage,
+        Title = "Product Detail"
+    })
+
+    <!-- BEGIN CHECKOUT -->
+    <div class="checkout-page wrapper">
+
+        <div class="checkout-nav">
+            <div class="checkout-nav__item active">
+                <span class="checkout-nav__text">order details</span>
+            </div>
+            <div class="checkout-nav__item active current">
+                <span class="checkout-nav__text">payment method</span>
+            </div>
+            <div class="checkout-nav__item">
+                <span class="checkout-nav__text">finish</span>
+            </div>
+        </div>
+
+        <div class="checkout-page__cols">
+
+            @{
+                await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
+
+                await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
+            }
+
+        </div>
+
+    </div>
+    <!-- CHECKOUT END -->
+
+</main>

@@ -31,7 +31,7 @@ namespace StoreFront.Pages.Main.HomePage
                 EachPage = 10
             });
 
-            var products = response.ToPagedList<ProductPreviewResponseModel>();
+            var products = response.ToPagedList();
 
 
             if (products != null)

@@ -23,5 +23,5 @@ public partial class Order : BaseAuditableEntity<Guid>
 
     public virtual User? Customer { get; set; }
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail>? OrderDetails { get; set; } = new List<OrderDetail>();
 }

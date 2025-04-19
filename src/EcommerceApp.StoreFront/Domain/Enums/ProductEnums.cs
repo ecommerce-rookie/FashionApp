@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace StoreFront.Domain.Enums
 {
-    public class ProductEnums
+    public static class ProductEnums
     {
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum ProductStatus
@@ -24,6 +24,17 @@ namespace StoreFront.Domain.Enums
             Name = 1,
             CreatedAt = 2,
             Price = 3,
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum ProductSize
+        {
+            S = 1,
+            M = 2,
+            L = 3,
+            XL = 4,
+            XXL = 5,
+            Other = 6
         }
     }
 }

@@ -1,0 +1,52 @@
+﻿@model StoreFront.Domain.Models.Common.Metadata
+
+@{
+    var current = Model.CurrentPage;
+    var total = Model.TotalPages;
+
+    int startPage = current - 2;
+    int endPage = current + 2;
+
+    if (startPage < 1)
+    {
+        endPage += (1 - startPage);
+        startPage = 1;
+    }
+
+    if (endPage > total)
+    {
+        startPage -= (endPage - total);
+        endPage = total;
+    }
+
+    if (startPage < 1) startPage = 1;
+}
+
+<div class="page-nav">
+    <div class="page-nav__col">
+        <!-- Trang đầu tiên -->
+        <a class="page-nav__button" href="#" data-page="1" title="First Page" @(current == 1 ? "disabled" : "")>&laquo;</a>
+
+        <!-- Trang trước -->
+        <a class="page-nav__button" href="#" data-page="@(current - 1)" title="Previous Page" @(current == 1 ? "disabled" : "")>&lsaquo;</a>
+    </div>
+
+    <div class="page-nav__col">
+        <ul class="page-nav__list">
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-nav__item @(i == current ? "active" : "")">
+                    <a class="page-nav__link" href="#" data-page="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="page-nav__col">
+        <!-- Trang sau -->
+        <a class="page-nav__button" href="#" data-page="@(current + 1)" title="Next Page" @(current == total ? "disabled" : "")>&rsaquo;</a>
+
+        <!-- Trang cuối -->
+        <a class="page-nav__button" href="#" data-page="@total" title="Last Page" @(current == total ? "disabled" : "")>&raquo;</a>
+    </div>
+</div>

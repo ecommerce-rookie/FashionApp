@@ -34,8 +34,16 @@
   <ItemGroup>
     <Folder Include="Application\Utilities\" />
     <Folder Include="Domain\Models\UserModels\Requests\" />
-    <Folder Include="Pages\Main\CartPage\" />
-    <Folder Include="Pages\Main\OrderPage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Main\HomePage\Components\FilterNav.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Main\HomePage\Components\ShopProductList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Main\ShopPage\Components\ShopFilter.cshtml" />
+    <AdditionalFiles Include="Pages\Main\ShopPage\Components\ShopProductList.cshtml" />
   </ItemGroup>
 
 </Project>

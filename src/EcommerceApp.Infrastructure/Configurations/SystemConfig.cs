@@ -19,7 +19,7 @@ namespace Infrastructure.Configurations
             {
                 options.AddServerHeader = false;
                 options.AllowResponseHeaderCompression = true;
-                options.ConfigureEndpointDefaults(o => o.Protocols = HttpProtocols.Http1AndHttp2AndHttp3);
+                //options.ConfigureEndpointDefaults(o => o.Protocols = HttpProtocols.Http1AndHttp2AndHttp3);
             });
 
             builder.Services
