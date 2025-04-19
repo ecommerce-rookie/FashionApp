@@ -17,5 +17,7 @@ namespace StoreFront.Domain.Models.ProductModels.Responses
         public string? Image { get; set; }
 
         public bool IsNew { get; set; }
+
+        public string Slug { get; set; } = string.Empty;
     }
 }

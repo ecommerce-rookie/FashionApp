@@ -1,6 +1,8 @@
 ﻿using Application.Features.ProductFeatures.Enums;
 using Application.Features.ProductFeatures.Models;
+using Application.Utilities;
 using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Constants.Common;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
@@ -21,6 +23,8 @@ namespace Application.Features.ProductFeatures.Queries
         public string? Search { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
+        public bool? IsNew { get; set; }
+        public bool? IsSale { get; set; }
         public IEnumerable<string>? Sizes { get; set; }
     }
 
@@ -36,9 +40,6 @@ namespace Application.Features.ProductFeatures.Queries
         public async Task<PagedList<ProductPreviewResponseModel>> Handle(GetListProductQuery request,
             CancellationToken cancellationToken)
         {
-            // Get the date 30 days ago from now (New products)
-            var date30DaysAgo = DateTime.UtcNow.AddDays(-30);
-
             // Check if the request has no categories, sizes, or search term
             var hasNoCategories = request.Categories.IsNullOrEmpty();
             var hasNoSizes = request.Sizes.IsNullOrEmpty();
@@ -47,10 +48,16 @@ namespace Application.Features.ProductFeatures.Queries
             // Build the predicate for filtering products
             Expression<Func<Product, bool>> predicate = p =>
                 (hasNoCategories || request.Categories!.Contains((int)p.CategoryId!)) &&
-                (hasNoSizes || p.Sizes.Any(size => request.Sizes!.Contains(size))) &&
+                (hasNoSizes || p.Sizes!.Any(size => request.Sizes!.Contains(size))) &&
                 (hasNoSearch || p.Name.Contains(request.Search!)) &&
-                (request.MinPrice == null || p.Price!.UnitPrice.Amount >= request.MinPrice) &&
-                (request.MaxPrice == null || p.Price!.UnitPrice.Amount <= request.MaxPrice);
+                (request.MinPrice == null || p.Price!.PurchasePrice.Amount >= request.MinPrice) &&
+                (request.MaxPrice == null || p.Price!.PurchasePrice.Amount <= request.MaxPrice) &&
+                (request.IsNew == null ||
+                     (request.IsNew == true && p.CreatedAt >= DateTime.UtcNow.AddDays(DefaultConstant.NewProductDays)) ||
+                     (request.IsNew == false && p.CreatedAt < DateTime.UtcNow.AddDays(DefaultConstant.NewProductDays))) &&
+                (request.IsSale == null ||
+                     (request.IsSale == true && p.Price!.UnitPrice.Equals(p.Price.PurchasePrice))) ||
+                     (request.IsSale == false && !p.Price!.UnitPrice.Equals(p.Price.PurchasePrice));
 
             // Build the selector for projecting products to ProductPreviewResponseModel
             Expression<Func<Product, ProductPreviewResponseModel>> selector = s => new ProductPreviewResponseModel
@@ -64,7 +71,8 @@ namespace Application.Features.ProductFeatures.Queries
                                     .Where(i => i.OrderNumber == 1)
                                     .Select(i => i.Image.Url)
                                     .FirstOrDefault(),
-                IsNew = s.CreatedAt >= date30DaysAgo
+                IsNew = s.CreatedAt.IsNewProduct(),
+                Slug = s.Slug
             };
 
             // Apply sorting

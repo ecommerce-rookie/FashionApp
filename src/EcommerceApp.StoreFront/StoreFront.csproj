@@ -34,11 +34,7 @@
   <ItemGroup>
     <Folder Include="Application\Utilities\" />
     <Folder Include="Domain\Models\UserModels\Requests\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Main\HomePage\Components\FilterNav.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Main\HomePage\Components\ShopProductList.cshtml" />
+    <Folder Include="Pages\Main\ProductPage\Components\FeedbackProduct\" />
   </ItemGroup>
 
   <ItemGroup>

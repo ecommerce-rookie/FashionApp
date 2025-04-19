@@ -20,7 +20,7 @@ namespace Application.Features.ProductFeatures.Commands
     public class UpdateProductCommand : ICommand<APIResponse>
     {
         [JsonIgnore]
-        public Guid Id { get; set; }
+        public string Slug { get; set; } = string.Empty;
 
         public string? Name { get; set; }
 
@@ -124,7 +124,7 @@ namespace Application.Features.ProductFeatures.Commands
         public async Task<APIResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             // Check if the product exists
-            var product = await _unitOfWork.ProductRepository.GetDetail(request.Id);
+            var product = await _unitOfWork.ProductRepository.GetDetail(request.Slug);
             if (product == null)
             {
                 return new APIResponse

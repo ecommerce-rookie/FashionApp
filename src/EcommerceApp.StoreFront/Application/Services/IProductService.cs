@@ -10,16 +10,22 @@ namespace StoreFront.Application.Services
         [Get("/products")]
         Task<ApiResponse<IEnumerable<ProductPreviewResponseModel>>> GetProducts([Query] ProductFilterParams filter);
 
-        [Get("/products/{id}")]
-        Task<APIResponse<ProductResponseModel>> GetProduct(Guid id);
+        [Get("/products/{slug}")]
+        Task<APIResponse<ProductResponseModel>> GetProduct(string slug);
 
         [Post("/products")]
         Task<APIResponse> CreateProduct([Body] ProductCreateRequest request);
 
-        [Put("/products/{id}")]
-        Task<APIResponse> UpdateProduct(Guid id, [Body] ProductUpdateRequest request);
+        [Put("/products/{slug}")]
+        Task<APIResponse> UpdateProduct(string slug, [Body] ProductUpdateRequest request);
 
         [Delete("/products/{id}")]
         Task<APIResponse> DeleteProduct(Guid id);
+
+        [Get("/products/recommend")]
+        Task<IEnumerable<ProductPreviewResponseModel>> GetRecommendProducts([Query] string slug, [Query] int eachPage);
+
+        [Get("/products/best-seller")]
+        Task<IEnumerable<ProductPreviewResponseModel>> GetBestSellerProducts([Query] int eachPage);
     }
 }

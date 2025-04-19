@@ -32,5 +32,7 @@ namespace Application.Features.ProductFeatures.Models
         public IEnumerable<string> Images { get; set; } = new List<string>();
 
         public AuthorResponseModel? Author { get; set; }
+
+        public bool IsNew { get; set; }
     }
 }

@@ -46,5 +46,19 @@
         public const string ShopProductList = "../ShopPage/Components/ShopProductList";
 
         #endregion
+
+        #region Product component
+
+        public const string RecommendProduct = nameof(RecommendProduct);
+        public const string BestSellerProduct = nameof(BestSellerProduct);
+        public const string FeaturedProduct = nameof(FeaturedProduct);
+
+        #endregion
+
+        #region Dislay Product
+
+        public const string ProductPreview = PrePathComponent + "/DisplayProduct/ProductPreview";
+
+        #endregion
     }
 }

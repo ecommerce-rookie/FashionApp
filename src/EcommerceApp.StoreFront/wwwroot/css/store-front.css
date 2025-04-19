@@ -1119,15 +1119,17 @@ button {
 }
 
 .logo {
-    height: 22px;
+    width: 8vw;
+    height: fit-content;
     padding: 2px 0 0;
     display: block
 }
 
 .logo__image {
-    width: 82px;
-    height: 17px;
-    margin: 0
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
 }
 
 .header-nav {

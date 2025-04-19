@@ -7,7 +7,7 @@ namespace Domain.Aggregates.OrderAggregate.Enums
     {
         Pending = 1,
         Processing = 2,
-        Shipped = 3,
+        Shipping = 3,
         Delivered = 4,
         Cancelled = 5
     }

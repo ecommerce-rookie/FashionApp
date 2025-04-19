@@ -3,43 +3,13 @@
 @using StoreFront.Domain.Models.ProductModels.Responses
 @model PagedList<ProductPreviewResponseModel>
 
-@Layout null;
 
 <div class="inner-catalog">
     @if (Model.Any())
     {
         @foreach (var product in Model)
         {
-            <article class="short-item">
-                <div class="short-item__all">
-                    <a class="short-item__image-bg" href="product_page.html">
-                        <img class="short-item__image" src=@product.Image alt="">
-                    </a>
-                    <div class="short-item__top">
-                        <div class="short-item__cols">
-                            <div class="short-item__col">
-                                @if (product.IsNew)
-                                {
-                                    <span class="item-tag item-tag_green">New</span>
-                                }
-                                else if (product.PurchasePrice != product.UnitPrice)
-                                {
-
-                                    <span class="item-tag item-tag_red">Sale</span>
-                                }
-                            </div>
-                            <div class="short-item__col">
-                                <button class="heart-button js-toggle-active"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <h4 class="short-item__title">
-                        <a class="short-item__link" href="product_page.html">@product.Name</a>
-                    </h4>
-                    <span class="short-item__price">@product.PurchasePrice.ToString("N0") đ</span>
-                    <span class="short-item__old-price">@product.UnitPrice.ToString("N0") đ</span>
-                </div>
-            </article>
+            @await Html.PartialAsync(PageConstants.ProductPreview, product);
         }
     }
     else

@@ -13,7 +13,7 @@ namespace Application.Features.ProductFeatures.Queries
     [Cache(nameof(Product), 60 * 3)]
     public class GetProductQuery : IRequest<APIResponse>
     {
-        public Guid Id { get; set; }
+        public string Slug { get; set; } = string.Empty;
     }
 
     public class GetProductQueryHandler : IRequestHandler<GetProductQuery, APIResponse>
@@ -29,7 +29,7 @@ namespace Application.Features.ProductFeatures.Queries
 
         public async Task<APIResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
-            var product = await _unitOfWork.ProductRepository.GetDetail(request.Id);
+            var product = await _unitOfWork.ProductRepository.GetDetail(request.Slug);
 
             if(product == null)
             {
@@ -37,7 +37,7 @@ namespace Application.Features.ProductFeatures.Queries
                 {
                     Status = HttpStatusCode.NotFound,
                     Message = MessageCommon.NotFound,
-                    Data = request.Id
+                    Data = request.Slug
                 };
             }
 

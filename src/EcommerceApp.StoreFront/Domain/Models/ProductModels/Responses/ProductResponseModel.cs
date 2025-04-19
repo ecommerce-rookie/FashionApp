@@ -33,5 +33,7 @@ namespace StoreFront.Domain.Models.ProductModels.Responses
         public IEnumerable<string> Images { get; set; } = new List<string>();
 
         public AuthorResponse? Author { get; set; }
+
+        public bool IsNew { get; set; }
     }
 }

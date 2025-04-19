@@ -21,9 +21,11 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
 
     public int? Quantity { get; private set; }
 
+    public string? Slug { get; private set; }
+
     public Guid? CreatedBy { get; private set; }
 
-    public List<string> Sizes { get; private set; } = [];
+    public List<string>? Sizes { get; private set; } = [];
 
     public Gender? Gender { get; private set; }
 
@@ -53,6 +55,7 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
         Quantity = quantity == null ? 0 : quantity;
         Sizes = sizes;
         Gender = gender;
+        Slug = $"{SlugHelper.Generate(name)}-{id}";
     }
 
     public void Update(Guid id, string name, decimal unitPrice, decimal purchasePrice, string description,
@@ -67,6 +70,7 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
         Quantity = quantity;
         Sizes = sizes;
         Gender = gender;
+        Slug = $"{SlugHelper.Generate(name)}-{id}";
     }
 
     public void Delete() => IsDeleted = true;

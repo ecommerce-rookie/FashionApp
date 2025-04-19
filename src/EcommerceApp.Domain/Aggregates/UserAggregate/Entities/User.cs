@@ -63,7 +63,7 @@ namespace Domain.Aggregates.UserAggregate.Entities
 
         public void Delete()
         {
-            DeletedAt = DateTime.UtcNow;
+            IsDeleted = true;
         }
     }
 }

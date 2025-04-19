@@ -56,6 +56,10 @@ namespace Persistence.Configurations
             builder.Property(e => e.DeletedAt)
                 .HasColumnType("timestamp with time zone")
                 .HasColumnName("deletedAt");
+
+            builder.Property(e => e.IsDeleted)
+                .HasDefaultValue(false)
+                .HasColumnName("isDeleted");
         }
     }
 }

@@ -23,6 +23,9 @@ namespace Persistence.Configurations
                    .IsRequired()
                    .HasColumnName("name");
 
+            builder.Property(p => p.Slug)
+                     .HasColumnName("slug");
+
             builder.OwnsOne(p => p.Price, price =>
             {
                 price.Property(p => p.UnitPrice)
@@ -65,6 +68,10 @@ namespace Persistence.Configurations
 
             builder.Property(p => p.CreatedBy)
                     .HasColumnName("createdBy");
+
+            builder.Property(e => e.IsDeleted)
+                .HasDefaultValue(false)
+                .HasColumnName("isDeleted");
 
             builder.HasOne(d => d.Category)
                    .WithMany(d => d.Products)

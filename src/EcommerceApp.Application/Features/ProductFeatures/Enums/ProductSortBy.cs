@@ -5,5 +5,6 @@
         Name = 1,
         CreatedAt = 2,
         Price = 3,
+        Gender = 4
     }
 }

@@ -17,6 +17,20 @@ namespace Domain.Repositories
         /// </summary>
         /// <param name="id">Id of product</param>
         /// <returns></returns>
-        Task<Product?> GetDetail(Guid id);
+        Task<Product?> GetDetail(string slug);
+
+        /// <summary>
+        /// Get recommend product by slug
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Product>> GetRecommendProduct(string slug, int eachPage);
+
+        /// <summary>
+        /// Get best seller product
+        /// </summary>
+        /// <param name="eachPage"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Product>> GetBestSeller(int eachPage);
     }
 }

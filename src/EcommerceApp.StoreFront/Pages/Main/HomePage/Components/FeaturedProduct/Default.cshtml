@@ -1,0 +1,75 @@
+﻿@using StoreFront.Domain.Constants
+@model StoreFront.Domain.Models.PageModels.FeaturedProductPageModel
+
+
+<section class="main-block wrapper">
+    <div class="main-block__top">
+        <span class="main-block__subtitle category-subtitle"><b>new</b> collections</span>
+        <h3 class="main-block__title">Featured products</h3>
+    </div>
+    <div class="products-nav tabs-nav js-line">
+        <ul class="tabs-nav__list">
+            <li class="tabs-nav__item js-tabs-item js-line-item active">
+                <a class="tabs-nav__link js-line-link js-tabs-link" href="#products-1">All</a>
+            </li>
+            <li class="tabs-nav__item js-line-item js-tabs-item">
+                <a class="tabs-nav__link js-line-link js-tabs-link" href="#products-2">New</a>
+            </li>
+            <li class="tabs-nav__item js-line-item js-tabs-item">
+                <a class="tabs-nav__link js-line-link js-tabs-link" href="#products-3">Sale</a>
+            </li>
+        </ul>
+        <div class="tabs-nav__line js-line-element"></div>
+    </div>
+
+    <!-- BEGIN TAB 1 -->
+    <div class="product-tab js-tabs-content active" id="products-1">
+        <div class="main-catalog">
+            <div class="main-catalog__list">
+                @foreach (var product in Model.Products)
+                {
+                    @await Html.PartialAsync(PageConstants.ProductPreview, product);
+                }
+            </div>
+            <img class="main-catalog__bg"
+                 src="~/img/svg/vector-catalog.svg" alt="">
+        </div>
+    </div>
+    <!-- TAB 1 END -->
+
+    <!-- BEGIN TAB 2 -->
+    <div class="product-tab js-tabs-content" id="products-2">
+        <div class="main-catalog">
+            <div class="main-catalog__list">
+                @foreach (var product in Model.NewProducts)
+                {
+                    @await Html.PartialAsync(PageConstants.ProductPreview, product);
+                }
+            </div>
+            <img class="main-catalog__bg"
+                 src="~/img/svg/vector-catalog.svg" alt="">
+        </div>
+    </div>
+    <!-- TAB 2 END -->
+
+    <!-- BEGIN TAB 3 -->
+    <div class="product-tab js-tabs-content" id="products-3">
+        <div class="main-catalog">
+            <div class="main-catalog__list">
+                @foreach (var product in Model.SellProducts)
+                {
+                    @await Html.PartialAsync(PageConstants.ProductPreview, product);
+                }
+            </div>
+            <img class="main-catalog__bg"
+                 src="~/img/svg/vector-catalog.svg" alt="">
+        </div>
+    </div>
+    <!-- TAB 3 END -->
+
+    <div class="load-more">
+        <a class="button" href="shop.html">
+            <span class="button__text">See all products</span>
+        </a>
+    </div>
+</section>

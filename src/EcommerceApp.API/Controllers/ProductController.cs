@@ -1,4 +1,5 @@
 ﻿using Application.Features.CategoryFeatures.Models;
+using Application.Features.OrderFeatures.Queries;
 using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.ProductFeatures.Queries;
@@ -37,6 +38,24 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("recommend")]
+        [ProducesResponseType(typeof(APIResponse<IEnumerable<ProductPreviewResponseModel>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetRecommendProducts([FromQuery] GetRecommendProductQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(query, cancellationToken);
+         
+            return Ok(result);
+        }
+
+        [HttpGet("best-seller")]
+        [ProducesResponseType(typeof(APIResponse<IEnumerable<ProductPreviewResponseModel>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetBestSellerProducts([FromQuery] GetBestSellerProductQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(query, cancellationToken);
+
+            return Ok(result);
+        }
+
         [HttpPost("")]
         [ProducesResponseType(typeof(APIResponse<Guid>), StatusCodes.Status201Created)]
         [Authorize]
@@ -47,24 +66,24 @@ namespace API.Controllers
             return StatusCode((int)result.Status, result);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{slug}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<ProductResponseModel>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetProduct(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProduct(string slug, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new GetProductQuery()
             {
-                Id = id
+                Slug = slug
             }, cancellationToken);
 
             return StatusCode((int)result.Status, result);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("{slug}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<Guid>>), StatusCodes.Status200OK)]
         [Authorize]
-        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct([FromRoute] string slug, [FromBody] UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            command.Id = id;
+            command.Slug = slug;
             var result = await _sender.Send(command, cancellationToken);
             
             return StatusCode((int)result.Status, result);

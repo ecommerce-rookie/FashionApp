@@ -1,0 +1,39 @@
+﻿@using StoreFront.Domain.Models.Common
+@using StoreFront.Domain.Models.ProductModels.Responses
+@using StoreFront.Domain.Constants
+@model IEnumerable<ProductPreviewResponseModel>
+
+
+<section class="main-block wrapper">
+    <div class="main-block__top">
+        <span class="main-block__subtitle category-subtitle"><b>top</b> products</span>
+        <h3 class="main-block__title">Best sellers at Mollee</h3>
+        <p class="main-block__text">
+            Cillum eu id enim aliquip aute ullamco anim. Culpa deserunt nostrud
+            excepteur voluptate velit ipsum esse enim.
+        </p>
+    </div>
+    <div class="catalog-slider js-catalog loaded">
+        <div class="catalog-slider__list-wrap">
+            <div class="catalog-slider__list js-catalog-carousel">
+                @foreach (var product in Model)
+                {
+                    @await Html.PartialAsync(PageConstants.ProductPreview, product);
+                }
+            </div>
+        </div>
+        <div class="catalog-slider__cols">
+            <div class="catalog-slider__col">
+                <button class="prev-button js-catalog-prev"></button>
+            </div>
+            <div class="catalog-slider__col dots-2 js-catalog-dots">
+            </div>
+            <div class="catalog-slider__col">
+                <button class="next-button js-catalog-next"></button>
+            </div>
+        </div>
+        <div class="load-icon"></div>
+        <img class="catalog-slider__bg"
+             src="~/img/svg/vector-catalog.svg" alt="">
+    </div>
+</section>

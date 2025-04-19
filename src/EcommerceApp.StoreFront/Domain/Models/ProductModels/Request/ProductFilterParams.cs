@@ -12,6 +12,8 @@ namespace StoreFront.Domain.Models.ProductModels.Request
         public string? Search { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
+        public bool? IsNew { get; set; }
+        public bool? IsSale { get; set; }
         public IEnumerable<string>? Sizes { get; set; }
     }
 }

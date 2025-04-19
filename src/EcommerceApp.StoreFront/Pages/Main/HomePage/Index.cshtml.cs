@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StoreFront.Application.Helpers;
 using StoreFront.Application.Services;
 using StoreFront.Domain.Models.ProductModels.Request;
-using StoreFront.Domain.Models.ProductModels.Responses;
 
 namespace StoreFront.Pages.Main.HomePage
 {
