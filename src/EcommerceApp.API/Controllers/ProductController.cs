@@ -1,5 +1,4 @@
-﻿using Application.Features.CategoryFeatures.Models;
-using Application.Features.ProductFeatures.Commands;
+﻿using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.ProductFeatures.Queries;
 using Asp.Versioning;

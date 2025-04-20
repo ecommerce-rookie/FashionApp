@@ -21,13 +21,14 @@
 
         #region Path Page
 
-        public const string AuthenPage = PrePathComponent + "/AuthenPage/Index";
+        public const string AuthenPage = PrePathMain + "/AuthenPage/Index";
         public const string CartPage = PrePathMain + "/CartPage/Index";
         public const string CheckoutPage = PrePathMain + "/CheckoutPage/Index";
         public const string HomePage = PrePathMain + "/HomePage/Index";
         public const string OrderPage = PrePathMain + "/OrderPage/Index";
         public const string ProductPage = PrePathMain + "/ProductPage/Index";
         public const string ShopPage = PrePathMain + "/ShopPage/Index";
+        public const string LogoutPage = PrePathMain + "/LogoutPage/Index";
 
         #endregion
 
@@ -60,5 +61,8 @@
         public const string ProductPreview = PrePathComponent + "/DisplayProduct/ProductPreview";
 
         #endregion
+
+       
+
     }
 }

@@ -60,12 +60,12 @@
     // Register form validation
     const registerForm = document.getElementById('registerForm');
 
-    registerForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    //registerForm.addEventListener('submit', function (e) {
+    //    e.preventDefault();
 
-        simulateSubmit(this.querySelector('.submit-btn'));
+    //    simulateSubmit(this.querySelector('.submit-btn'));
 
-    });
+    //});
 
     function simulateSubmit(button) {
         const btnText = button.querySelector('.btn-text');

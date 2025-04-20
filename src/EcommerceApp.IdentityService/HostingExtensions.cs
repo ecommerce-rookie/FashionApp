@@ -37,6 +37,8 @@ namespace EcommerceApp.IdentityService
                     options.Events.RaiseSuccessEvents = true;
 
                     options.EmitStaticAudienceClaim = true;
+
+                    //options.UserInteraction.LoginUrl = "/auth/logout";
                 })
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryApiScopes(Config.ApiScopes)

@@ -56,7 +56,7 @@ namespace EcommerceApp.IdentityService.Pages.Logout
             {
                 // if the request for logout was properly authenticated from IdentityServer, then
                 // we don't need to show the prompt and can just log the user out directly.
-                return await OnPost();
+                return await PerformLogoutAndRedirect();
             }
 
             return Page();
@@ -64,40 +64,49 @@ namespace EcommerceApp.IdentityService.Pages.Logout
 
         public async Task<IActionResult> OnPost()
         {
+            // if the user is authenticated, then we need to sign them out
             if (User.Identity?.IsAuthenticated == true)
             {
-                // if there's no current logout context, we need to create one
-                // this captures necessary info from the current logged in user
-                // this can still return null if there is no context needed
-                LogoutId ??= await _interaction.CreateLogoutContextAsync();
-
-                // delete local authentication cookie
                 await _signInManager.SignOutAsync();
-
-                // see if we need to trigger federated logout
-                var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
-
-                // raise the logout event
-                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
-                Telemetry.Metrics.UserLogout(idp);
-
-                // if it's a local login we can ignore this workflow
-                if (idp != null && idp != Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider)
-                {
-                    // we need to see if the provider supports external logout
-                    if (await HttpContext.GetSchemeSupportsSignOutAsync(idp))
-                    {
-                        // build a return URL so the upstream provider will redirect back
-                        // to us after the user has logged out. this allows us to then
-                        // complete our single sign-out processing.
-                        var url = Url.Page("/Account/Logout/Loggedout", new { logoutId = LogoutId });
-
-                        // this triggers a redirect to the external provider for sign-out
-                        return SignOut(new AuthenticationProperties { RedirectUri = url }, idp);
-                    }
-                }
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(
+                    User.GetSubjectId(), User.GetDisplayName()));
+                Telemetry.Metrics.UserLogout(
+                    User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value);
             }
 
+            // if there's no current logout context, we need to create one
+            return await PerformRedirectAfterLogout();
+        }
+
+        private async Task<IActionResult> PerformLogoutAndRedirect()
+        {
+            // if the user is not authenticated, then just show logged out page
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                await _signInManager.SignOutAsync();
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(
+                    User.GetSubjectId(), User.GetDisplayName()));
+                Telemetry.Metrics.UserLogout(
+                    User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value);
+            }
+
+            return await PerformRedirectAfterLogout();
+        }
+
+        private async Task<IActionResult> PerformRedirectAfterLogout()
+        {
+            // if there's no current logout context, we need to create one
+            LogoutId ??= await _interaction.CreateLogoutContextAsync();
+
+            // Get context to check if we need to redirect
+            var context = await _interaction.GetLogoutContextAsync(LogoutId);
+            if (!string.IsNullOrEmpty(context?.PostLogoutRedirectUri))
+            {
+                // check if the post logout redirect URI is still valid
+                return Redirect(context.PostLogoutRedirectUri);
+            }
+
+            // if we don't have a post logout redirect URI, then we just go back to the home page
             return RedirectToPage("/Account/Logout/LoggedOut", new { logoutId = LogoutId });
         }
     }

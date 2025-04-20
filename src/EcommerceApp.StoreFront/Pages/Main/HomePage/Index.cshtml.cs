@@ -6,7 +6,6 @@ using StoreFront.Domain.Models.ProductModels.Request;
 
 namespace StoreFront.Pages.Main.HomePage
 {
-    [Authorize]
     public class HomePageModel : PageModel
     {
         private readonly IProductService _productService;
@@ -18,10 +17,6 @@ namespace StoreFront.Pages.Main.HomePage
 
         public async Task OnGet()
         {
-            User.Claims.ToList().ForEach(x =>
-            {
-                Console.WriteLine($"Claim Type: {x.Type} - Claim Value: {x.Value}");
-            });
 
             var response = await _productService.GetProducts(new ProductFilterParams()
             {

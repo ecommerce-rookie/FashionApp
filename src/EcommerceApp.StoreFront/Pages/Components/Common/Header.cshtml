@@ -1,4 +1,8 @@
-﻿<!-- BEGIN HEADER -->
+﻿@using StoreFront.Domain.Constants
+@{
+    var isAuthen = User.Identity?.IsAuthenticated;
+}
+<!-- BEGIN HEADER -->
 <header class="header">
     <div class="header__main">
         <div class="header__cols">
@@ -20,12 +24,12 @@
                                 <li class="header-nav__item">
                                     <a class="header-nav__link" href="/">Home</a>
                                 </li>
-                                <li class="header-nav__item js-nav-item">
-                                    <a class="header-nav__link header-nav__link_arrow js-nav-button"
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link"
                                        href="/products">shop</a>
                                 </li>
-                                <li class="header-nav__item js-nav-item">
-                                    <a class="header-nav__link header-nav__link_arrow js-nav-button"
+                                <li class="header-nav__item">
+                                    <a class="header-nav__link"
                                        href="/categories">Category</a>
                                 </li>
                                 <li class="header-nav__item">
@@ -43,10 +47,30 @@
                             <span class="user-nav__icon user-nav__icon_1"></span>
                         </a>
                     </li>
-                    <li class="user-nav__item">
-                        <a class="user-nav__link" href="#">
+                    <li class="user-nav__item header-nav__item js-nav-item">
+                        <a class="user-nav__link header-nav__link_arrow js-nav-button" href="#">
                             <span class="user-nav__icon user-nav__icon_2"></span>
                         </a>
+                        <div class="hide-nav js-nav-hide">
+                            <ul class="hide-nav__list">
+                                @if (!isAuthen ?? true) {
+                                    <li class="hide-nav__item">
+                                        <a class="hide-nav__link" asp-page="@PageConstants.AuthenPage" asp-page-handler="Login">Login</a>
+                                    </li>
+                                    <li class="hide-nav__item">
+                                        <a class="hide-nav__link" href="registration.html">Registration</a>
+                                    </li>
+                                } else {
+                                    <li class="hide-nav__item">
+                                        <a class="hide-nav__link" href="/account">Account</a>
+                                    </li>
+                                    <li class="hide-nav__item">
+                                        <a class="hide-nav__link" asp-page="@PageConstants.AuthenPage" asp-page-handler="Logout">Logout</a>
+                                    </li>
+                                }
+                                
+                            </ul>
+                        </div>
                     </li>
                     <li class="user-nav__item">
                         <a class="user-nav__link" href="#">

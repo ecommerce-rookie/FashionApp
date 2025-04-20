@@ -119,7 +119,11 @@ namespace EcommerceApp.IdentityService
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
 
-                    RedirectUris = { "https://localhost:7101/auth/callback" },
+                    RedirectUris = { "https://localhost:7101/signin-oidc" },
+                    PostLogoutRedirectUris = {
+                        "https://localhost:7101/signout-callback-oidc"
+                    },
+
 
                     AllowedScopes = { "openid", "profile", "offline_access" },
                     RequireConsent = false,

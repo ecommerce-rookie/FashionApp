@@ -1,16 +1,20 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using EcommerceApp.IdentityService.Models;
+using IdentityService.Pages.Account.Login;
+using IdentityService.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EcommerceApp.IdentityService.Pages.Login
@@ -30,6 +34,9 @@ namespace EcommerceApp.IdentityService.Pages.Login
 
         [BindProperty]
         public InputModel Input { get; set; } = default!;
+
+        [BindProperty]
+        public RegisterUserModel RegisterUserModel { get; set; } = default!;
 
         public Index(
             IIdentityServerInteractionService interaction,
@@ -144,9 +151,76 @@ namespace EcommerceApp.IdentityService.Pages.Login
             return Page();
         }
 
+        public async Task<IActionResult> OnPostRegisterUser()
+        {
+            ModelState.Remove("Password");
+            ModelState.Remove("Username");
+            if (!RegisterUserModel!.Button!.Equals("register"))
+            {
+                // This "can't happen", because if the Button was null, then the RegisterUserModel would be null
+                ArgumentNullException.ThrowIfNull(RegisterUserModel.Button, nameof(RegisterUserModel.Button));
+
+                return Redirect(RegisterUserModel.ReturnUrl ?? "~/");
+            }
+
+
+            var user = await _userManager.FindByEmailAsync(RegisterUserModel.Email!);
+
+            if(user != null)
+            {
+                ModelState.AddModelError("Email", "User with this email already exists");
+
+                return Page();
+            }
+
+            // Validate user data
+            foreach(var error in ValidateUser.ValidateRegister(RegisterUserModel))
+            {
+                ModelState.AddModelError(error.Key, error.Value);
+
+                return Page();
+            }
+
+            // Cretae model user
+            user = new ApplicationUser()
+            {
+                Email = RegisterUserModel.Email,
+                NormalizedEmail = RegisterUserModel.Email?.ToUpperInvariant(),
+                EmailConfirmed = false,
+                UserName = RegisterUserModel.Email,
+            };
+
+            var result= await _userManager.CreateAsync(user, RegisterUserModel.Password!);
+
+            if(!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return Page();
+            }
+
+            await _userManager.AddClaimsAsync(user,
+                [
+                    new(JwtClaimTypes.Email, user.Email!),
+                    new(JwtClaimTypes.Role, "Customer")
+                ]);
+
+            await _userManager.AddToRoleAsync(user, "Customer");
+
+            return Redirect(RegisterUserModel.ReturnUrl ?? "~/");
+        }
+
         private async Task BuildModelAsync(string? returnUrl)
         {
             Input = new InputModel
+            {
+                ReturnUrl = returnUrl
+            };
+
+            RegisterUserModel = new RegisterUserModel
             {
                 ReturnUrl = returnUrl
             };
