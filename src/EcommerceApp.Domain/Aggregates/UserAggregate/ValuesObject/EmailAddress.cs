@@ -13,7 +13,7 @@ namespace Domain.Aggregates.UserAggregate.ValuesObject
 
         public EmailAddress(string value)
         {
-            value = value.Trim();
+            this.Value = value.Trim();
         }
 
         public static EmailAddress Create(string value)

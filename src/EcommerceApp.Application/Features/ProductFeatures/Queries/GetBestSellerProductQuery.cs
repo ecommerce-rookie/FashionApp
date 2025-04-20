@@ -3,7 +3,7 @@ using AutoMapper;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 
-namespace Application.Features.OrderFeatures.Queries
+namespace Application.Features.ProductFeatures.Queries
 {
     public class GetBestSellerProductQuery : IQuery<IEnumerable<ProductPreviewResponseModel>>
     {

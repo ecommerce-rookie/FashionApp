@@ -20,8 +20,8 @@ namespace Domain.Aggregates.ProductAggregate.ValuesObjects
             if (string.IsNullOrWhiteSpace(url))
                 throw new ValidationException($"{ProductMessages.ImageUrlCannotEmpty}", nameof(url));
             
-            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                throw new ValidationException($"{ProductMessages.ImageUrlInvalid}", nameof(url));
+            //if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            //    throw new ValidationException($"{ProductMessages.ImageUrlInvalid}", nameof(url));
             
             return new ImageUrl(url);
         }

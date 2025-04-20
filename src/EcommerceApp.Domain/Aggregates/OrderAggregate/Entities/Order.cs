@@ -1,15 +1,13 @@
 ﻿using Domain.Aggregates.OrderAggregate.Enums;
-using Domain.Aggregates.OrderAggregate.ValuesObject;
 using Domain.Aggregates.ProductAggregate.ValuesObjects;
 using Domain.Aggregates.UserAggregate.Entities;
-using Domain.Aggregates.UserAggregate.ValuesObject;
 using Persistence.SeedWorks.Implements;
 
 namespace Domain.Aggregates.OrderAggregate.Entities;
 
 public partial class Order : BaseAuditableEntity<Guid>
 {
-    public Money? TotalPrice { get; set; }
+    public Money TotalPrice { get; set; } = new Money(0);
 
     public string? Address { get; set; }
 

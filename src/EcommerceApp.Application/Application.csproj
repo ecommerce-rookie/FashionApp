@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Features\OrderFeatures\Events\" />
-    <Folder Include="Features\UserFeatures\Queries\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

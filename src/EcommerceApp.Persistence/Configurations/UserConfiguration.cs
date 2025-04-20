@@ -53,6 +53,11 @@ namespace Persistence.Configurations
                 .HasConversion<string>()
                 .HasColumnName("status");
 
+            builder.Property(e => e.Role)
+                .HasMaxLength(50)
+                .HasConversion<string>()
+                .HasColumnName("role");
+
             builder.Property(e => e.DeletedAt)
                 .HasColumnType("timestamp with time zone")
                 .HasColumnName("deletedAt");

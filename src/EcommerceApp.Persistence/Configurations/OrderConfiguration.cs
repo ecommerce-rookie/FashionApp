@@ -36,7 +36,7 @@ namespace Persistence.Configurations
 ;
             builder.Property(e => e.TotalPrice)
                 .HasConversion(
-                    v => v != null ? v.Amount : 0,
+                    v => v.Amount,
                     v => Money.Create(v)
                 )
                 .HasColumnName("totalPrice");

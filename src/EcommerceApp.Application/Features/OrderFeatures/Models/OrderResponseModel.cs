@@ -7,7 +7,7 @@ namespace Application.Features.OrderFeatures.Models
     public class OrderResponseModel
     {
         public Guid Id { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         public string? Address { get; set; }
 
@@ -21,8 +21,8 @@ namespace Application.Features.OrderFeatures.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
-        public UserAuthenModel? Customer { get; set; }
+        public AuthorResponseModel? Customer { get; set; }
     }
 }

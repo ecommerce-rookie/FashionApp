@@ -1,8 +1,12 @@
 ﻿using Application.Features.UserFeatures.Commands;
+using Application.Features.UserFeatures.Models;
+using Application.Features.UserFeatures.Queries;
 using Asp.Versioning;
+using Domain.Constants;
 using Domain.Models.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -47,6 +51,17 @@ namespace API.Controllers
             var result = await _sender.Send(command, cancellationToken);
 
             return StatusCode((int)result.Status, result);
+        }
+
+        [HttpGet("")]
+        [ProducesResponseType(typeof(APIResponse<PagedList<UserPreviewResponseModel>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetListUser([FromQuery] GetListUserQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(query, cancellationToken);
+
+            Response.Headers.Append(SystemConstant.HeaderPagination, JsonConvert.SerializeObject(result.Metadata));
+
+            return Ok(result);
         }
 
     }

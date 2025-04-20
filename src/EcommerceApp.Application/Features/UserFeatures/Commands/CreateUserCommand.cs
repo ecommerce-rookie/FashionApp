@@ -5,6 +5,7 @@ using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 using FluentValidation;
+using Infrastructure.Authentication.Services;
 using Infrastructure.Storage;
 using Microsoft.AspNetCore.Http;
 using System.Net;
@@ -51,15 +52,18 @@ namespace Application.Features.UserFeatures.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStorageService _storageService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IStorageService storageService)
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IStorageService storageService, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
             _storageService = storageService;
+            _authenticationService = authenticationService;
         }
 
         public async Task<APIResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            var role = _authenticationService.User.Role;
             string url = string.Empty;
             if(request.Avatar != null)
             {
@@ -67,7 +71,7 @@ namespace Application.Features.UserFeatures.Commands
                 url = resultUpload.Url.ToString();
             }
 
-            var user = new User(Guid.NewGuid(), request.Email, request.FirstName, request.LastName, request.Phone, url, request.Status);
+            var user = new User(Guid.NewGuid(), request.Email, request.FirstName, request.LastName, request.Phone, url, request.Status, (UserRole)role!);
         
             await _unitOfWork.UserRepository.Add(user);
 

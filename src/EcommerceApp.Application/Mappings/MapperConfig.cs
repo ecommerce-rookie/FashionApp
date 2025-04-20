@@ -1,9 +1,12 @@
-﻿using Application.Features.ProductFeatures.Models;
+﻿using Application.Features.OrderFeatures.Models;
+using Application.Features.ProductFeatures.Models;
 using Application.Features.UserFeatures.Models;
 using Application.Utilities;
 using AutoMapper;
+using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;
+using Domain.Models.Common;
 
 namespace Application.Mappings
 {
@@ -32,6 +35,20 @@ namespace Application.Mappings
                     .FirstOrDefault()))
                 .ForMember(dest => dest.IsNew, opt => opt.MapFrom(src => src.CreatedAt.IsNewProduct()))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<User, UserPreviewResponseModel>()
+                .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Avatar!.Url))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email.Value));
+
+            CreateMap<PagedList<User>, PagedList<UserPreviewResponseModel>>();
+
+            CreateMap<Order, OrderResponseModel>()
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice!.Amount))
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
+                .ForMember(dest => dest.TotalItems, opt => opt.MapFrom(src => src.OrderDetails!.Count()));
+
+
+            CreateMap<PagedList<Order>, PagedList<OrderResponseModel>>();
 
         }
     }

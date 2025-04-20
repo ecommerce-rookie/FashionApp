@@ -30,11 +30,13 @@ namespace Domain.Aggregates.UserAggregate.Entities
         public virtual ICollection<Product>? Products { get; set; } = new List<Product>();
 
         public bool IsDeleted { get; set; }
-        
+
+        public UserRole Role { get; set; }
+
         public User() { }
 
         public User(Guid id, string email, string? firstName, string lastName, string? phone,
-                     string avatar, UserStatus status)
+                     string avatar, UserStatus status, UserRole role)
         {
             Id = id;
             Email = EmailAddress.Create(email);
@@ -43,6 +45,7 @@ namespace Domain.Aggregates.UserAggregate.Entities
             Phone = phone ?? string.Empty;
             Avatar = ImageUrl.Create(avatar);
             Status = status;
+            Role = role;
         }
 
         public void Update(string email, string firstName, string lastName, string phone,

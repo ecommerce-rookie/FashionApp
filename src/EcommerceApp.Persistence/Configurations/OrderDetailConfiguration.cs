@@ -22,7 +22,7 @@ namespace Persistence.Configurations
 
             builder.Property(e => e.Price)
                 .HasConversion(
-                    v => v != null ? v.Amount : 0,
+                    v => v!.Amount,
                     v => Money.Create(v)
                 )
                 .HasColumnName("price");
@@ -32,9 +32,6 @@ namespace Persistence.Configurations
 
             builder.Property(e => e.Quantity)
                 .HasColumnName("quantity");
-
-            builder.Property(d => d.Color)
-                .HasColumnName("color");
 
             builder.Property(d => d.Size)
                 .HasColumnName("size");

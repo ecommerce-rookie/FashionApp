@@ -1,5 +1,4 @@
 ﻿using Application.Features.CategoryFeatures.Models;
-using Application.Features.OrderFeatures.Queries;
 using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.ProductFeatures.Queries;
@@ -81,7 +80,7 @@ namespace API.Controllers
         [HttpPut("{slug}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<Guid>>), StatusCodes.Status200OK)]
         [Authorize]
-        public async Task<IActionResult> UpdateProduct([FromRoute] string slug, [FromBody] UpdateProductCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct([FromRoute] string slug, [FromForm] UpdateProductCommand command, CancellationToken cancellationToken)
         {
             command.Slug = slug;
             var result = await _sender.Send(command, cancellationToken);
