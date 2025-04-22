@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.CookiePolicy;
+using StackExchange.Redis;
+using StoreFront.Application.Middlewares;
+using StoreFront.Application.Services.CartService;
 using StoreFront.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +25,10 @@ builder.Services.AddAuthenticationConfig();
 builder.Services.AddHttpConfig(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
+
+builder.AddRedis();
+
+builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
 
@@ -47,6 +54,8 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<CheckUserProfileMiddleware>();
 
 app.MapRazorPages();
 

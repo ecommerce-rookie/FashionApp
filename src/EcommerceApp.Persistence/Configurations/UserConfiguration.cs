@@ -58,12 +58,7 @@ namespace Persistence.Configurations
                 .HasConversion<string>()
                 .HasColumnName("role");
 
-            builder.Property(e => e.DeletedAt)
-                .HasColumnType("timestamp with time zone")
-                .HasColumnName("deletedAt");
-
             builder.Property(e => e.IsDeleted)
-                .HasDefaultValue(false)
                 .HasColumnName("isDeleted");
         }
     }

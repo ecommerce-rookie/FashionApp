@@ -1,0 +1,38 @@
+﻿@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+<section class="onboarding-step" id="step4">
+    <div class="step-content">
+        <h1 class="step-title">PROFILE PHOTO</h1>
+        <p class="step-description">Add a photo to personalize your profile (optional).</p>
+
+        <div class="photo-upload-container">
+            <div class="photo-preview" id="photoPreview">
+                <div class="photo-placeholder">
+                    <span class="plus-icon">+</span>
+                    <span class="upload-text">ADD PHOTO</span>
+                </div>
+            </div>
+
+            <input type="file" id="photoUpload" accept="image/*" class="hidden" asp-for="OnBoardingPageModel.Avatar">
+
+            <div class="photo-actions">
+                <button class="photo-btn" id="selectPhotoBtn" type="button">SELECT PHOTO</button>
+                <button class="photo-btn photo-btn-secondary hidden" id="removePhotoBtn" type="button">REMOVE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-navigation">
+        <button class="back-btn" id="step4Back" type="button">
+            <span class="btn-icon">←</span>
+            <span class="btn-text">BACK</span>
+        </button>
+        <div class="right-actions">
+            <button class="skip-btn" id="skipPhotoBtn" type="button">SKIP</button>
+            <button class="next-btn" id="step4Next" type="button">
+                <span class="btn-text">COMPLETE</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </div>
+    </div>
+</section>

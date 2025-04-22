@@ -23,8 +23,6 @@ namespace Domain.Aggregates.UserAggregate.Entities
 
         public UserStatus? Status { get; private set; }
 
-        public DateTime? DeletedAt { get; private set; }
-
         public virtual ICollection<Order>? Orders { get; set; }
 
         public virtual ICollection<Product>? Products { get; set; } = new List<Product>();
@@ -46,6 +44,7 @@ namespace Domain.Aggregates.UserAggregate.Entities
             Avatar = ImageUrl.Create(avatar);
             Status = status;
             Role = role;
+            IsDeleted = false;
         }
 
         public void Update(string email, string firstName, string lastName, string phone,

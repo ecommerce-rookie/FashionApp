@@ -35,7 +35,9 @@
         <div class="checkout-page__cols">
 
             @{
+                await Html.RenderPartialAsync(PageConstants.CheckoutDetail);
                 await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
+                await Html.RenderPartialAsync(PageConstants.CheckoutComplete);
 
                 await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
             }

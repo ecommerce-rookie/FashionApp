@@ -4,6 +4,7 @@ using Asp.Versioning;
 using Domain.Constants;
 using Domain.Models.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -14,6 +15,7 @@ namespace API.Controllers
     [ApiController]
     [ProducesResponseType(typeof(APIResponse<ErrorValidation>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ISender _sender;

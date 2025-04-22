@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Refit;
+﻿using Refit;
 using StoreFront.Application.Delegates;
 using StoreFront.Application.Helpers;
-using StoreFront.Application.Services;
 using StoreFront.Domain.Constants;
 using StoreFront.Domain.Models.Settings;
 

@@ -1,42 +1,36 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
+using StoreFront.Application.Extensions;
 using StoreFront.Application.Helpers;
-using StoreFront.Application.Services;
-using StoreFront.Domain.Models.ProductModels.Request;
+using StoreFront.Application.Services.CartService;
 
 namespace StoreFront.Pages.Main.HomePage
 {
     public class HomePageModel : PageModel
     {
-        private readonly IProductService _productService;
+        private readonly ILogger<HomePageModel> _logger;
+        private readonly ICartService _cartService;
 
-        public HomePageModel(IProductService productService)
-        {
-            _productService = productService;
+        public HomePageModel(ILogger<HomePageModel> logger, ICartService cartService)
+        {;
+            _logger = logger;
+            _cartService = cartService;
         }
 
-        public async Task OnGet()
+        public async Task OnGet(string? type, string? action)
         {
-
-            var response = await _productService.GetProducts(new ProductFilterParams()
+            if(action?.Equals("login") ?? false)
             {
-                Page = 1,
-                EachPage = 10
-            });
-
-            var products = response.ToPagedList();
-
-
-            if (products != null)
+                TempData.SetSuccess("Welcome back!", "Login Success!");
+            } else if(action?.Equals("logout") ?? false)
             {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"Product Name: {product.Name}, Id: {product.Id}");
-                }
-            } else
-            {
-                Console.WriteLine("No products found.");
+                TempData.SetSuccess("See you next time!", "Logout Success!");
             }
+
+
         }
+
+        
+
     }
 }

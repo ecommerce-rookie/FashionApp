@@ -22,10 +22,8 @@ $(function () {
         const page = $(this).data('page');
         if (!page || $(this).attr('disabled')) return;
 
-        // Cập nhật số trang vào input ẩn
         $('#page-input').val(page);
 
-        // Gọi lại AJAX
         doFilter();
     });
 
@@ -34,7 +32,6 @@ $(function () {
         const filterData = {};
         $.each(dataArray, function (_, field) {
             if (filterData[field.name]) {
-                // nếu đã tồn tại, ép thành mảng
                 if (!Array.isArray(filterData[field.name])) {
                     filterData[field.name] = [filterData[field.name]];
                 }

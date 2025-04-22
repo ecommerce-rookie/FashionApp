@@ -1,0 +1,34 @@
+﻿@page "/profile"
+@using StoreFront.Domain.Constants
+@using StoreFront.Domain.Models.PageModels
+@model StoreFront.Pages.Main.ProfilePage.IndexModel
+@{
+}
+
+
+<main class="main">
+    
+    @await Html.PartialAsync(PageConstants.Breadcrumb, new BreadcrumbViewModel()
+    {
+        Item = "Home",
+        Url = PageConstants.HomePage,
+        Title = "My Profile"
+    })
+
+    <!-- BEGIN WISHLIST -->
+    <div class="profile-page wrapper">
+
+        <div class="profile-page__cols">
+
+            @{
+                await Html.RenderPartialAsync(PageConstants.UserInformation);
+                
+                await Html.RenderPartialAsync(PageConstants.WidgetProfile);
+            }
+
+        </div>
+
+    </div>
+    <!-- WISHLIST END -->
+
+</main>

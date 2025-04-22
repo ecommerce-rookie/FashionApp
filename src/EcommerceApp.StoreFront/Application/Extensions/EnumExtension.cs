@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace StoreFront.Application.Helpers
+namespace StoreFront.Application.Extensions
 {
     public static class EnumExtension
     {

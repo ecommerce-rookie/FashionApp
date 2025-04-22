@@ -12,15 +12,7 @@ namespace StoreFront.Configurations
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-            {
-                // Sau khi cookie signed‑out xong, redirect về Home
-                options.Events.OnSigningOut = context =>
-                {
-                    context.Response.Redirect("/");
-                    return Task.CompletedTask;
-                };
-            })
+            .AddCookie()
             .AddOpenIdConnect(options =>
             {
                 options.Authority = "https://localhost:5001";
@@ -34,6 +26,7 @@ namespace StoreFront.Configurations
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
+                options.Scope.Add("api");
 
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -41,6 +34,22 @@ namespace StoreFront.Configurations
                 options.CallbackPath = "/signin-oidc";
                 options.SignedOutCallbackPath = "/signout-callback-oidc";
                 options.SignedOutRedirectUri = "https://localhost:7101/";
+
+                options.Events = new OpenIdConnectEvents
+                {
+                    OnRedirectToIdentityProvider = context =>
+                    {
+                        var request = context.Request;
+                        if (!request.Path.StartsWithSegments("/auth"))
+                        {
+                            context.Response.Redirect("/");
+                            context.HandleResponse();
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+
             });
         }
     }

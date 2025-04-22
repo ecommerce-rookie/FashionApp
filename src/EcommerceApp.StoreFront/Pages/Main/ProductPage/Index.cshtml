@@ -7,6 +7,13 @@
     var product = Model.Product;
 }
 
+@{
+    ViewData["Styles"] = new List<string>
+    {
+        "~/css/product.css"
+    };
+}
+
 <main class="main">
     @await Html.PartialAsync(PageConstants.Breadcrumb, new BreadcrumbViewModel()
     {
@@ -293,6 +300,7 @@
         "~/js/slick.js",
         "~/js/formstyler.js",
         "~/js/rating.js",
-        "~/js/fancybox.js"
+        "~/js/fancybox.js",
+        "~/js/product.js"
     };
 }

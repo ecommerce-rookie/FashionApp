@@ -19,17 +19,5 @@ public class AuthorizeDelegate : DelegatingHandler
         if (accessToken is not null) request.Headers.Authorization = new("Bearer", accessToken);
 
         return await base.SendAsync(request, cancellationToken);
-
-
-        //var accessToken = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
-
-        //if (!string.IsNullOrEmpty(accessToken) && accessToken.StartsWith("Bearer "))
-        //{
-        //    // Optionally, extract the token part only
-        //    var token = accessToken.Substring("Bearer ".Length);
-        //    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        //}
-
-        //return await base.SendAsync(request, cancellationToken);
     }
 }

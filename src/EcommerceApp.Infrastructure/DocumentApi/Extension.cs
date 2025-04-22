@@ -23,17 +23,7 @@ namespace Infrastructure.DocumentApi
                 options.EndpointPathPrefix = "/scalar/{documentName}";
                 options.WithOAuth2Authentication(opt =>
                 {
-                    opt.ClientId = "swagger-client";
-                    opt.Scopes = new List<string>
-                    {
-                        { AuthScope.Read },
-                        {
-                            "profile"
-                        },
-                        {
-                            "openid"
-                        }
-                    };
+                    opt.ClientId = "scalar-client";
                 });
             });
         }

@@ -1,0 +1,34 @@
+﻿@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+<section class="onboarding-step active" id="step1">
+    <div class="step-content">
+        <h1 class="step-title">PERSONAL DETAILS</h1>
+        <p class="step-description">Tell us a bit about yourself to personalize your experience.</p>
+
+        <div class="form-group">
+            <label for="firstName" class="form-label">FIRST NAME</label>
+            <div class="input-wrapper">
+                <input type="text" id="firstName" class="form-input" asp-for="OnBoardingPageModel.FirstName" placeholder=" ">
+                <div class="input-line"></div>
+                <div class="error-message" id="firstNameError"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName" class="form-label">LAST NAME</label>
+            <div class="input-wrapper">
+                <input type="text" id="lastName" class="form-input" asp-for="OnBoardingPageModel.LastName" placeholder=" ">
+                <div class="input-line"></div>
+                <div class="error-message" id="lastNameError"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-navigation">
+        <div></div> <!-- Empty div for flex spacing -->
+        <button class="next-btn" id="step1Next" type="button">
+            <span class="btn-text">CONTINUE</span>
+            <span class="btn-icon">→</span>
+        </button>
+    </div>
+</section>

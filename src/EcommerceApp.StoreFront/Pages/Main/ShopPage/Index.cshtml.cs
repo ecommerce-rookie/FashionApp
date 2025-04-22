@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using StoreFront.Application.Extensions;
 using StoreFront.Application.Helpers;
 using StoreFront.Application.Services;
 using StoreFront.Domain.Constants;

@@ -10,7 +10,7 @@ namespace Infrastructure.DocumentApi.swagger
     {
         public static void AddSwagger(this IServiceCollection services, IConfiguration config)
         {
-            var openIdSettings = config.GetSection(nameof(OpenIdSetting)).Get<OpenIdSetting>();
+            var openIdSettings = config.GetSection(nameof(OpenIdSetting)).Get<OpenIdSetting>() ?? throw new Exception("OpenId is not config!");
 
             services.ConfigureOptions<SwaggerGenConfig>();
             services.AddSwaggerGen(swagger =>
@@ -53,8 +53,10 @@ namespace Infrastructure.DocumentApi.swagger
                             AuthorizationUrl = new Uri($"{openIdSettings.Authority}/connect/authorize"),
                             Scopes = new Dictionary<string, string>
                             {
-                                { AuthScope.Read, "Read Access to API" },
-                                { AuthScope.Write, "Write Access to API" }
+                                { "profile", "Get Profile User" },
+                                { "openid", "Get Informations related to Authen User" },
+                                { "offline_access", "Get Refresh Token" },
+                                { "api", "Get All Informations For User" }
                             },
                             RefreshUrl = new Uri($"{openIdSettings.Authority}/connect/token"),
                         },
@@ -72,7 +74,7 @@ namespace Infrastructure.DocumentApi.swagger
                                 Id = "oauth2",
                             }
                         },
-                        new[] { AuthScope.Read, AuthScope.Write }
+                        new[] { "profile", "api", "openid" }
                     }
                 });
 

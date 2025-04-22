@@ -29,11 +29,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.15" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.31" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Utilities\" />
-    <Folder Include="Domain\Models\UserModels\Requests\" />
     <Folder Include="Pages\Main\ProductPage\Components\FeedbackProduct\" />
   </ItemGroup>
 

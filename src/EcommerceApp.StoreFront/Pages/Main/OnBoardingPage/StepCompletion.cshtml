@@ -1,0 +1,47 @@
+﻿@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+<section class="onboarding-step" id="completion">
+    <div class="step-content completion-content">
+        <div class="completion-check">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+
+        <h1 class="step-title">PROFILE COMPLETE</h1>
+        <p class="step-description">
+            Thank you, <span id="userFirstName"></span>. Your profile has been
+            successfully set up. We've tailored your experience based on your preferences.
+        </p>
+
+        <div class="completion-divider"></div>
+
+        <div class="completion-summary">
+            <!-- Profile Photo Summary -->
+            <div class="summary-section profile-photo-summary">
+                <h3 class="summary-title">YOUR PROFILE</h3>
+                <div class="profile-photo-container" id="profilePhotoSummary">
+                    <div class="profile-photo-placeholder">
+                        <span>No photo selected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-title">YOUR STYLE</h3>
+                <p class="summary-content" id="styleSummary">No preferences selected</p>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-title">YOUR CONTACT</h3>
+                <p class="summary-content" id="contactSummary">Not specified</p>
+            </div>
+        </div>
+
+        <button type="submit" value="onboarding" class="enter-btn">
+            <span class="btn-text">ENTER ATELIER</span>
+            <span class="btn-icon">→</span>
+        </button>
+    </div>
+</section>

@@ -3,6 +3,7 @@ using Duende.IdentityServer.Services;
 using EcommerceApp.IdentityService.Data;
 using EcommerceApp.IdentityService.Models;
 using IdentityService;
+using IdentityService.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,10 @@ namespace EcommerceApp.IdentityService
         {
             builder.Services.AddRazorPages();
 
-            //builder.Services.AddScoped<IProfileService, CustomProfileService>();
+            // Check enviroment
+            var env = builder.Environment;
+            
+            var clientUrls = builder.Configuration.GetSection(env.EnvironmentName).Get<ClientUrls>() ?? throw new Exception("ClientUrls is not config!");
 
             // Config database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -37,10 +41,8 @@ namespace EcommerceApp.IdentityService
                     options.Events.RaiseSuccessEvents = true;
 
                     options.EmitStaticAudienceClaim = true;
-
-                    //options.UserInteraction.LoginUrl = "/auth/logout";
                 })
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(Config.GetClients(clientUrls))
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)

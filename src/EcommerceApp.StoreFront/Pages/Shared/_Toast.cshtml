@@ -1,0 +1,27 @@
+﻿@{
+    var notifType = TempData["NotifType"] as string;
+    var notifMessage = TempData["NotifMessage"] as string;
+    var notifTitle = TempData["NotifTitle"] as string;
+}
+
+<div id="notifications-container"
+     class="fixed top-4 right-4 space-y-2 transition-all duration-300 max-h-screen overflow-hidden">
+</div>
+
+@if (!string.IsNullOrEmpty(notifType) && !string.IsNullOrEmpty(notifMessage))
+{
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Create a notification
+                createNotification('@notifType', '@notifMessage', '@notifTitle');
+
+                // Clean url
+                const url = new URL(window.location);
+                if (url.searchParams.has("type") || url.searchParams.has("message")) {
+                    url.search = "";
+                    window.history.replaceState({}, document.title, url.pathname);
+                }
+
+            });
+        </script>
+}

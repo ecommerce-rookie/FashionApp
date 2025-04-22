@@ -15,32 +15,23 @@ namespace Application.Features.UserFeatures.Commands
 {
     public class CreateUserCommand : ICommand<APIResponse>
     {
-        public string Email { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
 
         public string? Phone { get; set; }
 
         public IFormFile? Avatar { get; set; }
 
-        public UserStatus Status { get; set; }
-
-        public string? FirstName { get; set; }
+        public string? Address { get; set; }
     }
 
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
         public CreateUserCommandValidator()
         {
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Email is required and must be a valid email address.");
-
             RuleFor(x => x.LastName)
                 .NotEmpty().WithMessage("Last name is required.");
-
-            RuleFor(x => x.Phone)
-                .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("Phone number is not valid.");
 
             RuleFor(x => x.Avatar)
                 .Must(file => file == null || (file.Length > 0 && file.Length < 2 * 1024 * 1024))
@@ -64,14 +55,17 @@ namespace Application.Features.UserFeatures.Commands
         public async Task<APIResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var role = _authenticationService.User.Role;
+            var email = _authenticationService.User.Email;
+            var userId = _authenticationService.User.UserId;
             string url = string.Empty;
+
             if(request.Avatar != null)
             {
                 var resultUpload = await _storageService.UploadImage(request.Avatar, ImageFolder.Avatar, ImageFormat.png, string.Empty);
                 url = resultUpload.Url.ToString();
             }
 
-            var user = new User(Guid.NewGuid(), request.Email, request.FirstName, request.LastName, request.Phone, url, request.Status, (UserRole)role!);
+            var user = new User(userId, email, request.FirstName, request.LastName!, request.Phone, url, UserStatus.Active, (UserRole)role!);
         
             await _unitOfWork.UserRepository.Add(user);
 
@@ -82,7 +76,8 @@ namespace Application.Features.UserFeatures.Commands
                 return new APIResponse()
                 {
                     Status = HttpStatusCode.Created,
-                    Message = MessageCommon.CreateSuccesfully
+                    Message = MessageCommon.CreateSuccesfully,
+                    Data = user.Id
                 };
             }
 

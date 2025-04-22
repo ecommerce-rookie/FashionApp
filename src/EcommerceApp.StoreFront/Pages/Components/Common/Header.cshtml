@@ -1,6 +1,9 @@
 ﻿@using StoreFront.Domain.Constants
+@using Microsoft.AspNetCore.Http
+@using StoreFront.Application.Helpers
 @{
     var isAuthen = User.Identity?.IsAuthenticated;
+    var numberOfProduct = Context.GetTotalItems();
 }
 <!-- BEGIN HEADER -->
 <header class="header">
@@ -75,11 +78,11 @@
                     <li class="user-nav__item">
                         <a class="user-nav__link" href="#">
                             <span class="user-nav__icon user-nav__icon_3"></span>
-                            <span class="user-nav__text">0</span>
+                            <span class="user-nav__text">@numberOfProduct</span>
                         </a>
                     </li>
                     <li class="user-nav__item">
-                        <a class="user-nav__link" href="#">
+                        <a class="user-nav__link" href="/checkout">
                             <span class="user-nav__icon user-nav__icon_4"></span>
                             <span class="user-nav__text">0</span>
                         </a>

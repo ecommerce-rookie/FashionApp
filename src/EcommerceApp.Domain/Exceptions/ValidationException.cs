@@ -2,18 +2,18 @@
 {
     public class ValidationException : Exception
     {
-        public IDictionary<string, string[]> Errors { get; }
+        public IDictionary<string, string> Errors { get; }
 
         public ValidationException(string errorMessage, string propertyName)
             : base("One or more validation failures have occurred.")
         {
-            Errors = new Dictionary<string, string[]>
+            Errors = new Dictionary<string, string>
             {
-                { propertyName, new[] { errorMessage } }
+                { propertyName, errorMessage }
             };
         }
 
-        public ValidationException(IDictionary<string, string[]> errors)
+        public ValidationException(IDictionary<string, string> errors)
             : base("One or more validation failures have occurred.")
         {
             Errors = errors;

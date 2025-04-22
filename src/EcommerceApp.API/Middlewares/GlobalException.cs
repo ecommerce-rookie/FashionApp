@@ -15,6 +15,9 @@ namespace Application.Middlewares
                 await next(context);
             } catch (NotFoundException ex) {
                 await HandleNotFoundException(context, ex);
+            } catch (Domain.Exceptions.ValidationException ex) 
+            { 
+                await HandleValidationExceptionInDomain(context, ex);
             } catch (FluentValidation.ValidationException ex)
             {
                 await HandleValidationException(context, ex);
@@ -22,7 +25,26 @@ namespace Application.Middlewares
             {
                 await HandleException(context, ex);
             }
+        }
 
+        private Task HandleValidationExceptionInDomain(HttpContext context, Domain.Exceptions.ValidationException ex)
+        {
+            var errors = ex.Errors.Select(x => new ErrorValidation()
+            {
+                PropertyName = x.Key,
+                ErrorMessage = x.Value
+            }).ToArray();
+            int statusCode = (int)HttpStatusCode.BadRequest;
+            var errorResponse = new APIResponse()
+            {
+                Status = HttpStatusCode.BadRequest,
+                Message = MessageCommon.SomethingErrors,
+                Data = errors
+            };
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+
+            return context.Response.WriteAsync(errorResponse.ToString()!);
         }
 
         private Task HandleNotFoundException(HttpContext context, NotFoundException ex)
@@ -62,17 +84,16 @@ namespace Application.Middlewares
 
         private Task HandleException(HttpContext context, Exception ex)
         {
-            int statusCode = (int)HttpStatusCode.InternalServerError;
             var methodError = ex.TargetSite?.DeclaringType?.FullName;
-            var errorResponse = new ErrorResponse()
+         
+            var errorResponse = new APIResponse()
             {
-                StatusCode = statusCode,
-                Message = ex.GetType().ToString(),
-                Location = (methodError != null ? ("Class: " + methodError + ", ") : "") + "Method: " + ex.TargetSite?.Name,
-                Detail = ex.Message,
+                Status = HttpStatusCode.InternalServerError,
+                Message = ex.Message,
+                Data = ex.GetType().ToString()
             };
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = statusCode;
+            context.Response.StatusCode = (int)errorResponse.Status;
 
             return context.Response.WriteAsync(errorResponse.ToString());
         }

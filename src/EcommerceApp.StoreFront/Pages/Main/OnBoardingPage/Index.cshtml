@@ -1,0 +1,22 @@
+﻿@page "/onboarding"
+@using StoreFront.Domain.Constants
+@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+@{
+    ViewData["Title"] = "On Boarding";
+}
+
+
+<form class="main-content" id="onboarding-form" 
+    asp-page="@PageConstants.OnboardingPage" asp-page-handler="CreateInforCustomer"
+    enctype="multipart/form-data"
+>
+    @{
+        await Html.RenderPartialAsync(PageConstants.Step1);
+        await Html.RenderPartialAsync(PageConstants.Step2);
+        await Html.RenderPartialAsync(PageConstants.Step3);
+        await Html.RenderPartialAsync(PageConstants.Step4);
+        await Html.RenderPartialAsync(PageConstants.StepCompletion);
+    }
+    
+</form>

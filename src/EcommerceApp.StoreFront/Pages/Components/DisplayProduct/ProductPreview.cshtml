@@ -4,10 +4,13 @@
     var product = Model;
 }
 
-<article class="short-item">
+<article class="short-item" data-product-id="@product.Id">
     <div class="short-item__all">
         <a class="short-item__image-bg" href="product_page.html">
-            <img class="short-item__image" src="@product.Image" alt="">
+            <img class="short-item__image" src="@product.Image" alt="thumbnail">
+            <button class="add-to-cart-btn">
+                <img src="~/img/svg/icon-add-to-cart.svg" />
+            </button>
         </a>
         <div class="short-item__top">
             <div class="short-item__cols">

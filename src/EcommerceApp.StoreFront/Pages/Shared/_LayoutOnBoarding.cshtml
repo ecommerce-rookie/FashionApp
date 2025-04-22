@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EcommerceApp.StoreFront</title>
+    <link rel="stylesheet" href="~/css/on-boarding.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Noise overlay -->
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+        <header class="brand-header">
+            <div class="brand-signature">
+                <div class="brand-mark">A</div>
+                <div class="brand-name">ATELIER</div>
+            </div>
+            <div class="step-indicator">
+                <span id="currentStepText">STEP 1 OF 5</span>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        @RenderBody()
+
+        @* decorator *@
+
+        <!-- Corner elements -->
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <!-- Floating elements -->
+        <div class="floating-element fe-1"></div>
+        <div class="floating-element fe-2"></div>
+        <div class="floating-element fe-3"></div>
+
+    </div>
+
+    <script src="~/js/on-boarding.js" asp-append-version="true"></script>
+</body>
+</html>

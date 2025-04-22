@@ -1,4 +1,6 @@
-﻿namespace StoreFront.Application.Delegates;
+﻿using StoreFront.Domain.Models.Common;
+
+namespace StoreFront.Application.Delegates;
 
 public sealed class LoggingDelegate(ILogger<LoggingDelegate> logger) : DelegatingHandler
 {
@@ -6,22 +8,26 @@ public sealed class LoggingDelegate(ILogger<LoggingDelegate> logger) : Delegatin
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
+        var response = await base.SendAsync(request, cancellationToken);
+
         try
-        {
-            var response = await base.SendAsync(request, cancellationToken);
-            response.EnsureSuccessStatusCode();
+        {            
             logger.LogInformation("[{Delegate}] Request: {RequestMethod} {RequestUri}", nameof(LoggingDelegate),
                 request.Method, request.RequestUri);
             logger.LogInformation("[{Delegate}] Response: {ResponseStatusCode} {ResponseContent}",
                 nameof(LoggingDelegate), response.StatusCode,
-                await response.Content.ReadAsStringAsync(cancellationToken));
-            return response;
+                
+            await response.Content.ReadAsStringAsync(cancellationToken));
+
         } catch (HttpRequestException ex)
         {
             logger.LogError(ex, "[{Delegate}] {RequestMethod} - {RequestUri} has error: {ErrorMessage}",
                 nameof(LoggingDelegate), request.Method,
                 request.RequestUri, ex.Message);
-            throw new HttpRequestException(ex.Message);
+
+            await response.Content.ReadAsStringAsync(cancellationToken);
         }
+
+        return response;
     }
 }

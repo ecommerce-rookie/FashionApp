@@ -1,3 +1,11 @@
 ﻿@{
-    Layout = "_Layout";
+    var path = ViewContext.RouteData.Values["page"]!.ToString();
+
+    if (path!.StartsWith("/Main/OnBoardingPage", StringComparison.OrdinalIgnoreCase)) {
+        Layout = "_LayoutOnBoarding";
+    } else {
+        Layout = "_Layout";
+    }
+
+    
 }

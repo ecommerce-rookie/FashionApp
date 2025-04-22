@@ -1,0 +1,47 @@
+﻿@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+<section class="onboarding-step" id="step2">
+    <div class="step-content">
+        <h1 class="step-title">YOUR STYLE</h1>
+        <p class="step-description">Select the styles that resonate with your aesthetic sensibility.</p>
+
+        <div class="style-grid">
+            <div class="style-option" data-style="minimal">
+                <h3 class="style-name">MINIMAL</h3>
+                <p class="style-description">Clean lines, neutral colors, timeless pieces</p>
+            </div>
+            <div class="style-option" data-style="avantgarde">
+                <h3 class="style-name">AVANT-GARDE</h3>
+                <p class="style-description">Experimental, boundary-pushing, artistic</p>
+            </div>
+            <div class="style-option" data-style="classic">
+                <h3 class="style-name">CLASSIC</h3>
+                <p class="style-description">Timeless, refined, elegant staples</p>
+            </div>
+            <div class="style-option" data-style="streetwear">
+                <h3 class="style-name">STREETWEAR</h3>
+                <p class="style-description">Urban, casual, contemporary</p>
+            </div>
+            <div class="style-option" data-style="bohemian">
+                <h3 class="style-name">BOHEMIAN</h3>
+                <p class="style-description">Free-spirited, eclectic, artistic</p>
+            </div>
+            <div class="style-option" data-style="luxury">
+                <h3 class="style-name">LUXURY</h3>
+                <p class="style-description">High-end, sophisticated, premium materials</p>
+            </div>
+        </div>
+        <div class="error-message centered" id="styleError"></div>
+    </div>
+
+    <div class="step-navigation">
+        <button class="back-btn" id="step2Back" type="button">
+            <span class="btn-icon">←</span>
+            <span class="btn-text">BACK</span>
+        </button>
+        <button class="next-btn" id="step2Next" type="button">
+            <span class="btn-text">CONTINUE</span>
+            <span class="btn-icon">→</span>
+        </button>
+    </div>
+</section>

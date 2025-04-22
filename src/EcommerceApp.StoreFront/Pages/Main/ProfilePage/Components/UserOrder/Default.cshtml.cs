@@ -1,0 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace StoreFront.Pages.Main.ProfilePage.Components.UserOrder
+{
+    public class UserOrderViewComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View();
+        }
+    }
+}

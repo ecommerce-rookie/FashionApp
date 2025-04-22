@@ -299,13 +299,13 @@ window.onload = function () {
 	// tabs line end	
 
 	// timer
-	if ($(".js-timer").length) {
-		$('.js-timer').syotimer({
-			year: 2021,
-			month: 3,
-			day: 10
-		});
-	}
+	//if ($(".js-timer").length) {
+	//	$('.js-timer').syotimer({
+	//		year: 2021,
+	//		month: 3,
+	//		day: 10
+	//	});
+	//}
 	// timer end
 
 	// toggle active

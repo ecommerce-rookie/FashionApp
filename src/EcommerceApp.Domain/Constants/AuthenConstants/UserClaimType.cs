@@ -11,7 +11,6 @@ namespace Domain.readonlyants
         public const string SessionId = "sid";
 
         public const string Avatar = nameof(Avatar);
-        public const string Email = "email";
-        public const string UserName = "preferred_username";
+        public const string Email = "preferred_username";
     }
 }

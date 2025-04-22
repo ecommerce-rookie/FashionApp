@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using StoreFront.Application.Extensions;
 
 namespace StoreFront.Pages.Main.AuthenPage
 {
@@ -19,17 +19,18 @@ namespace StoreFront.Pages.Main.AuthenPage
         {
             return Challenge(new AuthenticationProperties
             {
-                RedirectUri = "/"
+                RedirectUri = "/?type=success&action=login"
             }, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         public IActionResult OnGetLogout()
         {
-            //HttpContext.SignOutAsync();
+            // Clear session data
+            HttpContext.Session.SignOut();
 
             return SignOut(new AuthenticationProperties
             {
-                RedirectUri = "/"
+                RedirectUri = "/?type=success&action=logout"
             },
             CookieAuthenticationDefaults.AuthenticationScheme,
             OpenIdConnectDefaults.AuthenticationScheme);

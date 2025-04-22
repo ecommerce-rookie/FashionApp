@@ -1,0 +1,30 @@
+﻿@using StoreFront.Domain.Constants
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="profile-page__left">
+
+    <div class="profile-nav tabs-nav js-line">
+        <ul class="profile-nav__list tabs-nav__list tabs-nav__list_left">
+            <li class="tabs-nav__item js-tabs-item js-line-item">
+                <a class="tabs-nav__link js-line-link js-tabs-link" href="#profile-tab-1">my profile</a>
+            </li>
+            <li class="tabs-nav__item js-line-item js-tabs-item active">
+                <a class="tabs-nav__link js-line-link js-tabs-link" href="#profile-tab-2">my orders</a>
+            </li>
+        </ul>
+        <div class="tabs-nav__line js-line-element"></div>
+    </div>
+
+    <div class="profile-tab js-tabs-content" id="profile-tab-1">
+        @await Component.InvokeAsync(PageConstants.UserProfile)
+    </div>
+    <div class="profile-tab js-tabs-content active" id="profile-tab-2">
+        @await Component.InvokeAsync(PageConstants.UserOrder)
+    </div>
+    
+
+</div>

@@ -1,6 +1,7 @@
 ﻿using Domain.Constants.Common;
 using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
+using IdentityService.Models;
 
 namespace EcommerceApp.IdentityService
 {
@@ -18,7 +19,15 @@ namespace EcommerceApp.IdentityService
             [
                 new(AuthScope.Read, "Read Access to API"),
                 new(AuthScope.Write, "Write Access to API"),
-                new(AuthScope.All, "Read and Write Access to API")
+                new(AuthScope.All, "Read and Write Access to API"),
+                new ApiScope("api", "Read Access to API", new[]
+                {
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.Role,
+                    JwtClaimTypes.PreferredUserName,
+                    JwtClaimTypes.EmailVerified,
+                    JwtClaimTypes.Confirmation
+                })
             ];
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -27,13 +36,13 @@ namespace EcommerceApp.IdentityService
             {
                 Name = "api",
                 DisplayName = "Ecommerce API",
-                Scopes = { AuthScope.Read, AuthScope.Write, "profile", "openid" },
+                Scopes = { "api", "profile", "openid", "offline_access" },
                 UserClaims = new[] { JwtClaimTypes.Role, JwtClaimTypes.Confirmation, JwtClaimTypes.PreferredUserName, 
                     JwtClaimTypes.EmailVerified, JwtClaimTypes.Email },
             }
         ];
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> GetClients(ClientUrls clientUrls) =>
             new Client[]
             {
                 // m2m client credentials flow client
@@ -58,9 +67,10 @@ namespace EcommerceApp.IdentityService
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris = { "https://localhost:7031/auth/callback" },
-                    FrontChannelLogoutUri = "https://localhost:7031/signout-oidc",
-                    PostLogoutRedirectUris = { "https://localhost:7031/auth/logout" },
+                    RedirectUris = { $"{clientUrls.Api}/auth/callback" },
+                    FrontChannelLogoutUri = $"{clientUrls.Api}/signout-oidc",
+                    PostLogoutRedirectUris = { $"{clientUrls.Api}/auth/logout" },
+                    AllowedCorsOrigins = { clientUrls.Api! },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "scope2" },
@@ -69,41 +79,19 @@ namespace EcommerceApp.IdentityService
 
                 new Client
                 {
-                    ClientId = "postman-client",
-                    ClientName = "Postman Client",
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = true,
-
-                    RedirectUris = { "https://oauth.pstmn.io/v1/callback" }, // Postman callback
-
-
-                    AllowedScopes = { "openid", "profile", "api", "offline_access" },
-                    RequireConsent = false,
-                    AllowedCorsOrigins = { "https://oauth.pstmn.io" },
-
-                    AllowAccessTokensViaBrowser = true,
-                    AllowOfflineAccess = true,
-                    AccessTokenLifetime = 3600,
-                },
-
-                new Client
-                {
-                    ClientId = "swagger-client",
-                    ClientSecrets = { new Secret("swagger-secret".Sha256()) },
-                    ClientName = "Swagger UI Client",
+                    ClientId = "scalar-client",
+                    ClientSecrets = { new Secret("scalar-secret".Sha256()) },
+                    ClientName = "Scalar UI Client",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris = { "https://localhost:7031/ap1/v1", "https://localhost:7031/swagger/oauth2-redirect.html", "https://localhost:7031/scalar/v1" },
+                    RedirectUris = { $"{clientUrls.Api}/scalar/v1" },
 
-                    AllowedScopes = { "openid", "profile", AuthScope.Read, AuthScope.Write, "offline_access", "cnf" },
-                    RequireConsent = true,
-                    AllowedCorsOrigins = { "https://localhost:7031" },
+                    AllowedScopes = { "openid", "profile", "offline_access", "api" },
+                    RequireConsent = false,
+                    AllowedCorsOrigins = { clientUrls.Api! },
 
                     AllowOfflineAccess = true,
                     AllowAccessTokensViaBrowser = true,
@@ -119,15 +107,15 @@ namespace EcommerceApp.IdentityService
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
 
-                    RedirectUris = { "https://localhost:7101/signin-oidc" },
+                    RedirectUris = { $"{clientUrls.StoreFront}/signin-oidc" },
                     PostLogoutRedirectUris = {
-                        "https://localhost:7101/signout-callback-oidc"
+                        $"{clientUrls.StoreFront}/signout-callback-oidc"
                     },
 
 
-                    AllowedScopes = { "openid", "profile", "offline_access" },
+                    AllowedScopes = { "openid", "profile", "offline_access", "api" },
                     RequireConsent = false,
-                    AllowedCorsOrigins = { "https://localhost:7101" },
+                    AllowedCorsOrigins = { clientUrls.StoreFront! },
 
                     AllowOfflineAccess = true,
                 }

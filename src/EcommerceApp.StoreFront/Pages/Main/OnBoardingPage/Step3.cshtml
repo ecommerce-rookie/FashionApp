@@ -1,0 +1,76 @@
+﻿@model StoreFront.Pages.Main.OnBoardingPage.IndexModel
+
+<section class="onboarding-step" id="step3">
+    <div class="step-content">
+        <h1 class="step-title">YOUR CONTACT</h1>
+        <p class="step-description">
+            Please provide your address and phone number for shipping and
+            communication.
+        </p>
+
+        <div class="form-group">
+            <label for="phoneNumber" class="form-label">PHONE NUMBER</label>
+            <div class="input-wrapper">
+                <input type="tel" id="phoneNumber" class="form-input" placeholder=" " asp-for="OnBoardingPageModel.PhoneNumber">
+                <div class="input-line"></div>
+                <div class="error-message" id="phoneNumberError"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="province" class="form-label">PROVINCE</label>
+            <div class="input-wrapper dropdown-wrapper">
+                <input type="text" id="province" class="form-input dropdown-input" placeholder=" "
+                       autocomplete="off" asp-for="OnBoardingPageModel.Province">
+                <div class="dropdown-icon">▼</div>
+                <div class="input-line"></div>
+                <div class="dropdown-menu" id="provinceDropdown"></div>
+                <div class="error-message" id="provinceError"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="district" class="form-label">DISTRICT</label>
+            <div class="input-wrapper dropdown-wrapper">
+                <input type="text" id="district" class="form-input dropdown-input" placeholder=" "
+                       autocomplete="off" disabled asp-for="OnBoardingPageModel.District">
+                <div class="dropdown-icon">▼</div>
+                <div class="input-line"></div>
+                <div class="dropdown-menu" id="districtDropdown"></div>
+                <div class="error-message" id="districtError"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ward" class="form-label">WARD</label>
+            <div class="input-wrapper dropdown-wrapper">
+                <input type="text" id="ward" class="form-input dropdown-input" placeholder=" "
+                       autocomplete="off" disabled asp-for="OnBoardingPageModel.Ward">
+                <div class="dropdown-icon">▼</div>
+                <div class="input-line"></div>
+                <div class="dropdown-menu" id="wardDropdown"></div>
+                <div class="error-message" id="wardError"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="streetAddress" class="form-label">STREET ADDRESS</label>
+            <div class="input-wrapper">
+                <input type="text" id="streetAddress" class="form-input" placeholder=" " asp-for="OnBoardingPageModel.StreetAddress">
+                <div class="input-line"></div>
+                <div class="error-message" id="streetAddressError"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-navigation">
+        <button class="back-btn" id="step3Back" type="button">
+            <span class="btn-icon">←</span>
+            <span class="btn-text">BACK</span>
+        </button>
+        <button class="next-btn" id="step3Next" type="button">
+            <span class="btn-text">CONTINUE</span>
+            <span class="btn-icon">→</span>
+        </button>
+    </div>
+</section>

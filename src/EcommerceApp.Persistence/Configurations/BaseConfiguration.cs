@@ -16,7 +16,6 @@ public abstract class BaseConfiguration<T, TKey> : IEntityTypeConfiguration<T>
 
         builder.Property(e => e.UpdatedAt)
             .HasColumnType("timestamp with time zone")
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .HasColumnName("updatedAt");
 
         builder.Property(e => e.Version)
