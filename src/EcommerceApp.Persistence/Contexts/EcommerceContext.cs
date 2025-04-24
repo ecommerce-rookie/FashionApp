@@ -1,4 +1,6 @@
-﻿using Domain.Aggregates.OrderAggregate.Entities;
+﻿using Domain.Aggregates.CategoryAggregate.Entities;
+using Domain.Aggregates.FeedbackAggregate.Entities;
+using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;
 using Domain.SeedWorks.Abstractions;
@@ -26,6 +28,7 @@ namespace Persistence.Contexts
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
 
         public IEnumerable<BaseEvent> GetDomainEvents()
         {

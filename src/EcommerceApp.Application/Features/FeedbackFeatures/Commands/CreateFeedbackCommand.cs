@@ -1,4 +1,6 @@
 ﻿using Application.Messages;
+using Domain.Aggregates.FeedbackAggregate.Entities;
+using Domain.Aggregates.FeedbackAggregate.Events;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Events;
 using Domain.Models.Common;

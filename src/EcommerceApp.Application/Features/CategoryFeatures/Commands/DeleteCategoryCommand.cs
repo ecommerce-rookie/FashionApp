@@ -1,5 +1,5 @@
 ﻿using Application.Messages;
-using Domain.Aggregates.ProductAggregate.Events;
+using Domain.Aggregates.CategoryAggregate.Events;
 using Domain.Exceptions;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;

@@ -74,6 +74,11 @@ namespace Persistence.Repository
             return best;
         }
 
+        public async Task DeleteImages(IEnumerable<ImageProduct> images)
+        {
+            _context.ImageProducts.RemoveRange(images);
 
+            await Task.CompletedTask;
+        }
     }
 }

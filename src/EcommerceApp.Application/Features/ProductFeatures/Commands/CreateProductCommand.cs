@@ -137,7 +137,7 @@ namespace Application.Features.ProductFeatures.Commands
             for (int i = 0; i < request.Files.Count(); i++)
             {
                 var image = await _storageService.UploadImage(request.Files.ElementAt(i), ImageFolder.Product, request.Files.ElementAt(i).ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
-                await _unitOfWork.ImageProductRepository.Add(ImageProduct.Create(image.Url.ToString(), product.Id, i + 1));
+                product.AddImage(image.Url.ToString(), i + 1);
             }
 
             var result = await _unitOfWork.SaveChangesAsync(cancellationToken);

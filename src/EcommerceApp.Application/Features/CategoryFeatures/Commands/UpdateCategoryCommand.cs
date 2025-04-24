@@ -1,4 +1,5 @@
 ﻿using Application.Messages;
+using Domain.Aggregates.CategoryAggregate.Events;
 using Domain.Aggregates.ProductAggregate.Events;
 using Domain.Exceptions;
 using Domain.Models.Common;

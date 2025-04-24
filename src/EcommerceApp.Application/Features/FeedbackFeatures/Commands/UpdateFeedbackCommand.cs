@@ -1,4 +1,5 @@
 ﻿using Application.Messages;
+using Domain.Aggregates.FeedbackAggregate.Events;
 using Domain.Aggregates.ProductAggregate.Events;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;

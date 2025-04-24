@@ -1,5 +1,5 @@
-﻿using Domain.Aggregates.ProductAggregate.Entities;
-using Domain.Aggregates.ProductAggregate.Events;
+﻿using Domain.Aggregates.FeedbackAggregate.Entities;
+using Domain.Aggregates.FeedbackAggregate.Events;
 using Infrastructure.Cache;
 using MediatR;
 

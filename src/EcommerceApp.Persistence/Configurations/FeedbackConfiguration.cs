@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates.ProductAggregate.Entities;
+﻿using Domain.Aggregates.FeedbackAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

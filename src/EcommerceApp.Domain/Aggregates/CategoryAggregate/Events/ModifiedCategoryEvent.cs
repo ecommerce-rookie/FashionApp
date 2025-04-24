@@ -1,6 +1,6 @@
 ﻿using Domain.SeedWorks.Events;
 
-namespace Domain.Aggregates.ProductAggregate.Events
+namespace Domain.Aggregates.CategoryAggregate.Events
 {
     public class ModifiedCategoryEvent : BaseEvent
     {

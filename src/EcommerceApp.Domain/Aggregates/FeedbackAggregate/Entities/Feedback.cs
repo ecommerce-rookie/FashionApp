@@ -1,8 +1,10 @@
-﻿using Domain.Aggregates.UserAggregate.Entities;
+﻿using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Aggregates.UserAggregate.Entities;
+using Domain.Exceptions;
 using Domain.SeedWorks.Events;
 using Persistence.SeedWorks.Abstractions;
 
-namespace Domain.Aggregates.ProductAggregate.Entities
+namespace Domain.Aggregates.FeedbackAggregate.Entities
 {
     public partial class Feedback : BaseDomainEvents<Guid>, ISoftDelete
     {
@@ -34,8 +36,25 @@ namespace Domain.Aggregates.ProductAggregate.Entities
             Rating = rating;
         }
 
+        public static Feedback Create(string content, Guid userId, Guid productId, int rating)
+        {
+            if (string.IsNullOrWhiteSpace(content))
+                throw new ValidationException("Content cannot be empty or null", nameof(content));
+
+            if (rating < 1 || rating > 5)
+                throw new ValidationException("Rating must be between 1 and 5", nameof(rating));
+
+            return new Feedback(Guid.NewGuid(), content, userId, productId, rating);
+        }
+
         public void Update(string content, int rating)
         {
+            if (string.IsNullOrWhiteSpace(content))
+                throw new ValidationException("Content cannot be empty or null", nameof(content));
+
+            if (rating < 1 || rating > 5)
+                throw new ValidationException("Rating must be between 1 and 5", nameof(rating));
+
             Content = content;
             Rating = rating;
         }

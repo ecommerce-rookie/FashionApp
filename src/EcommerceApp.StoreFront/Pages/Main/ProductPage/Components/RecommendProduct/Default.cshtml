@@ -15,7 +15,7 @@
         <div class="catalog-slider__list-wrap">
             <div class="catalog-slider__list js-catalog-carousel">
                 @foreach (var product in Model) {
-                    await Html.PartialAsync(PageConstants.ProductPreview, product);
+                    @await Html.PartialAsync(PageConstants.ProductPreview, product);
                 }
             </div>
         </div>

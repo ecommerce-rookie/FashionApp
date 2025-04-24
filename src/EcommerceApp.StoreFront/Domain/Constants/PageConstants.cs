@@ -62,6 +62,7 @@
         #region Dislay Product
 
         public const string ProductPreview = PrePathComponent + "/DisplayProduct/ProductPreview";
+        public const string ProductDetail = PrePathComponent + "/DisplayProduct/ProductDetail";
 
         #endregion
 

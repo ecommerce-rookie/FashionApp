@@ -1,7 +1,7 @@
 ﻿using Application.Features.FeedbackFeatures.Enums;
 using Application.Features.FeedbackFeatures.Models;
 using Application.Features.UserFeatures.Models;
-using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Aggregates.FeedbackAggregate.Entities;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;

@@ -11,6 +11,7 @@ using FluentValidation;
 using Infrastructure.Shared.Extensions;
 using Infrastructure.Storage;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text.Json.Serialization;
 using static Infrastructure.Storage.Cloudinary.Internals.CloudinaryOptions;
@@ -165,14 +166,14 @@ namespace Application.Features.ProductFeatures.Commands
             };
         }
 
-        private async Task UpdateImages(Product product, IEnumerable<string> images, IEnumerable<ImageFileRequestModel> files)
+        private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<ImageFileRequestModel> files)
         {
             // Delete old images
-            await _unitOfWork.ImageProductRepository.DeleteRange(product.ImageProducts);
+            product.DeleteImages(imagesDelete);
 
             // Get images and re-order them
-            var oldImages = product.ImageProducts
-                .Where(x => !images.Contains(x.Image.Url))
+            var oldImages = product.ImageProducts?
+                .Where(x => !imagesDelete.Contains(x.Image.Url))
                 .OrderBy(x => x.OrderNumber)
                 .Select(x => x.Image)
                 .ToList();
@@ -184,14 +185,14 @@ namespace Application.Features.ProductFeatures.Commands
                 var image = await _storageService.UploadImage(file.File, ImageFolder.Product, 
                     file.File.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
 
-                oldImages.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
+                oldImages?.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
             }
 
             // Add new images
-            for (int i = 0; i < oldImages.Count(); i++)
+            for (int i = 0; i < oldImages?.Count(); i++)
             {
                 var image = oldImages.ElementAt(i);
-                await _unitOfWork.ImageProductRepository.Add(ImageProduct.Create(image.ToString(), product.Id, i + 1));
+                product.AddImage(image.ToString(), i + 1);
             }
         }
 

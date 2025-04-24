@@ -32,5 +32,12 @@ namespace Domain.Repositories
         /// <param name="eachPage"></param>
         /// <returns></returns>
         Task<IEnumerable<Product>> GetBestSeller(int eachPage);
+
+        /// <summary>
+        /// Delete a range of images from the database.
+        /// </summary>
+        /// <param name="images">Image Product</param>
+        /// <returns></returns>
+        Task DeleteImages(IEnumerable<ImageProduct> images);
     }
 }

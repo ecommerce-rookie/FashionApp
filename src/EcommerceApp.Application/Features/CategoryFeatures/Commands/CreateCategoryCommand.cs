@@ -1,6 +1,6 @@
 ﻿using Application.Messages;
-using Domain.Aggregates.ProductAggregate.Entities;
-using Domain.Aggregates.ProductAggregate.Events;
+using Domain.Aggregates.CategoryAggregate.Entities;
+using Domain.Aggregates.CategoryAggregate.Events;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;

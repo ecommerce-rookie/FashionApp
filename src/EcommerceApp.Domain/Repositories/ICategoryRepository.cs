@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates.ProductAggregate.Entities;
+﻿using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Repositories.BaseRepositories;
 
 namespace Domain.Repositories

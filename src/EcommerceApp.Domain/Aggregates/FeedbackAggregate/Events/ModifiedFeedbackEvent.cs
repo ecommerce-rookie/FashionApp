@@ -1,6 +1,6 @@
 ﻿using Domain.SeedWorks.Events;
 
-namespace Domain.Aggregates.ProductAggregate.Events
+namespace Domain.Aggregates.FeedbackAggregate.Events
 {
     public class ModifiedFeedbackEvent : BaseEvent
     {

@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates.ProductAggregate.ValuesObjects;
+using Domain.Exceptions;
 
 namespace Domain.Aggregates.ProductAggregate.Entities;
 
@@ -23,6 +24,9 @@ public partial class ImageProduct
 
     public static ImageProduct Create(string image, Guid productId, int? orderNumber)
     {
+        if (string.IsNullOrWhiteSpace(image))
+            throw new ValidationException("Url cannot be empty or null", nameof(image));
+
         return new ImageProduct(image, productId, orderNumber);
     }
 

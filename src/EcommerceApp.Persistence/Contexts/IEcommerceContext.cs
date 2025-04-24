@@ -1,4 +1,6 @@
-﻿using Domain.Aggregates.OrderAggregate.Entities;
+﻿using Domain.Aggregates.CategoryAggregate.Entities;
+using Domain.Aggregates.FeedbackAggregate.Entities;
+using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,5 +20,7 @@ namespace Persistence.Contexts
         DbSet<Product> Products { get; set; }
 
         DbSet<User> Users { get; set; }
+
+        DbSet<Feedback> Feedbacks { get; set; }
     }
 }

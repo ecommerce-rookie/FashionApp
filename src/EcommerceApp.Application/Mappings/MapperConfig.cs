@@ -4,6 +4,7 @@ using Application.Features.ProductFeatures.Models;
 using Application.Features.UserFeatures.Models;
 using Application.Utilities;
 using AutoMapper;
+using Domain.Aggregates.FeedbackAggregate.Entities;
 using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;

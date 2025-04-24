@@ -1,6 +1,6 @@
 ﻿using Application.Features.CategoryFeatures.Models;
 using Application.Messages;
-using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;

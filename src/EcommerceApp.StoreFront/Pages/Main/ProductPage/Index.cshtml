@@ -23,7 +23,7 @@
     })
 
     <!-- BEGIN PRODUCT CARD -->
-    
+    @await Html.PartialAsync(PageConstants.ProductDetail, product);
     <!-- PRODUCT CARD END -->
 
     <!-- BEGIN PRODUCT TABS -->
@@ -65,7 +65,7 @@
     <!-- PRODUCT TABS END -->
 
     <!-- BEGIN BEST SELLERS -->
-    @await Component.InvokeAsync(PageConstants.RecommendProduct, Model.Slug);
+    @await Component.InvokeAsync(PageConstants.RecommendProduct, Model.Slug)
     <!-- BEST SELLERS END -->
 
 </main>
