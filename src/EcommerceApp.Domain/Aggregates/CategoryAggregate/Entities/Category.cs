@@ -1,9 +1,11 @@
 ﻿using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Exceptions;
+using Domain.SeedWorks.Abstractions;
 using Persistence.SeedWorks.Implements;
 
 namespace Domain.Aggregates.CategoryAggregate.Entities;
 
-public partial class Category : BaseAuditableEntity<int>
+public partial class Category : BaseAuditableEntity<int>, IAggregateRoot
 {
     public string? Name { get; private set; }
 
@@ -14,6 +16,14 @@ public partial class Category : BaseAuditableEntity<int>
     public Category(string name)
     {
         Name = name;
+    }
+
+    public static Category Create(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ValidationException("Name cannot be empty or null", nameof(name));
+
+        return new Category(name);
     }
 
     public void Update(string name)

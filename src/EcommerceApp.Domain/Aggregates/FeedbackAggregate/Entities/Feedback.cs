@@ -1,12 +1,13 @@
 ﻿using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;
 using Domain.Exceptions;
+using Domain.SeedWorks.Abstractions;
 using Domain.SeedWorks.Events;
 using Persistence.SeedWorks.Abstractions;
 
 namespace Domain.Aggregates.FeedbackAggregate.Entities
 {
-    public partial class Feedback : BaseDomainEvents<Guid>, ISoftDelete
+    public partial class Feedback : BaseDomainEvents<Guid>, IAggregateRoot, ISoftDelete
     {
         public string Content { get; set; } = null!;
 

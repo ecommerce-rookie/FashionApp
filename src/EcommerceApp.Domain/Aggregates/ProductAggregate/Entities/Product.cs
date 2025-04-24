@@ -64,6 +64,28 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
         Slug = $"{SlugHelper.Generate(name)}-{id}";
     }
 
+    public static Product Create(Guid id, string name, decimal unitPrice, decimal? purchasePrice, string? description,
+        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender)
+    {
+        if(name.Length <= 2)
+            throw new ValidationException("Name must be at least 2 characters long", nameof(name));
+
+        if (unitPrice < 0)
+            throw new ValidationException("Unit price cannot be negative", nameof(unitPrice));
+
+        if (purchasePrice < 0)
+            throw new ValidationException("Purchase price cannot be negative", nameof(purchasePrice));
+
+        if (purchasePrice > unitPrice)
+            throw new ValidationException("Purchase price cannot be greater than unit price", nameof(unitPrice));
+
+        if(quantity < 0)
+            throw new ValidationException("Quantity cannot be negative", nameof(quantity));
+
+        return new Product(id, name, unitPrice, purchasePrice, description, status, categoryId, quantity, sizes, gender);
+
+    }
+
     public void Update(Guid id, string name, decimal unitPrice, decimal purchasePrice, string description,
         ProductStatus status, int categoryId, int quantity, List<string> sizes, Gender gender)
     {
@@ -103,38 +125,6 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
         {
             DeleteImage(url);
         }
-    }
-
-    #endregion
-
-    #region Action Feedback
-
-    public void AddFeedback(string content, int rating, Guid userId)
-    {
-        var feedback = Feedback.Create(content, userId, this.Id, rating);
-
-        Feedbacks!.Add(feedback);
-    }
-
-    public void UpdateFeedback(Guid userId, string newContent, int newRating)
-    {
-        var feedback = Feedbacks!.FirstOrDefault(f => f.UserId.Equals(userId) && f.ProductId.Equals(this.Id));
-        if (feedback == null)
-            throw new ValidationException("Feedback not found", nameof(userId));
-
-        feedback.Update(newContent, newRating);
-    }
-
-    public void DeleteFeedback(Guid feedbackId, bool? isHard)
-    {
-        var feedback = Feedbacks!.FirstOrDefault(f => f.Id.Equals(feedbackId));
-        if (feedback == null)
-            throw new ValidationException("Feedback not found", nameof(feedbackId));
-
-        if (isHard != null && isHard.HasValue)
-            feedback.Delete();
-        else
-            Feedbacks!.Remove(feedback);
     }
 
     #endregion
