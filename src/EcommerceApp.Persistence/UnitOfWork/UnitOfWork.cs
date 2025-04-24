@@ -16,6 +16,7 @@ namespace Persistence.UnitOfWork
         private readonly IOrderRepository _orderRepository = null!;
         private readonly IOrderDetailRepository _orderDetailRepository = null!;
         private readonly IUserRepository _userRepository = null!;
+        private readonly IFeedbackRepository _feedbackRepository = null!;
 
         public UnitOfWork(EcommerceContext context)
         {
@@ -28,6 +29,7 @@ namespace Persistence.UnitOfWork
         public IOrderRepository OrderRepository => _orderRepository ?? new OrderRepository(_context);
         public IOrderDetailRepository OrderDetailRepository => _orderDetailRepository ?? new OrderDetailRepository(_context);
         public IUserRepository UserRepository => _userRepository ?? new UserRepository(_context);
+        public IFeedbackRepository FeedbackRepository => _feedbackRepository ?? new FeedbackRepository(_context);
 
         public void Dispose()
         {

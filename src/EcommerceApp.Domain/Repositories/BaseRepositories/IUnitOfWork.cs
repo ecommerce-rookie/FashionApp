@@ -8,6 +8,7 @@
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
         IUserRepository UserRepository { get; }
+        IFeedbackRepository FeedbackRepository { get; }
 
         Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
         Task BeginTransaction(CancellationToken cancellationToken);

@@ -23,6 +23,9 @@ namespace Persistence.Configurations
                    .IsRequired()
                    .HasColumnName("name");
 
+            builder.Property(p => p.CategoryId)
+                     .HasColumnName("categoryId");
+
             builder.Property(p => p.Slug)
                      .HasColumnName("slug");
 

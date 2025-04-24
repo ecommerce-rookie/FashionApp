@@ -1,0 +1,38 @@
+﻿@using StoreFront.Application.Extensions
+@using StoreFront.Domain.Models.Common
+@using StoreFront.Domain.Models.FeedbackModels.Response
+@model PagedList<FeedbackResponse>
+
+
+<div class="product-tab__left">
+    <div class="reviews">
+        @foreach(var feedback in Model) {
+            <article class="review">
+                <div class="review__top">
+                    <div class="review__left">
+                        <div class="review__cols">
+                            <div class="review__col">
+                                <h5 class="review__author">@(feedback.Author.FirstName ?? "" + feedback.Author.LastName)</h5>
+                            </div>
+                            <div class="review__col">
+                                <span class="review__date">@(feedback.UpdatedAt == null ? feedback.CreatedAt.GetTimeSender() : feedback.UpdatedAt?.GetTimeSender())</span>
+                            </div>
+                            <div class="review__col">
+                                <div class="review__rating rating rating_small">
+                                    @for(int i = 0; i < feedback.Rating; i++) {
+                                        <input class="star" name="review-rating-1" type="radio" disabled checked>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review__right">
+                        <a class="review__button reply-button" href="#"></a>
+                    </div>
+                </div>
+                <p class="review__text">@feedback.Content</p>
+            </article>
+        }
+        
+    </div>
+</div>

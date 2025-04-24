@@ -2,12 +2,13 @@
 using Domain.Aggregates.ProductAggregate.Enums;
 using Domain.Aggregates.ProductAggregate.ValueObjects;
 using Domain.Aggregates.UserAggregate.Entities;
+using Domain.SeedWorks.Abstractions;
 using Persistence.SeedWorks.Abstractions;
 using Persistence.SeedWorks.Implements;
 
 namespace Domain.Aggregates.ProductAggregate.Entities;
 
-public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
+public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftDelete
 {
     public string Name { get; private set; } = null!;
 
@@ -33,9 +34,11 @@ public partial class Product : BaseAuditableEntity<Guid>, ISoftDelete
 
     public virtual User? CreatedByNavigation { get; private set; }
 
-    public virtual ICollection<ImageProduct> ImageProducts { get; private set; } = new List<ImageProduct>();
+    public virtual ICollection<ImageProduct>? ImageProducts { get; private set; } = new List<ImageProduct>();
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; private set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; } = new List<OrderDetail>();
+
+    public virtual ICollection<Feedback>? Feedbacks { get; private set; } = new List<Feedback>();
 
     public bool IsDeleted { get; set; }
 

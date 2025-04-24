@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Main\ProductPage\Components\FeedbackProduct\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="Pages\Main\ShopPage\Components\ShopFilter.cshtml" />
     <AdditionalFiles Include="Pages\Main\ShopPage\Components\ShopProductList.cshtml" />
   </ItemGroup>

@@ -39,7 +39,7 @@ namespace Application.Features.ProductFeatures.Commands
                 };
             }
 
-            if (request.Hard.HasValue)
+            if (request.Hard.HasValue && request.Hard.Value)
             {
                 await _unitOfWork.ProductRepository.Delete(product);
             } else

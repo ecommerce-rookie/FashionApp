@@ -90,11 +90,12 @@ namespace API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse>), StatusCodes.Status200OK)]
         [Authorize]
-        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, [FromQuery] bool? isHard, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteProductCommand()
             {
-                Id = id
+                Id = id,
+                Hard = isHard
             }, cancellationToken);
          
             return StatusCode((int)result.Status, result);

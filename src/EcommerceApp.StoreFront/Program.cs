@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.CookiePolicy;
 using StackExchange.Redis;
 using StoreFront.Application.Middlewares;
+using StoreFront.Application.Services;
 using StoreFront.Application.Services.CartService;
 using StoreFront.Configurations;
 
@@ -29,6 +30,7 @@ builder.Services.AddHttpContextAccessor();
 builder.AddRedis();
 
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<SafeApiCaller>();
 
 var app = builder.Build();
 

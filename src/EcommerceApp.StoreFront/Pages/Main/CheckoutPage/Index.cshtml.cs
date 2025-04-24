@@ -62,6 +62,8 @@ namespace StoreFront.Pages.Main.CheckoutPage
                 var totalItems = HttpContext.Session.GetNumberOfProduct();
                 totalItems += request.Quantity;
                 HttpContext.Session.UpdateNumberOfProduct(totalItems);
+
+                result = true;
             }
 
             return new JsonResult(result);

@@ -47,9 +47,9 @@ namespace API.Controllers
 
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id, [FromQuery] bool? isHard, CancellationToken cancellationToken)
         {
-            var command = new DeleteUserCommand { Id = id };
+            var command = new DeleteUserCommand { Id = id, Hard = isHard };
             var result = await _sender.Send(command, cancellationToken);
 
             return StatusCode((int)result.Status, result);

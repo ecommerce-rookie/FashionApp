@@ -118,6 +118,14 @@ namespace EcommerceApp.IdentityService
                     AllowedCorsOrigins = { clientUrls.StoreFront! },
 
                     AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AlwaysSendClientClaims = true,
+
+                    AccessTokenLifetime = 60 * 60 * 24 * 30 * 12, // 1 year
+                    //RefreshTokenExpiration = TokenExpiration.Sliding,
+                    //AbsoluteRefreshTokenLifetime = 60 * 60 * 24 * 30, // 30 days
+                    //UpdateAccessTokenClaimsOnRefresh = true,
+                    //RefreshTokenUsage = TokenUsage.ReUse,
                 }
 
             };

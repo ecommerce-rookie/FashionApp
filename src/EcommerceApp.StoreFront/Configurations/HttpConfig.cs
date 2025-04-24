@@ -31,6 +31,7 @@ namespace StoreFront.Configurations
                     .AddHttpMessageHandler<LoggingDelegate>()
                     .AddHttpMessageHandler<AuthorizeDelegate>();
             }
+
         }
     }
 }

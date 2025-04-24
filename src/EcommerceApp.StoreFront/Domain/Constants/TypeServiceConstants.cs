@@ -10,7 +10,8 @@ namespace StoreFront.Domain.Constants
                 typeof(IProductService),
                 typeof(IUserService),
                 typeof(IOrderService),
-                typeof(IOrderDetailService)
+                typeof(IOrderDetailService),
+                typeof(IFeedbackService),
             ];
     }
 }

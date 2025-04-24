@@ -12,7 +12,11 @@ namespace StoreFront.Configurations
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60 * 24 * 30 * 12);
+                options.SlidingExpiration = true;
+            })
             .AddOpenIdConnect(options =>
             {
                 options.Authority = "https://localhost:5001";
@@ -48,6 +52,13 @@ namespace StoreFront.Configurations
 
                         return Task.CompletedTask;
                     }
+                };
+
+                options.Events.OnTokenResponseReceived = ctx =>
+                {
+                    var expiresIn = ctx.TokenEndpointResponse.ExpiresIn;
+                    ctx.Properties!.ExpiresUtc = DateTime.UtcNow.AddSeconds(double.Parse(expiresIn));
+                    return Task.CompletedTask;
                 };
 
             });

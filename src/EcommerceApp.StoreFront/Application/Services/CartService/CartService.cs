@@ -17,11 +17,11 @@ namespace StoreFront.Application.Services.CartService
         public async Task AddItemsToCart(string userId, IDictionary<Guid, int> productIds)
         {
             var key = GetKey(userId);
-            var entries = productIds
-                .Select(x => new HashEntry(x.Key.ToString(), x.Value))
+            var task = productIds
+                .Select(x => _database.HashIncrementAsync(key, x.Key.ToString(), x.Value))
                 .ToArray();
 
-            await _database.HashSetAsync(key, entries); 
+            await Task.WhenAll(task);
         }
 
         public async Task AddItemToCart(string userId, string productId, int quantity)

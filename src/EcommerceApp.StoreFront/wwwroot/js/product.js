@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    const cartIcon = $(".user-nav__icon_3");
+    const cartIcon = $(".user-nav__icon_4");
 
     $(".add-to-cart-btn").on("click", function (e) {
         e.preventDefault();
@@ -19,17 +19,15 @@
             }),
             success: function (res) {
                 if (res === true) {
-                    // Cập nhật số lượng ở icon giỏ
                     const cartCount = cartIcon.next();
                     cartCount.text(parseInt(cartCount.text()) + quantity);
 
-                    // Rung icon giỏ
                     cartIcon.addClass("cart-shake");
                     setTimeout(() => {
                         cartIcon.removeClass("cart-shake");
                     }, 800);
 
-                    createNotification('success', 'Thank You!', 'Add Product Success');
+                    //createNotification('success', 'Thank You!', 'Add Product Success');
                 } else {
                     createNotification('error', 'Sorry! Try Again!', 'Add Product Fail');
                 }

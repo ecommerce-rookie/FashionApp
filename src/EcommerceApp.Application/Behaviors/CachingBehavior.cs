@@ -30,7 +30,7 @@ namespace Application.Behaviors
             var key = $"{NameHelper.GenerateName(request, new object[] { request })}";
 
             // Check if the cache has the response
-            var cached = await _cache.GetAsync<TResponse>(key);
+            var cached = await _cache.GetAsync<TResponse>($"{cacheAttribute.Key}:{key}");
             if (cached is not null)
             {
                 return cached;

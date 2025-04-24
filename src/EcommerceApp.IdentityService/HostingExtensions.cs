@@ -50,7 +50,7 @@ namespace EcommerceApp.IdentityService
                 .AddAspNetIdentity<ApplicationUser>();
 
             //builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomProfileService>();
-            //builder.Services.AddScoped<IProfileService, CustomProfileService>();
+            builder.Services.AddScoped<IProfileService, CustomProfileService>();
 
 
             builder.Services.AddAuthentication()

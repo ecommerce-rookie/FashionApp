@@ -85,5 +85,11 @@
 
         #endregion
 
+        #region Feedback component
+
+        public const string ReviewProduct = nameof(ReviewProduct);
+        public const string FeedbackProduct = nameof(FeedbackProduct);
+
+        #endregion
     }
 }

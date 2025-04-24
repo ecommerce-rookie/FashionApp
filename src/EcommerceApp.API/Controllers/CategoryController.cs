@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteCategory(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteCategory([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteCategoryCommand()
             {

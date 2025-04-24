@@ -6,7 +6,7 @@
 
 <article class="short-item" data-product-id="@product.Id">
     <div class="short-item__all">
-        <a class="short-item__image-bg" href="product_page.html">
+        <a class="short-item__image-bg" href="/products/@product.Slug">
             <img class="short-item__image" src="@product.Image" alt="thumbnail">
             <button class="add-to-cart-btn">
                 <img src="~/img/svg/icon-add-to-cart.svg" />
@@ -32,7 +32,7 @@
             </div>
         </div>
         <h4 class="short-item__title">
-            <a class="short-item__link" href="product_page.html">@product.Name</a>
+            <a class="short-item__link" href="/products/@product.Slug">@product.Name</a>
         </h4>
         <span class="short-item__price">@product.PurchasePrice.ToString("N0") đ</span>
         <span class="short-item__old-price">@product.UnitPrice.ToString("N0") đ</span>

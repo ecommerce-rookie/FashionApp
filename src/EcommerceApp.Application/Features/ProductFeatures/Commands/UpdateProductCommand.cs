@@ -58,7 +58,6 @@ namespace Application.Features.ProductFeatures.Commands
         private void ConfigureValidationRules()
         {
             RuleFor(v => v.Name)
-                .NotEmpty().WithMessage("Product name is required")
                 .MinimumLength(3).WithMessage("Minimum length for name is 3 syllables")
                 .MaximumLength(50).WithMessage("Product name cannot exceed 50 syllables")
                 .MustAsync(CheckDuplicatedName).WithMessage("This product name already exist");
@@ -138,7 +137,7 @@ namespace Application.Features.ProductFeatures.Commands
             product.Update(product.Id, request.Name ?? product.Name, request.UnitPrice ?? (decimal)product.Price?.UnitPrice.Amount!,
                 request.PurchasePrice ?? (decimal)product.Price?.PurchasePrice.Amount!, request.Description ?? product.Description!.ToString(),
                 request.Status ?? (ProductStatus)product.Status!, request.CategoryId ?? (int)product.CategoryId!, 
-                request.Quantity ?? (int)product.Quantity!, request.Sizes ?? product.Sizes, 
+                request.Quantity ?? (int)product.Quantity!, request.Sizes ?? product.Sizes ?? new List<string>(), 
                 request.Gender ?? (Gender)product.Gender!);
 
             // Update images if any

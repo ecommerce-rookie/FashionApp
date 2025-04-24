@@ -1,8 +1,5 @@
-﻿using Application.Features.ProductFeatures.Enums;
-using Application.Features.ProductFeatures.Models;
+﻿using Application.Features.ProductFeatures.Models;
 using AutoMapper;
-using Domain.Constants.Common;
-using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 

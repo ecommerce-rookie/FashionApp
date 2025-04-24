@@ -1,4 +1,5 @@
-﻿using Application.Features.OrderFeatures.Models;
+﻿using Application.Features.FeedbackFeatures.Models;
+using Application.Features.OrderFeatures.Models;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.UserFeatures.Models;
 using Application.Utilities;
@@ -22,14 +23,16 @@ namespace Application.Mappings
                 .ForMember(dest => dest.PurchasePrice, opt => opt.MapFrom(src => src.Price!.PurchasePrice.Amount))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.Name))
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.CreatedByNavigation))
-                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.ImageProducts.Select(x => x.Image.Url)))
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.ImageProducts!.Select(x => x.Image.Url)))
                 .ForMember(dest => dest.IsNew, opt => opt.MapFrom(src => src.CreatedAt.IsNewProduct()))
+                .ForMember(dest => dest.ReviewCount, opt => opt.MapFrom(src => src.Feedbacks!.Count()))
+                .ForMember(dest => dest.Star, opt => opt.MapFrom(src => src.Feedbacks!.Count() == 0 ? 0 : src.Feedbacks!.Sum(x => x.Rating) / src.Feedbacks!.Count()))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Product, ProductPreviewResponseModel>()
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price!.UnitPrice.Amount))
                 .ForMember(dest => dest.PurchasePrice, opt => opt.MapFrom(src => src.Price!.PurchasePrice.Amount))
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageProducts
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageProducts!
                     .Where(i => i.OrderNumber == 1)
                     .Select(i => i.Image.Url)
                     .FirstOrDefault()))
@@ -50,6 +53,8 @@ namespace Application.Mappings
 
             CreateMap<PagedList<Order>, PagedList<OrderResponseModel>>();
 
+            CreateMap<Feedback, FeedbackResponseModel>()
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.CreatedByNavigation));
         }
     }
 }

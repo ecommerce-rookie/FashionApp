@@ -21,26 +21,43 @@
     <div class="checkout-page wrapper">
 
         <div class="checkout-nav">
-            <div class="checkout-nav__item active">
+            <div class="checkout-nav__item active current" data-step="1">
                 <span class="checkout-nav__text">order details</span>
             </div>
-            <div class="checkout-nav__item active current">
+            <div class="checkout-nav__item" data-step="2">
                 <span class="checkout-nav__text">payment method</span>
             </div>
-            <div class="checkout-nav__item">
+            <div class="checkout-nav__item" data-step="3">
                 <span class="checkout-nav__text">finish</span>
             </div>
         </div>
 
         <div class="checkout-page__cols">
 
-            @{
-                await Html.RenderPartialAsync(PageConstants.CheckoutDetail);
-                await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
-                await Html.RenderPartialAsync(PageConstants.CheckoutComplete);
+            <div class="checkout-page__left">
+                <div id="step1" class="checkout-step active">
+                    @{
+                        await Html.RenderPartialAsync(PageConstants.CheckoutDetail);
+                    }
+                </div>
+                <div id="step2" class="checkout-step active">
+                    @{
+                        await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
+                    }
+                </div>
+                <div id="step3" class="checkout-step active">
+                    @{
+                        await Html.RenderPartialAsync(PageConstants.CheckoutComplete);
+                    }
+                </div>
+            </div>
 
-                await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
-            }
+            <aside class="checkout-page__right">
+                @{
+                    await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
+                }
+            </aside>
+            
 
         </div>
 
@@ -48,3 +65,10 @@
     <!-- CHECKOUT END -->
 
 </main>
+
+@{
+    ViewData["Scripts"] = new List<string>
+    {
+        "~/js/checkout.js",
+    };
+}

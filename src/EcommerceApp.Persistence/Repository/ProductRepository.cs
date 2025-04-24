@@ -27,6 +27,7 @@ namespace Persistence.Repository
                 .Include(p => p.CreatedByNavigation)
                 .Include(p => p.Category)
                 .Include(p => p.ImageProducts)
+                .Include(p => p.Feedbacks)
                 .FirstOrDefaultAsync(p => p.Slug!.Equals(slug));
         }
 
@@ -58,7 +59,7 @@ namespace Persistence.Repository
                 .Select(g => new
                 {
                     ProductId = g.Key!.Value,
-                    TotalSold = g.Sum(x => x.Quantity ?? 0)
+                    TotalSold = g.Sum(x => x.Quantity ?? 0),
                 })
                 .OrderByDescending(x => x.TotalSold)
                 .Take(eachPage)

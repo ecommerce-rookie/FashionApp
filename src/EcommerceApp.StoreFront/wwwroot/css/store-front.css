@@ -13641,3 +13641,12 @@ body.compensate-for-scrollbar {
         height: 280px
     }
 }
+
+.delete-feedback {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    background: url(../img/svg/bin-icon.svg) 0 0/100% 100% no-repeat
+}

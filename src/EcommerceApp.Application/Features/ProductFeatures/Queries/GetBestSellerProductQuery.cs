@@ -1,10 +1,13 @@
 ﻿using Application.Features.ProductFeatures.Models;
 using AutoMapper;
+using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
+using Infrastructure.Cache.Attributes;
 
 namespace Application.Features.ProductFeatures.Queries
 {
+    [Cache(nameof(Product), 60 * 5)]
     public class GetBestSellerProductQuery : IQuery<IEnumerable<ProductPreviewResponseModel>>
     {
         public int EachPage { get; set; }

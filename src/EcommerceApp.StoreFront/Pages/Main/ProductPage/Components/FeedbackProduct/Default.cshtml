@@ -1,0 +1,41 @@
+﻿@using StoreFront.Domain.Constants
+@using StoreFront.Domain.Models.Common
+@using StoreFront.Domain.Models.FeedbackModels.Response
+@model FeedbackResponse?
+
+<div class="product-tab__right">
+    @if(User.Identity!.IsAuthenticated) {
+        <form asp-page-handler="Feedback" method="post">
+            <input type="hidden" name="ProductId" value="@TempData["ProductId"]" />
+            <input type="hidden" name="FeedbackId" value="@Model?.Id" />
+            <section class="add-review">
+                <div class="add-review__top">
+                    <div class="flex justify-between items-center">
+                        <h3 class="add-review__title">Leave a review</h3>
+                        <button class="delete-feedback" name="Button" disabled="@(Model?.Id == null)" value="delete"></button>
+                    </div>
+                    <p class="add-review__text">Write us your impressions of&nbsp;the&nbsp;purchase</p>
+                    <div class="add-review__rating rating">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <input class="star"
+                                   name="Feedback.Rating"
+                                   type="radio"
+                                   value="@i"
+                            @(Model?.Rating == i ? "checked" : "") />
+                        }
+                    </div>
+
+                </div>
+                <textarea class="textarea" placeholder="Enter your feedback" name="Feedback.Content">@Model?.Content</textarea>
+                <button class="add-review__button button" name="Button" value="@(Model?.Content != null ? "update" : "create")">
+                    <span class="button__text">Post a review</span>
+                </button>
+            </section>
+        </form>
+    } else {
+        <a class="add-review__button button" asp-page="@PageConstants.AuthenPage" asp-page-handler="Login">
+            <span class="button__text">Login to post a review</span>
+        </a>
+    }
+</div>

@@ -34,5 +34,9 @@ namespace Application.Features.ProductFeatures.Models
         public AuthorResponseModel? Author { get; set; }
 
         public bool IsNew { get; set; }
+
+        public int Star { get; set; }
+
+        public int ReviewCount { get; set; }
     }
 }

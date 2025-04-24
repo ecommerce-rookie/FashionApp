@@ -35,5 +35,9 @@ namespace StoreFront.Domain.Models.ProductModels.Responses
         public AuthorResponse? Author { get; set; }
 
         public bool IsNew { get; set; }
+
+        public int Star { get; set; }
+
+        public int ReviewCount { get; set; }
     }
 }
