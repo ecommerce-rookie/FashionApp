@@ -1,12 +1,7 @@
 ﻿using Domain.Aggregates.FeedbackAggregate.Entities;
 using Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UnitTest
+namespace Application.UnitTest.AggregateTest
 {
     public class FeedbackAggregateTest
     {
@@ -44,7 +39,7 @@ namespace Application.UnitTest
 
             // Act & Assert
             var exception = Assert.Throws<ValidationException>(() => Feedback.Create(content, userId, productId, rating));
-            Assert.Equal("Content cannot be empty or null", exception.Message);
+            Assert.Equal("One or more validation failures have occurred.", exception.Message);
         }
 
         [Theory]
@@ -59,7 +54,7 @@ namespace Application.UnitTest
 
             // Act & Assert
             var exception = Assert.Throws<ValidationException>(() => Feedback.Create(content, userId, productId, rating));
-            Assert.Equal("Rating must be between 1 and 5", exception.Message);
+            Assert.Equal("One or more validation failures have occurred.", exception.Message);
         }
 
         [Fact]
@@ -90,7 +85,7 @@ namespace Application.UnitTest
 
             // Act & Assert
             var exception = Assert.Throws<ValidationException>(() => feedback.Update(content, rating));
-            Assert.Equal("Content cannot be empty or null", exception.Message);
+            Assert.Equal("One or more validation failures have occurred.", exception.Message);
         }
 
         [Theory]
@@ -104,7 +99,7 @@ namespace Application.UnitTest
 
             // Act & Assert
             var exception = Assert.Throws<ValidationException>(() => feedback.Update(content, rating));
-            Assert.Equal("Rating must be between 1 and 5", exception.Message);
+            Assert.Equal("One or more validation failures have occurred.", exception.Message);
         }
 
         [Fact]

@@ -60,7 +60,7 @@ namespace Application.Features.ProductFeatures.Commands
 
             RuleFor(v => v.UnitPrice)
                 .NotNull().WithMessage("Unit price is required")
-                .GreaterThan(0).WithMessage("Unit price must be asigned with a positive value");
+                .GreaterThan(0).WithMessage("Unit price must be assigned with a positive value");
 
             RuleFor(v => v.PurchasePrice)
                 .GreaterThan(0).WithMessage("Purchase price must be asigned with a positive value")

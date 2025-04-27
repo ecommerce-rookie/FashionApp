@@ -64,7 +64,7 @@ namespace Application.Features.ProductFeatures.Commands
                 .MustAsync(CheckDuplicatedName).WithMessage("This product name already exist");
 
             RuleFor(v => v.UnitPrice)
-                .GreaterThan(0).WithMessage("Unit price must be asigned with a positive value");
+                .GreaterThan(0).WithMessage("Unit price must be assigned with a positive value");
 
             RuleFor(v => v.PurchasePrice)
                 .GreaterThan(0).WithMessage("Purchase price must be asigned with a positive value")
@@ -78,7 +78,7 @@ namespace Application.Features.ProductFeatures.Commands
                 .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater or equal than 0");
 
             RuleFor(v => v)
-                .Must(v => CheckStatusValid(v.Status, v.Quantity)).WithMessage("Status must be Available when quantity greater than 0");
+                .Must(v => !CheckStatusValid(v.Status, v.Quantity)).WithMessage("Status must not Available when quantity less than 0");
         }
 
         private bool CheckStatusValid(ProductStatus? status, int? quantity)
@@ -88,7 +88,7 @@ namespace Application.Features.ProductFeatures.Commands
                 return false;
             }
 
-            return quantity == 0 && status == ProductStatus.Available;
+            return quantity == 0 && status != ProductStatus.Available;
         }
 
         private async Task<bool> CheckDuplicatedName(string name, CancellationToken cancellationToken)
@@ -176,7 +176,7 @@ namespace Application.Features.ProductFeatures.Commands
                 .Where(x => !imagesDelete.Contains(x.Image.Url))
                 .OrderBy(x => x.OrderNumber)
                 .Select(x => x.Image)
-                .ToList();
+                .ToList() ?? new List<ImageUrl>();
 
             // Upload new images
             for (int i = 0; i < files.Count(); i++)
@@ -185,7 +185,18 @@ namespace Application.Features.ProductFeatures.Commands
                 var image = await _storageService.UploadImage(file.File, ImageFolder.Product, 
                     file.File.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
 
-                oldImages?.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
+                //oldImages.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
+
+                // Check if the OrderNumber is within bounds
+                if (file.OrderNumber < oldImages.Count)
+                {
+                    // Insert at the given OrderNumber
+                    oldImages.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
+                } else
+                {
+                    // If OrderNumber is out of bounds, add at the end of the list
+                    oldImages.Add(ImageUrl.Create(image.Url.ToString()));
+                }
             }
 
             // Add new images

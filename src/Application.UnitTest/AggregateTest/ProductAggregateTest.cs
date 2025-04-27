@@ -3,7 +3,7 @@ using Domain.Aggregates.ProductAggregate.Enums;
 using Domain.Exceptions;
 using FluentAssertions;
 
-namespace Application.UnitTest
+namespace Application.UnitTest.AggregateTest
 {
     public class ProductAggregateTest
     {

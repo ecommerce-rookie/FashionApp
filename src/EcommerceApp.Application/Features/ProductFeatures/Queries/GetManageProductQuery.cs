@@ -17,7 +17,7 @@ namespace Application.Features.ProductFeatures.Queries
         public string Slug { get; set; } = string.Empty;
     }
 
-    public class GetManageProductQueryHandler : IRequestHandler<GetProductQuery, APIResponse<ProductResponseModel>>
+    public class GetManageProductQueryHandler : IRequestHandler<GetManageProductQuery, APIResponse<ProductResponseModel>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Application.Features.ProductFeatures.Queries
             _mapper = mapper;
         }
 
-        public async Task<APIResponse<ProductResponseModel>> Handle(GetProductQuery request, CancellationToken cancellationToken)
+        public async Task<APIResponse<ProductResponseModel>> Handle(GetManageProductQuery request, CancellationToken cancellationToken)
         {
             var product = await _unitOfWork.ProductRepository.GetManageDetail(request.Slug);
 
