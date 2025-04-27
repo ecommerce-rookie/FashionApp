@@ -8,19 +8,65 @@ namespace Domain.Aggregates.OrderAggregate.Entities;
 
 public partial class Order : BaseAuditableEntity<Guid>, IAggregateRoot
 {
-    public Money TotalPrice { get; set; } = new Money(0);
+    public Money TotalPrice { get; private set; } = new Money(0);
 
-    public string? Address { get; set; }
+    public string? Address { get; private set; }
 
-    public OrderStatus? OrderStatus { get; set; }
+    public OrderStatus? OrderStatus { get; private set; }
 
-    public PaymentMethod? PaymentMethod { get; set; }
+    public PaymentMethod? PaymentMethod { get; private set; }
 
-    public string? NameReceiver { get; set; }
+    public string? NameReceiver { get; private set; }
 
-    public Guid? CustomerId { get; set; }
+    public Guid? CustomerId { get; private set; }
 
-    public virtual User? Customer { get; set; }
+    public virtual User? Customer { get; private set; }
 
-    public virtual ICollection<OrderDetail>? OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; } = new List<OrderDetail>();
+
+
+    public Order() { }
+
+    public Order(decimal totalPrice, string address, OrderStatus status, PaymentMethod method, 
+        string nameReceiver, Guid customerId)
+    {
+        TotalPrice = new Money(totalPrice);
+        Address = address;
+        OrderStatus = status;
+        PaymentMethod = method;
+        NameReceiver = nameReceiver;
+        CustomerId = customerId;
+    }
+
+    public static Order Create(decimal totalPrice, string address, OrderStatus status, PaymentMethod method,
+        string nameReceiver, Guid customerId)
+    {
+        if(string.IsNullOrWhiteSpace(address))
+        {
+            throw new ArgumentException("Address cannot be null or empty.", nameof(address));
+        }
+
+        if (totalPrice < 0)
+        {
+            throw new ArgumentException("Total price cannot be negative.", nameof(totalPrice));
+        }
+
+        if (string.IsNullOrWhiteSpace(nameReceiver))
+        {
+            throw new ArgumentException("Name receiver cannot be null or empty.", nameof(nameReceiver));
+        }
+
+        if (customerId == Guid.Empty)
+        {
+            throw new ArgumentException("Customer ID cannot be empty.", nameof(customerId));
+        }
+
+        return new Order(totalPrice, address, status, method, nameReceiver, customerId);
+    }
+
+    public void UpdateStatus(OrderStatus status)
+    {
+        OrderStatus = status;
+    }
+
 }

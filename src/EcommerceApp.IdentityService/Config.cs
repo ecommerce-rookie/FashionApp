@@ -63,17 +63,16 @@ namespace EcommerceApp.IdentityService
                     ClientId = "ecommerce-api",
                     ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
 
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris = { $"{clientUrls.Api}/auth/callback" },
-                    FrontChannelLogoutUri = $"{clientUrls.Api}/signout-oidc",
-                    PostLogoutRedirectUris = { $"{clientUrls.Api}/auth/logout" },
-                    AllowedCorsOrigins = { clientUrls.Api! },
+                    RedirectUris = { $"http://localhost:5173/signin-callback" },
+                    PostLogoutRedirectUris = { $"http://localhost:5173/signout-callback" },
+                    AllowedCorsOrigins = { "http://localhost:5173" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "scope2" },
+                    AllowedScopes = { "openid", "profile", "api" },
                     AccessTokenLifetime = 60 * 30, // second unit
                 },
 

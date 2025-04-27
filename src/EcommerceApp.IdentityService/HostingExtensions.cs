@@ -52,6 +52,8 @@ namespace EcommerceApp.IdentityService
             //builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomProfileService>();
             builder.Services.AddScoped<IProfileService, CustomProfileService>();
 
+            builder.Services.AddCors();
+
 
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>
@@ -70,6 +72,11 @@ namespace EcommerceApp.IdentityService
 
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+
             app.UseSerilogRequestLogging();
 
             if (app.Environment.IsDevelopment())

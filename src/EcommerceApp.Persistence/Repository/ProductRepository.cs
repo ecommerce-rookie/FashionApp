@@ -1,5 +1,7 @@
 ﻿using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Models.Common;
 using Domain.Repositories;
+using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
@@ -28,6 +30,20 @@ namespace Persistence.Repository
                 .Include(p => p.Category)
                 .Include(p => p.ImageProducts)
                 .Include(p => p.Feedbacks)
+                .FirstOrDefaultAsync(p => p.Slug!.Equals(slug));
+        }
+
+        public async Task<Product?> GetManageDetail(string slug)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .AsSplitQuery()
+                .IgnoreQueryFilters()
+                .Include(p => p.CreatedByNavigation)
+                .Include(p => p.Category)
+                .Include(p => p.ImageProducts)
+                .Include(p => p.Feedbacks)
+                .Include(p => p.CreatedByNavigation)
                 .FirstOrDefaultAsync(p => p.Slug!.Equals(slug));
         }
 
@@ -80,5 +96,38 @@ namespace Persistence.Repository
 
             await Task.CompletedTask;
         }
+
+        public async Task<PagedList<Product>> GetManageProducts(int page, int eachPage, string? search, 
+            IEnumerable<int>? categories, IEnumerable<string>? sizes)
+        {
+            var query = _dbSet
+                .AsNoTracking()
+                .AsQueryable()
+                .IgnoreQueryFilters();
+
+            if (categories != null && categories.Any())
+            {
+                query = query.Where(p => categories.Contains(p.CategoryId ?? 0));
+            }
+
+            if (sizes != null && sizes.Any())
+            {
+                query = query.Where(p => p.Sizes != null && p.Sizes.Any(size => sizes.Contains(size)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(p => p.Name.Contains(search));
+            }
+
+            query = query
+                .Include(p => p.Category)
+                .Include(p => p.ImageProducts)
+                .Include(p => p.Feedbacks)
+                .OrderByDescending(p => p.CreatedAt);
+
+            return await query.ToPagedListAsync(page, eachPage);
+        }
+
     }
 }

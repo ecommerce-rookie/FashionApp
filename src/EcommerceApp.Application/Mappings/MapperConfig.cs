@@ -1,9 +1,11 @@
-﻿using Application.Features.FeedbackFeatures.Models;
+﻿using Application.Features.CategoryFeatures.Models;
+using Application.Features.FeedbackFeatures.Models;
 using Application.Features.OrderFeatures.Models;
 using Application.Features.ProductFeatures.Models;
 using Application.Features.UserFeatures.Models;
 using Application.Utilities;
 using AutoMapper;
+using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Aggregates.FeedbackAggregate.Entities;
 using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.ProductAggregate.Entities;
@@ -40,6 +42,22 @@ namespace Application.Mappings
                 .ForMember(dest => dest.IsNew, opt => opt.MapFrom(src => src.CreatedAt.IsNewProduct()))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+            CreateMap<PagedList<Product>, PagedList<ProductPreviewResponseModel>>();
+
+            CreateMap<Product, ProductPreviewManageResponesModel>()
+                 .ForMember(dest => dest.ReviewCount, opt => opt.MapFrom(src => src.Feedbacks!.Count()))
+                 .ForMember(dest => dest.Star, opt => opt.MapFrom(src => src.Feedbacks!.Count() == 0 ? 0 : src.Feedbacks!.Sum(x => x.Rating) / src.Feedbacks!.Count()))
+                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.Name))
+                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageProducts!
+                    .Where(i => i.OrderNumber == 1)
+                    .Select(i => i.Image.Url)
+                    .FirstOrDefault()))
+                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price!.UnitPrice.Amount))
+                 .ForMember(dest => dest.PurchasePrice, opt => opt.MapFrom(src => src.Price!.PurchasePrice.Amount))
+                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<PagedList<Product>, PagedList<ProductPreviewManageResponesModel>>();
+
             CreateMap<User, UserPreviewResponseModel>()
                 .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Avatar!.Url))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email.Value));
@@ -56,6 +74,10 @@ namespace Application.Mappings
 
             CreateMap<Feedback, FeedbackResponseModel>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.CreatedByNavigation));
+
+            CreateMap<Category, CategoryResponseModel>();
+
+            CreateMap<PagedList<Category>, PagedList<CategoryResponseModel>>();
         }
     }
 }

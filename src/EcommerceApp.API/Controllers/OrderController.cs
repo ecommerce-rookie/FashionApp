@@ -1,4 +1,5 @@
-﻿using Application.Features.OrderFeatures.Models;
+﻿using Application.Features.OrderFeatures.Commands;
+using Application.Features.OrderFeatures.Models;
 using Application.Features.OrderFeatures.Queries;
 using Asp.Versioning;
 using Domain.Constants;
@@ -27,6 +28,7 @@ namespace API.Controllers
 
         [HttpGet("")]
         [ProducesResponseType(typeof(APIResponse<PagedList<OrderResponseModel>>), StatusCodes.Status200OK)]
+        [Authorize]
         public async Task<IActionResult> GetListOrder([FromQuery] GetListOrderQuery query, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(query, cancellationToken);
@@ -34,6 +36,17 @@ namespace API.Controllers
             Response.Headers.Append(SystemConstant.HeaderPagination, JsonSerializer.Serialize(result.Metadata));
 
             return Ok(result);
+        }
+
+        [HttpPatch("{orderId}/status")]
+        [ProducesResponseType(typeof(APIResponse<OrderResponseModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateOrderStatus([FromRoute] Guid orderId, [FromBody] UpdateOrderStatusCommand command, 
+            CancellationToken cancellationToken)
+        {
+            command.OrderId = orderId;
+            var result = await _sender.Send(command, cancellationToken);
+
+            return StatusCode((int)result.Status, result);
         }
 
     }

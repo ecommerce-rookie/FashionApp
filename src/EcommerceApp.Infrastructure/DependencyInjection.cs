@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Settings;
+using Infrastructure.Authentication.Configs;
 using Infrastructure.Authentication.Services;
 using Infrastructure.BackgroundServices.TaskQueues;
 using Infrastructure.BackgroundServices.Workers;
@@ -30,6 +31,9 @@ namespace Infrastructure
 
             // Set up configuration Security
             builder.Services.AddJWT(builder.Configuration);
+
+            // Set up policy
+            builder.Services.AddPolicies();
 
             // Set up Swagger
             builder.Services.AddSwagger(builder.Configuration);

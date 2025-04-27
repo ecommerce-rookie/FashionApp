@@ -5,5 +5,7 @@
         public const string Admin = nameof(Admin);
         public const string Staff = nameof(Staff);
 		public const string Customer = nameof(Customer);
+        public const string Moderator = nameof(Moderator);
+
     }
 }

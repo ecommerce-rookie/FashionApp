@@ -7,6 +7,7 @@ namespace Domain.Repositories
 {
     public interface IUserRepository : ISqlRepository<User>
     {
-        Task<PagedList<User>> GetUsers(int page, int eachPage, IEnumerable<UserRole>? roles, IEnumerable<UserStatus>? statuss, string? search);
+        Task<PagedList<User>> GetUsers(int page, int eachPage, IEnumerable<UserRole>? roles, 
+            IEnumerable<UserStatus>? statuss, string? search, UserRole currentRole);
     }
 }

@@ -18,13 +18,13 @@ namespace Domain.Models.Common
             PageSize = EachPage
         };
 
-        public PagedList(IEnumerable<T> items)
+        public PagedList(IEnumerable<T>? items)
         {
-            Items = items;
-            TotalItems = items.Count();
+            Items = items ?? [];
+            TotalItems = items?.Count() ?? 0;
             TotalPages = 1;
             CurrentPage = 1;
-            EachPage = items.Count();
+            EachPage = items?.Count() ?? 0;
         }
 
         public PagedList()

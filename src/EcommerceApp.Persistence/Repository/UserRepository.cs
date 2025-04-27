@@ -15,12 +15,18 @@ namespace Persistence.Repository
         {
         }
 
-        public async Task<PagedList<User>> GetUsers(int page, int eachPage, IEnumerable<UserRole>? roles, IEnumerable<UserStatus>? statuss, string? search)
+        public async Task<PagedList<User>> GetUsers(int page, int eachPage, IEnumerable<UserRole>? roles, 
+            IEnumerable<UserStatus>? statuss, string? search, UserRole currentRole)
         {
             var users = _dbSet
                 .AsNoTracking()
                 .AsSplitQuery()
                 .IgnoreQueryFilters();
+
+            if(currentRole == UserRole.Admin)
+            {
+                users = users.Where(x => !x.Role.Equals(UserRole.Admin.ToString()));
+            }
 
             if(!statuss.IsNullOrEmpty())
             {

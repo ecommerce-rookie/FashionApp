@@ -67,7 +67,7 @@ namespace Application.Features.ProductFeatures.Queries
                 UnitPrice = s.Price!.UnitPrice.Amount,
                 PurchasePrice = s.Price.PurchasePrice.Amount,
                 Status = s.Status,
-                Image = s.ImageProducts
+                Image = s.ImageProducts!
                                     .Where(i => i.OrderNumber == 1)
                                     .Select(i => i.Image.Url)
                                     .FirstOrDefault(),

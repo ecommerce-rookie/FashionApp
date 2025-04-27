@@ -56,7 +56,7 @@ namespace API.Controllers
 
         [HttpPost("")]
         [ProducesResponseType(typeof(APIResponse<Guid>), StatusCodes.Status201Created)]
-        [Authorize]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> CreateProduct([FromForm] CreateProductCommand command, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(command, cancellationToken);
@@ -78,7 +78,7 @@ namespace API.Controllers
 
         [HttpPut("{slug}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<Guid>>), StatusCodes.Status200OK)]
-        [Authorize]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> UpdateProduct([FromRoute] string slug, [FromForm] UpdateProductCommand command, CancellationToken cancellationToken)
         {
             command.Slug = slug;
@@ -89,7 +89,7 @@ namespace API.Controllers
 
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse>), StatusCodes.Status200OK)]
-        [Authorize]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, [FromQuery] bool? isHard, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteProductCommand()
@@ -98,6 +98,31 @@ namespace API.Controllers
                 Hard = isHard
             }, cancellationToken);
          
+            return StatusCode((int)result.Status, result);
+        }
+
+        [HttpGet("manage")]
+        [ProducesResponseType(typeof(APIResponse<PagedList<ProductPreviewResponseModel>>), StatusCodes.Status200OK)]
+        [Authorize(PolicyType.Moderator)]
+        public async Task<IActionResult> GetManageProducts([FromQuery] GetListManageProductQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(query, cancellationToken);
+
+            Response.Headers.Append(SystemConstant.HeaderPagination, JsonConvert.SerializeObject(result.Metadata));
+
+            return Ok(result);
+        }
+
+        [HttpGet("manage/{slug}")]
+        [ProducesResponseType(typeof(APIResponse<APIResponse<ProductResponseModel>>), StatusCodes.Status200OK)]
+        [Authorize(PolicyType.Moderator)]
+        public async Task<IActionResult> GetManageProduct(string slug, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(new GetManageProductQuery()
+            {
+                Slug = slug
+            }, cancellationToken);
+
             return StatusCode((int)result.Status, result);
         }
 

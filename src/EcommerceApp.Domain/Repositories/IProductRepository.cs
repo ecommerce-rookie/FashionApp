@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates.ProductAggregate.Entities;
+using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 
 namespace Domain.Repositories
@@ -39,5 +40,23 @@ namespace Domain.Repositories
         /// <param name="images">Image Product</param>
         /// <returns></returns>
         Task DeleteImages(IEnumerable<ImageProduct> images);
+
+        /// <summary>
+        /// Get all products for management
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="eachPage"></param>
+        /// <param name="categories"></param>
+        /// <param name="sizes"></param>
+        /// <returns></returns>
+        Task<PagedList<Product>> GetManageProducts(int page, int eachPage, string? search, 
+            IEnumerable<int>? categories, IEnumerable<string>? sizes);
+
+        /// <summary>
+        /// Get product detail for management
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
+        Task<Product?> GetManageDetail(string slug);
     }
 }

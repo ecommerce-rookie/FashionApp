@@ -1,39 +1,50 @@
 ﻿using Application.Features.CategoryFeatures.Models;
 using Application.Messages;
+using AutoMapper;
 using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 using Infrastructure.Cache.Attributes;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
 namespace Application.Features.CategoryFeatures.Queries
 {
     [Cache(nameof(Category), 60 * 3)]
-    public class GetcategoryQuery : IQuery<IEnumerable<CategoryResponseModel>>
+    public class GetcategoryQuery : IQuery<PagedList<CategoryResponseModel>>
     {
+        public int Page { get; set; }
+        public int EachPage { get; set; }
+        public string? Search { get; set; }
     }
 
-    public class GetCategoryQueryHandler : IQueryHandler<GetcategoryQuery, IEnumerable<CategoryResponseModel>>
+    public class GetCategoryQueryHandler : IQueryHandler<GetcategoryQuery, PagedList<CategoryResponseModel>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public GetCategoryQueryHandler(IUnitOfWork unitOfWork)
+        public GetCategoryQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CategoryResponseModel>> Handle(GetcategoryQuery request, CancellationToken cancellationToken)
+        public async Task<PagedList<CategoryResponseModel>> Handle(GetcategoryQuery request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.CategoryRepository.GetAll();
-
-            var response = result.Select(c => new CategoryResponseModel
+            if (request.Page == -1)
             {
-                Id = c.Id,
-                Name = c.Name!
-            }).ToList();
+                var result = await _unitOfWork.CategoryRepository.GetAll(c => string.IsNullOrEmpty(request.Search) || c.Name!.Contains(request.Search!));
 
-            return response;
+                return _mapper.Map<PagedList<CategoryResponseModel>>(result);
+            } else
+            {
+                var result = await _unitOfWork.CategoryRepository.GetAll(c => string.IsNullOrEmpty(request.Search) || c.Name!.Contains(request.Search!), 
+                    request.Page, request.EachPage);
+
+                return _mapper.Map<PagedList<CategoryResponseModel>>(result);
+            }
+
         }
 
     }

@@ -26,8 +26,6 @@ namespace Application.Features.UserFeatures.Commands
 
         public IFormFile? Avatar { get; set; }
 
-        public UserStatus? Status { get; set; }
-
         public string? FirstName { get; set; }
     }
 
@@ -67,7 +65,7 @@ namespace Application.Features.UserFeatures.Commands
             }
 
             user.Update(request.Email ?? user.Email.Value, request.FirstName ?? user.FirstName ?? string.Empty, request.LastName ?? user.LastName,
-                request.Phone ?? user.Phone ?? string.Empty, avatar ?? user.Avatar?.Url ?? string.Empty, request.Status ?? (UserStatus)user.Status!);
+                request.Phone ?? user.Phone ?? string.Empty, avatar ?? user.Avatar?.Url ?? string.Empty, (UserStatus)user.Status!);
 
             await _unitOfWork.UserRepository.Update(user);
             var result = await _unitOfWork.SaveChangesAsync(cancellationToken);

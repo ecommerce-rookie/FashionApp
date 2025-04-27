@@ -5,6 +5,7 @@ using Asp.Versioning;
 using Domain.Constants;
 using Domain.Models.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -39,6 +40,7 @@ namespace API.Controllers
 
         [HttpPost("{productId}")]
         [ProducesResponseType(typeof(APIResponse<Guid>), StatusCodes.Status201Created)]
+        [Authorize(PolicyType.Customer)]
         public async Task<IActionResult> CreateFeedback([FromRoute] Guid productId, [FromBody] CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
             request.ProductId = productId;
@@ -49,6 +51,7 @@ namespace API.Controllers
 
         [HttpPatch("{productId}")]
         [ProducesResponseType(typeof(APIResponse<FeedbackResponseModel>), StatusCodes.Status200OK)]
+        [Authorize]
         public async Task<IActionResult> UpdateFeedback([FromRoute] Guid productId, [FromBody] UpdateFeedbackCommand request, CancellationToken cancellationToken)
         {
             request.ProductId = productId;
@@ -59,6 +62,7 @@ namespace API.Controllers
 
         [HttpDelete("{feedbackId}")]
         [ProducesResponseType(typeof(APIResponse<FeedbackResponseModel>), StatusCodes.Status200OK)]
+        [Authorize]
         public async Task<IActionResult> DeleteFeedback([FromRoute] Guid feedbackId, [FromQuery] bool? isHard, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteFeedbackCommand() 
@@ -72,6 +76,7 @@ namespace API.Controllers
 
         [HttpGet("{productId}/me")]
         [ProducesResponseType(typeof(APIResponse<FeedbackResponseModel>), StatusCodes.Status200OK)]
+        [Authorize(PolicyType.Customer)]
         public async Task<IActionResult> GetFeedback([FromRoute] Guid productId, [FromQuery] GetFeedbackQuery query, CancellationToken cancellationToken)
         {
             query.ProductId = productId;

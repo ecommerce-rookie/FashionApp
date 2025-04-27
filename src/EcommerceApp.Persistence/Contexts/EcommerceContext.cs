@@ -6,6 +6,7 @@ using Domain.Aggregates.UserAggregate.Entities;
 using Domain.SeedWorks.Abstractions;
 using Domain.SeedWorks.Events;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Extensions;
 using Persistence.SeedWorks.Abstractions;
 using System.Collections.Immutable;
 
@@ -59,6 +60,7 @@ namespace Persistence.Contexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.DbContextAssembly);
+            modelBuilder.ApplySoftDeleteQueryFilter();
 
             OnModelCreatingPartial(modelBuilder);
         }

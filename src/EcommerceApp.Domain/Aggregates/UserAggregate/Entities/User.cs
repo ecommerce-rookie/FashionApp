@@ -61,7 +61,7 @@ namespace Domain.Aggregates.UserAggregate.Entities
             Status = status;
         }
 
-        public void ChangeStatusAccount(UserStatus userStatus)
+        public void UpdateStatus(UserStatus userStatus)
         {
             Status = userStatus;
         }

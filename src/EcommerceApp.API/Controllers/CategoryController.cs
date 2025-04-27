@@ -2,8 +2,10 @@
 using Application.Features.CategoryFeatures.Models;
 using Application.Features.CategoryFeatures.Queries;
 using Asp.Versioning;
+using Domain.Constants;
 using Domain.Models.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -33,6 +35,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> DeleteCategory([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new DeleteCategoryCommand()
@@ -45,6 +48,7 @@ namespace API.Controllers
 
         [HttpPost("")]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status201Created)]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command, CancellationToken cancellationToken)
         {
             var result = await _sender.Send(command, cancellationToken);
@@ -54,6 +58,7 @@ namespace API.Controllers
 
         [HttpPatch("{id}")]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
+        [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryCommand command, CancellationToken cancellationToken)
         {
             command.Id = id;
