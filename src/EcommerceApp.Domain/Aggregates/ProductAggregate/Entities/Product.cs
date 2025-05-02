@@ -29,7 +29,7 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
 
     public Guid? CreatedBy { get; private set; }
 
-    public List<string>? Sizes { get; private set; } = [];
+    public IEnumerable<string>? Sizes { get; private set; } = [];
 
     public Gender? Gender { get; private set; }
 
@@ -37,11 +37,11 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
 
     public virtual User? CreatedByNavigation { get; private set; }
 
-    public virtual ICollection<ImageProduct>? ImageProducts { get; private set; } = new List<ImageProduct>();
+    public virtual ICollection<ImageProduct>? ImageProducts { get; private set; }
 
-    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; }
 
-    public virtual ICollection<Feedback>? Feedbacks { get; private set; } = new List<Feedback>();
+    public virtual ICollection<Feedback>? Feedbacks { get; private set; }
 
     public bool IsDeleted { get; set; }
 
@@ -50,7 +50,7 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
     }
 
     public Product(Guid id, string name, decimal unitPrice, decimal? purchasePrice, string? description,
-        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender)
+        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender, Guid createdBy)
     {
         Id = id;
         Name = name;
@@ -62,10 +62,12 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
         Sizes = sizes;
         Gender = gender;
         Slug = $"{SlugHelper.Generate(name)}-{id}";
+        IsDeleted = false;
+        CreatedBy = createdBy;
     }
 
     public static Product Create(Guid id, string name, decimal unitPrice, decimal? purchasePrice, string? description,
-        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender)
+        ProductStatus status, int categoryId, int? quantity, List<string> sizes, Gender gender, Guid createdBy)
     {
         if(name.Length <= 2)
             throw new ValidationException("Name must be at least 2 characters long", nameof(name));
@@ -82,12 +84,12 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
         if(quantity < 0)
             throw new ValidationException("Quantity cannot be negative", nameof(quantity));
 
-        return new Product(id, name, unitPrice, purchasePrice, description, status, categoryId, quantity, sizes, gender);
+        return new Product(id, name, unitPrice, purchasePrice, description, status, categoryId, quantity, sizes, gender, createdBy);
 
     }
 
     public void Update(Guid id, string name, decimal unitPrice, decimal purchasePrice, string description,
-        ProductStatus status, int categoryId, int quantity, List<string> sizes, Gender gender)
+        ProductStatus status, int categoryId, int quantity, IEnumerable<string> sizes, Gender gender)
     {
         Id = id;
         Name = name;

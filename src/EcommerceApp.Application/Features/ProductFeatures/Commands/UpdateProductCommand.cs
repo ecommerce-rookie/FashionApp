@@ -21,7 +21,7 @@ namespace Application.Features.ProductFeatures.Commands
     public class UpdateProductCommand : ICommand<APIResponse>
     {
         [JsonIgnore]
-        public string Slug { get; set; } = string.Empty;
+        public string? Slug { get; set; }
 
         public string? Name { get; set; }
 
@@ -37,7 +37,7 @@ namespace Application.Features.ProductFeatures.Commands
 
         public int? Quantity { get; set; }
 
-        public List<string>? Sizes { get; set; }
+        public IEnumerable<string>? Sizes { get; set; }
 
         public Gender? Gender { get; set; }
 
@@ -61,21 +61,25 @@ namespace Application.Features.ProductFeatures.Commands
             RuleFor(v => v.Name)
                 .MinimumLength(3).WithMessage("Minimum length for name is 3 syllables")
                 .MaximumLength(50).WithMessage("Product name cannot exceed 50 syllables")
-                .MustAsync(CheckDuplicatedName).WithMessage("This product name already exist");
+                .MustAsync(CheckDuplicatedName).WithMessage("This product name already exist")
+                .When(v => v.Name != null);
 
             RuleFor(v => v.UnitPrice)
-                .GreaterThan(0).WithMessage("Unit price must be assigned with a positive value");
+                .GreaterThanOrEqualTo(0).WithMessage("Unit price must be assigned with a positive value")
+                .When(v => v.UnitPrice.HasValue);
 
             RuleFor(v => v.PurchasePrice)
-                .GreaterThan(0).WithMessage("Purchase price must be asigned with a positive value")
-                .Must((model, purchasePrice) => model.UnitPrice >= (purchasePrice ?? 0))
+                .GreaterThan(0).WithMessage("Purchase price must be assigned with a positive value")
+                .Must((model, purchasePrice) =>
+                    purchasePrice == null || model.UnitPrice >= purchasePrice)
                 .WithMessage("Unit price must be greater than or equal to purchase price");
-
+    
             RuleFor(v => v.CategoryId)
                 .MustAsync(CheckCategoryExist).WithMessage("This category does not exist");
 
             RuleFor(v => v.Quantity)
-                .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater or equal than 0");
+                .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater or equal than 0")
+                .When(v => v.Quantity != null);
 
             RuleFor(v => v)
                 .Must(v => !CheckStatusValid(v.Status, v.Quantity)).WithMessage("Status must not Available when quantity less than 0");
@@ -100,7 +104,7 @@ namespace Application.Features.ProductFeatures.Commands
         {
             if(categoryId == null)
             {
-                return false;
+                return true;
             }
 
             return await _unitOfWork.CategoryRepository.CheckCategoryExist((int)categoryId!);
@@ -124,7 +128,7 @@ namespace Application.Features.ProductFeatures.Commands
         public async Task<APIResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             // Check if the product exists
-            var product = await _unitOfWork.ProductRepository.GetDetail(request.Slug);
+            var product = await _unitOfWork.ProductRepository.GetDetail(request.Slug!);
             if (product == null)
             {
                 return new APIResponse
@@ -134,15 +138,18 @@ namespace Application.Features.ProductFeatures.Commands
                 };
             }
 
+            // Update images if any
+            if (request.Files.Any() || request.Images.Any())
+            {
+                await UpdateImages(product, request.Images, request.Files);
+            }
+
             // Update product details
             product.Update(product.Id, request.Name ?? product.Name, request.UnitPrice ?? (decimal)product.Price?.UnitPrice.Amount!,
                 request.PurchasePrice ?? (decimal)product.Price?.PurchasePrice.Amount!, request.Description ?? product.Description!.ToString(),
                 request.Status ?? (ProductStatus)product.Status!, request.CategoryId ?? (int)product.CategoryId!, 
-                request.Quantity ?? (int)product.Quantity!, request.Sizes ?? product.Sizes ?? new List<string>(), 
+                request.Quantity ?? (int)product.Quantity!, request.Sizes ?? product.Sizes ?? Enumerable.Empty<string>(), 
                 request.Gender ?? (Gender)product.Gender!);
-
-            // Update images if any
-            await UpdateImages(product, request.Images, request.Files);
 
             await _unitOfWork.ProductRepository.Update(product);
 
@@ -168,12 +175,15 @@ namespace Application.Features.ProductFeatures.Commands
 
         private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<ImageFileRequestModel> files)
         {
-            // Delete old images
+            // Delete old images in the database
+            await _unitOfWork.ProductRepository.DeleteImages(product.ImageProducts!);
+
+            // Delete old images in the storage
             product.DeleteImages(imagesDelete);
 
             // Get images and re-order them
             var oldImages = product.ImageProducts?
-                .Where(x => !imagesDelete.Contains(x.Image.Url))
+                .Where(x => !imagesDelete.Contains(x.Image.Url.ToString()))
                 .OrderBy(x => x.OrderNumber)
                 .Select(x => x.Image)
                 .ToList() ?? new List<ImageUrl>();
@@ -184,8 +194,6 @@ namespace Application.Features.ProductFeatures.Commands
                 var file = files.ElementAt(i);
                 var image = await _storageService.UploadImage(file.File, ImageFolder.Product, 
                     file.File.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
-
-                //oldImages.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
 
                 // Check if the OrderNumber is within bounds
                 if (file.OrderNumber < oldImages.Count)
@@ -205,6 +213,9 @@ namespace Application.Features.ProductFeatures.Commands
                 var image = oldImages.ElementAt(i);
                 product.AddImage(image.ToString(), i + 1);
             }
+
+            // Add new images to the database
+            await _unitOfWork.ProductRepository.AddRangeImage(product.ImageProducts!);
         }
 
     }

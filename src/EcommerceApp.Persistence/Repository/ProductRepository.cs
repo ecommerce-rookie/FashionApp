@@ -129,5 +129,10 @@ namespace Persistence.Repository
             return await query.ToPagedListAsync(page, eachPage);
         }
 
+        public async Task AddRangeImage(IEnumerable<ImageProduct> images)
+        {
+            await _context.ImageProducts.AddRangeAsync(images);
+        }
+
     }
 }

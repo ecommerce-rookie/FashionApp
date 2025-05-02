@@ -58,5 +58,12 @@ namespace Domain.Repositories
         /// <param name="slug"></param>
         /// <returns></returns>
         Task<Product?> GetManageDetail(string slug);
+
+        /// <summary>
+        /// Add a range of images to the database.
+        /// </summary>
+        /// <param name="images"></param>
+        /// <returns></returns>
+        Task AddRangeImage(IEnumerable<ImageProduct> images);
     }
 }

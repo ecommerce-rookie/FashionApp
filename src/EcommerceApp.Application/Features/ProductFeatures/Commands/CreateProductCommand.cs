@@ -130,7 +130,7 @@ namespace Application.Features.ProductFeatures.Commands
             }
 
             var product = new Product(Guid.NewGuid(), request.Name!, request.UnitPrice, request.PurchasePrice, request.Description,
-                request.Status, request.CategoryId, request.Quantity, request.Sizes!, request.Gender);
+                request.Status, request.CategoryId, request.Quantity, request.Sizes!, request.Gender, userId);
 
             await _unitOfWork.ProductRepository.Add(product);
 

@@ -58,7 +58,6 @@ namespace Persistence.Configurations
                    .HasColumnName("status");
 
             builder.Property(p => p.Sizes)
-                    .HasColumnType("jsonb")
                     .HasColumnName("sizes");
 
 
@@ -73,8 +72,7 @@ namespace Persistence.Configurations
                     .HasColumnName("createdBy");
 
             builder.Property(e => e.IsDeleted)
-                .HasDefaultValue(false)
-                .HasColumnName("isDeleted");
+                    .HasColumnName("isDeleted");
 
             builder.HasOne(d => d.Category)
                    .WithMany(d => d.Products)
@@ -84,7 +82,7 @@ namespace Persistence.Configurations
             builder.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.Products)
                    .HasForeignKey(p => p.CreatedBy)
-                   .OnDelete(DeleteBehavior.SetNull);
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 
