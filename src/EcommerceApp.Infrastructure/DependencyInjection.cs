@@ -8,6 +8,7 @@ using Infrastructure.Cache.Services;
 using Infrastructure.Configurations;
 using Infrastructure.DocumentApi.swagger;
 using Infrastructure.Email;
+using Infrastructure.HttpClients;
 using Infrastructure.ProducerTasks.CloudTaskProducers;
 using Infrastructure.ProducerTasks.EmailTaskProducers;
 using Infrastructure.Storage;
@@ -65,6 +66,9 @@ namespace Infrastructure
 
             // Set up storage service
             builder.Services.AddStorage(builder.Configuration);
+
+            // Set up http client
+            builder.AddHttpService();
 
             // Anothers
             builder.Services.AddAuthorization();

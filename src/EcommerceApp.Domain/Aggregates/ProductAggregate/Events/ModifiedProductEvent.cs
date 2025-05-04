@@ -8,6 +8,8 @@ namespace Domain.Aggregates.ProductAggregate.Events
 
         public IEnumerable<string>? Images { get; set; }
 
+        public bool? IsPermanently { get; set; }
+
         public ModifiedProductEvent() { }
 
         public ModifiedProductEvent(Guid? id)

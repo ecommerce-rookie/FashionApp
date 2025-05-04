@@ -25,6 +25,9 @@ namespace StoreFront.Pages.Main.HomePage
             } else if(action?.Equals("logout") ?? false)
             {
                 TempData.SetSuccess("See you next time!", "Logout Success!");
+            } else if(action?.Equals("force-logout") ?? false)
+            {
+                TempData.SetWarning($"Your account has been {type}!", "Logout Success!");
             }
 
 

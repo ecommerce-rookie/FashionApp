@@ -23,14 +23,14 @@ namespace StoreFront.Pages.Main.AuthenPage
             }, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
-        public IActionResult OnGetLogout()
+        public IActionResult OnGetLogout(string? type, string? action)
         {
             // Clear session data
             HttpContext.Session.SignOut();
 
             return SignOut(new AuthenticationProperties
             {
-                RedirectUri = "/?type=success&action=logout"
+                RedirectUri = $"/?type={type}&action={action}"
             },
             CookieAuthenticationDefaults.AuthenticationScheme,
             OpenIdConnectDefaults.AuthenticationScheme);

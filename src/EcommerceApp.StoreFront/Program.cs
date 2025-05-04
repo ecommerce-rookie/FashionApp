@@ -11,7 +11,12 @@ builder.AddServiceDefaults();
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddSession();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -43,13 +48,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseSession();
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
 app.UseCookiePolicy();
+
+app.UseSession();
 
 app.UseRouting();
 

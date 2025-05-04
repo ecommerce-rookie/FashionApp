@@ -27,7 +27,7 @@ namespace Application.Features.ProductFeatures.Commands
 
         public async Task<APIResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _unitOfWork.ProductRepository.GetById(request.Id);
+            var product = await _unitOfWork.ProductRepository.GetManageById(request.Id);
 
             if (product == null)
             {
@@ -51,7 +51,11 @@ namespace Application.Features.ProductFeatures.Commands
 
             if (result)
             {
-                await _publisher.Publish(new ModifiedProductEvent(), cancellationToken);
+                await _publisher.Publish(new ModifiedProductEvent()
+                {
+                    Images = product.ImageProducts?.Select(i => i.Image.Url).ToList(),
+                    IsPermanently = request.Hard ?? false,
+                }, cancellationToken);
 
                 return new APIResponse()
                 {

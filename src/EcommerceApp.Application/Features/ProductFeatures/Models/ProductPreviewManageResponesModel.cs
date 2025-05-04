@@ -7,5 +7,6 @@ namespace Application.Features.ProductFeatures.Models
         public string? CategoryName { get; set; }
         public int ReviewCount { get; set; }
         public decimal Star { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

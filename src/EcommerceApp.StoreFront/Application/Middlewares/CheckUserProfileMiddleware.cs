@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Application.Features.UserFeatures.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using StoreFront.Application.Extensions;
 using StoreFront.Application.Services;
 using StoreFront.Application.Services.CartService;
@@ -43,6 +46,10 @@ namespace StoreFront.Application.Middlewares
                     } else if(response.IsSuccess && response.Data != null)
                     {
                         _logger.LogInformation("User profile is completed, setting session");
+
+                        // Check status account
+                        await ForceSignOut(response.Data, context);
+
                         var role = context.User.GetRoleFromToken();
                         // Set to session if user profile is existed
                         context.Session.SignIn(response.Data, await cartService.CountProduct(response.Data!.Id.ToString()), role!.Value != UserRole.Customer);
@@ -54,6 +61,20 @@ namespace StoreFront.Application.Middlewares
             }
 
             await _next(context);
+        }
+
+        private async Task ForceSignOut(AuthorResponse author, HttpContext context)
+        {
+            if (author.Status!.Equals(UserStatus.Banned.ToString()) || author.Status!.Equals(UserStatus.Deleted.ToString()))
+            {
+                // Signout user if account is banned
+                _logger.LogWarning("User account is banned, redirecting to error page");
+
+                context.Session.Clear();
+
+                // Redirect đến Razor Page logout handler — nơi có SignOut chuẩn
+                context.Response.Redirect($"/auth?handler=Logout&type={author.Status}&action=force-logout");
+            }
         }
 
         private async Task TransferCart(HttpContext context, ICartService cartService)

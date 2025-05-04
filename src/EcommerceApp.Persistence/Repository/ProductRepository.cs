@@ -21,6 +21,16 @@ namespace Persistence.Repository
             return await _dbSet.AnyAsync(p => p.Name.Equals(name));
         }
 
+        public async Task<Product?> GetManageById(Guid id)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .AsSplitQuery()
+                .IgnoreQueryFilters()
+                .Include(p => p.ImageProducts)
+                .FirstOrDefaultAsync(p => p.Id.Equals(id));
+        }
+
         public async Task<Product?> GetDetail(string slug)
         {
             return await _dbSet
@@ -97,7 +107,7 @@ namespace Persistence.Repository
             await Task.CompletedTask;
         }
 
-        public async Task<PagedList<Product>> GetManageProducts(int page, int eachPage, string? search, 
+        public async Task<PagedList<Product>> GetManageProducts(int page, int eachPage, bool? isDeleted, string? search, 
             IEnumerable<int>? categories, IEnumerable<string>? sizes)
         {
             var query = _dbSet
@@ -118,6 +128,11 @@ namespace Persistence.Repository
             if (!string.IsNullOrWhiteSpace(search))
             {
                 query = query.Where(p => p.Name.Contains(search));
+            }
+
+            if (isDeleted.HasValue)
+            {
+                query = query.Where(p => p.IsDeleted.Equals(isDeleted));
             }
 
             query = query

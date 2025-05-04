@@ -109,6 +109,9 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
     {
         var newImage = ImageProduct.Create(imageUrl, this.Id, orderNumber);
 
+        if(ImageProducts == null)
+            ImageProducts = new List<ImageProduct>();
+
         ImageProducts!.Add(newImage);
     }
 

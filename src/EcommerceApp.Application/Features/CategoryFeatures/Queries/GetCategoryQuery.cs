@@ -36,7 +36,7 @@ namespace Application.Features.CategoryFeatures.Queries
             {
                 var result = await _unitOfWork.CategoryRepository.GetAll(c => string.IsNullOrEmpty(request.Search) || c.Name!.Contains(request.Search!));
 
-                return _mapper.Map<PagedList<CategoryResponseModel>>(result);
+                return new PagedList<CategoryResponseModel>(_mapper.Map<IEnumerable<CategoryResponseModel>>(result));
             } else
             {
                 var result = await _unitOfWork.CategoryRepository.GetAll(c => string.IsNullOrEmpty(request.Search) || c.Name!.Contains(request.Search!), 

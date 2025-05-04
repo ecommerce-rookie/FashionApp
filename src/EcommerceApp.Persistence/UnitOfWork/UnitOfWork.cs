@@ -65,6 +65,11 @@ namespace Persistence.UnitOfWork
 
         }
 
+        public async Task RollbackTransaction(CancellationToken cancellationToken)
+        {
+            await _context.Database.RollbackTransactionAsync(cancellationToken);
+        }
+
         public async Task<T> ExecuteTransactionalAsync<T>(Func<Task<T>> operation, CancellationToken cancellationToken)
         {
             // Get execution strategy from EF Core

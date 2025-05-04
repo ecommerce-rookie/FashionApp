@@ -8,6 +8,8 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using EcommerceApp.IdentityService.Models;
+using IdentityService.Constants;
+using IdentityService.Enums;
 using IdentityService.Pages.Account.Login;
 using IdentityService.Utils;
 using Microsoft.AspNetCore.Authentication;
@@ -107,6 +109,27 @@ namespace EcommerceApp.IdentityService.Pages.Login
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(Input.Username!);
+
+                    if(user!.Status!.Equals(UserStatus.Banned.ToString()))
+                    {
+                        await _events.RaiseAsync(new UserLoginFailureEvent(user.UserName, MessageAccount.AccountBanned, clientId: context?.Client.ClientId));
+                        Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, MessageAccount.AccountBanned);
+                        ModelState.AddModelError(string.Empty, MessageAccount.AccountBanned);
+
+                        await BuildModelAsync(Input.ReturnUrl);
+
+                        return Page();
+                    } else if(user!.Status!.Equals(UserStatus.Deleted.ToString()))
+                    {
+                        await _events.RaiseAsync(new UserLoginFailureEvent(user.UserName, MessageAccount.AccountDeleted, clientId: context?.Client.ClientId));
+                        Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, MessageAccount.AccountDeleted);
+                        ModelState.AddModelError(string.Empty, MessageAccount.AccountDeleted);
+
+                        await BuildModelAsync(Input.ReturnUrl);
+
+                        return Page();
+                    }
+
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user!.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
                     Telemetry.Metrics.UserLogin(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider);
 
@@ -186,8 +209,9 @@ namespace EcommerceApp.IdentityService.Pages.Login
             {
                 Email = RegisterUserModel.Email,
                 NormalizedEmail = RegisterUserModel.Email?.ToUpperInvariant(),
-                EmailConfirmed = false,
+                EmailConfirmed = true,
                 UserName = RegisterUserModel.Email,
+                Status = UserStatus.Active.ToString()
             };
 
             var result= await _userManager.CreateAsync(user, RegisterUserModel.Password!);

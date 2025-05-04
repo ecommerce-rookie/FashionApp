@@ -92,6 +92,8 @@ namespace EcommerceApp.IdentityService
             app.MapRazorPages()
                 .RequireAuthorization();
 
+            app.MapControllers();
+
             return app;
         }
     }

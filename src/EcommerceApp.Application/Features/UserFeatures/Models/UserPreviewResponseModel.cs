@@ -6,6 +6,8 @@ namespace Application.Features.UserFeatures.Models
 {
     public class UserPreviewResponseModel
     {
+        public Guid Id { get; set; }
+
         public string Email { get; set; } = null!;
 
         public string? FirstName { get; set; }

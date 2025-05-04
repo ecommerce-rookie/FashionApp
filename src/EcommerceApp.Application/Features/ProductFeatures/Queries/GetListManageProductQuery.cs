@@ -13,6 +13,7 @@ namespace Application.Features.ProductFeatures.Queries
     {
         public int Page { get; set; }
         public int EachPage { get; set; }
+        public bool? IsDeleted { get; set; }
         public IEnumerable<int>? Categories { get; set; }
         public string? Search { get; set; }
         public IEnumerable<string>? Sizes { get; set; }
@@ -32,7 +33,7 @@ namespace Application.Features.ProductFeatures.Queries
         public async Task<PagedList<ProductPreviewManageResponesModel>> Handle(GetListManageProductQuery request,
             CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.ProductRepository.GetManageProducts(request.Page, request.EachPage, request.Search,
+            var result = await _unitOfWork.ProductRepository.GetManageProducts(request.Page, request.EachPage, request.IsDeleted, request.Search,
                 request.Categories, request.Sizes);
 
             return _mapper.Map<PagedList<ProductPreviewManageResponesModel>>(result);

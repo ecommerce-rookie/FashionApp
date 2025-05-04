@@ -7,6 +7,13 @@ namespace Domain.Repositories
     public interface IProductRepository : ISqlRepository<Product>
     {
         /// <summary>
+        /// Get all products for management by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<Product?> GetManageById(Guid id);
+
+        /// <summary>
         /// Check if the product name is duplicated
         /// </summary>
         /// <param name="name">Name of product</param>
@@ -49,7 +56,7 @@ namespace Domain.Repositories
         /// <param name="categories"></param>
         /// <param name="sizes"></param>
         /// <returns></returns>
-        Task<PagedList<Product>> GetManageProducts(int page, int eachPage, string? search, 
+        Task<PagedList<Product>> GetManageProducts(int page, int eachPage, bool? isDeleted, string? search, 
             IEnumerable<int>? categories, IEnumerable<string>? sizes);
 
         /// <summary>
