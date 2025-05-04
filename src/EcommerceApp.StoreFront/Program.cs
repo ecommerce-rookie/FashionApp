@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.CookiePolicy;
-using StackExchange.Redis;
 using StoreFront.Application.Middlewares;
 using StoreFront.Application.Services;
 using StoreFront.Application.Services.CartService;
@@ -26,7 +25,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.Secure = CookieSecurePolicy.Always;
 });
 
-builder.Services.AddAuthenticationConfig();
+builder.Services.AddAuthenticationConfig(builder.Configuration);
 
 builder.Services.AddHttpConfig(builder.Configuration);
 

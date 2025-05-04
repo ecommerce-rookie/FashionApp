@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using StoreFront.Domain.Models.Settings;
 
 namespace StoreFront.Configurations
 {
     public static class AuthenConfig
     {
-        public static void AddAuthenticationConfig(this IServiceCollection services)
+        public static void AddAuthenticationConfig(this IServiceCollection services, IConfiguration configuration)
         {
+            var clientUrls = configuration.GetSection(nameof(ClientUrls)).Get<ClientUrls>() ?? throw new Exception("Client Urls is not config!");
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -19,7 +22,7 @@ namespace StoreFront.Configurations
             })
             .AddOpenIdConnect(options =>
             {
-                options.Authority = "https://localhost:5001";
+                options.Authority = clientUrls.Identity;
 
                 options.ClientId = "store-front";
                 options.ClientSecret = "store-front-secret";
@@ -37,7 +40,7 @@ namespace StoreFront.Configurations
 
                 options.CallbackPath = "/signin-oidc";
                 options.SignedOutCallbackPath = "/signout-callback-oidc";
-                options.SignedOutRedirectUri = "https://localhost:7101/";
+                options.SignedOutRedirectUri = $"{clientUrls.StoreFront}/";
 
                 options.Events = new OpenIdConnectEvents
                 {

@@ -67,9 +67,9 @@ namespace EcommerceApp.IdentityService
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris = { $"http://localhost:5173/signin-callback" },
-                    PostLogoutRedirectUris = { $"http://localhost:5173/signout-callback" },
-                    AllowedCorsOrigins = { "http://localhost:5173" },
+                    RedirectUris = { $"{clientUrls.BackOffice}/signin-callback" },
+                    PostLogoutRedirectUris = { $"{clientUrls.BackOffice}/signout-callback" },
+                    AllowedCorsOrigins = { $"{clientUrls.BackOffice}" },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "api" },

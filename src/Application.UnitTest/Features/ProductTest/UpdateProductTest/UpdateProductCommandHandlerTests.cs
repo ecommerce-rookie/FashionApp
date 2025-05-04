@@ -75,7 +75,7 @@ namespace Application.UnitTest.Features.ProductTest.UpdateProductTest
                 }
             };
 
-            var existingProduct = new Product(Guid.NewGuid(), "Old Product", 100, 90, "Old description", ProductStatus.OutOfStock, 1, 5, new List<string> { "L", "M" }, Gender.Male);
+            var existingProduct = new Product(Guid.NewGuid(), "Old Product", 100, 90, "Old description", ProductStatus.OutOfStock, 1, 5, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
             _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetDetail(It.IsAny<string>())).ReturnsAsync(existingProduct);
 
             _mockUnitOfWork.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
@@ -103,7 +103,7 @@ namespace Application.UnitTest.Features.ProductTest.UpdateProductTest
                 Slug = "existing-slug"
             };
 
-            var existingProduct = new Product(Guid.NewGuid(), "Old Product", 100, 90, "Old description", ProductStatus.OutOfStock, 1, 5, new List<string> { "L", "M" }, Gender.Male);
+            var existingProduct = new Product(Guid.NewGuid(), "Old Product", 100, 90, "Old description", ProductStatus.OutOfStock, 1, 5, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
             _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetDetail(It.IsAny<string>())).ReturnsAsync(existingProduct);
 
             // Mock the SaveChangesAsync method to return false

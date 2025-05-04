@@ -7,11 +7,12 @@ using IdentityService.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 
 namespace EcommerceApp.IdentityService
 {
-    internal static class HostingExtensions
+    public static class HostingExtensions
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
@@ -31,6 +32,8 @@ namespace EcommerceApp.IdentityService
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            IdentityModelEventSource.ShowPII = true;
+
             // Config IdentityServer
             builder.Services
                 .AddIdentityServer(options =>
@@ -46,8 +49,8 @@ namespace EcommerceApp.IdentityService
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddDeveloperSigningCredential()
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddDeveloperSigningCredential(persistKey: false);
 
             //builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomProfileService>();
             builder.Services.AddScoped<IProfileService, CustomProfileService>();

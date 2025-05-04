@@ -24,6 +24,13 @@ namespace Infrastructure.DocumentApi
                 options.WithOAuth2Authentication(opt =>
                 {
                     opt.ClientId = "scalar-client";
+                    opt.Scopes = new List<string>
+                    {
+                        "profile",
+                        "openid",
+                        "offline_access",
+                        "api"
+                    };
                 });
             });
         }

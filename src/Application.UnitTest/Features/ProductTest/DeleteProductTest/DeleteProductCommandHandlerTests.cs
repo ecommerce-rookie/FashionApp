@@ -59,7 +59,7 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
                 Hard = false 
             };
 
-            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male);
+            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
             _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
                 .ReturnsAsync(product);
 
@@ -85,7 +85,7 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
                 Hard = true 
             };
 
-            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male);
+            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
             _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
                 .ReturnsAsync(product);
 
@@ -111,7 +111,7 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
                 Hard = false 
             };
 
-            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male);
+            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
             _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
                 .ReturnsAsync(product);
 

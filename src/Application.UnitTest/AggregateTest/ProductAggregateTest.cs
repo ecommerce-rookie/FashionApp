@@ -24,7 +24,7 @@ namespace Application.UnitTest.AggregateTest
             var gender = Gender.Male;
 
             // Act
-            var product = Product.Create(id, name, unitPrice, purchasePrice, description, status, categoryId, quantity, sizes, gender);
+            var product = Product.Create(id, name, unitPrice, purchasePrice, description, status, categoryId, quantity, sizes, gender, Guid.NewGuid());
 
             // Assert
             product.Name.Should().Be(name);
@@ -37,7 +37,7 @@ namespace Application.UnitTest.AggregateTest
         [Fact]
         public void Create_WithInvalidName_ShouldThrow()
         {
-            var act = () => Product.Create(Guid.NewGuid(), "A", 100, 50, "", ProductStatus.Available, 1, 1, new(), Gender.Male);
+            var act = () => Product.Create(Guid.NewGuid(), "A", 100, 50, "", ProductStatus.Available, 1, 1, new(), Gender.Male, Guid.NewGuid());
 
             act.Should().Throw<ValidationException>().WithMessage("One or more validation failures have occurred.");
         }
@@ -49,7 +49,7 @@ namespace Application.UnitTest.AggregateTest
         [InlineData(100, 90, -5)] // negative quantity
         public void Create_WithInvalidValues_ShouldThrow(decimal unitPrice, decimal purchasePrice, int? quantity = 1)
         {
-            var act = () => Product.Create(Guid.NewGuid(), "Shirt", unitPrice, purchasePrice, "", ProductStatus.Available, 1, quantity, new(), Gender.Male);
+            var act = () => Product.Create(Guid.NewGuid(), "Shirt", unitPrice, purchasePrice, "", ProductStatus.Available, 1, quantity, new(), Gender.Male, Guid.NewGuid());
 
             act.Should().Throw<ValidationException>();
         }
@@ -61,10 +61,10 @@ namespace Application.UnitTest.AggregateTest
         [Fact]
         public void Update_ShouldUpdateFieldsAndSetSlug()
         {
-            var product = Product.Create(Guid.NewGuid(), "Old", 10, 5, "", ProductStatus.OutOfStock, 1, 1, new(), Gender.Male);
+            var product = Product.Create(Guid.NewGuid(), "Old", 10, 5, "", ProductStatus.OutOfStock, 1, 1, new(), Gender.Male, Guid.NewGuid());
 
             var newId = Guid.NewGuid();
-            product.Update(newId, "New", 50, 20, "updated", ProductStatus.Available, 2, 0, new() { "S" }, Gender.Female);
+            product.Update(newId, "New", 50, 20, "updated", ProductStatus.Available, 2, 0, new List<string>() { "S" }, Gender.Female);
 
             product.Name.Should().Be("New");
             product.Slug.Should().Contain("new");
