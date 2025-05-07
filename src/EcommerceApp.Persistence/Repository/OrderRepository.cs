@@ -1,5 +1,6 @@
 ﻿using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
 namespace Persistence.Repository
@@ -17,5 +18,17 @@ namespace Persistence.Repository
         {
             await _context.OrderDetails.AddRangeAsync(orderDetails);
         }
+
+        public async Task<IEnumerable<Order>> GetOrderCustomer(Guid customerId)
+        {
+            return await _dbSet
+                .Where(o => o.CustomerId.Equals(customerId))
+                .Include(o => o.OrderDetails!)
+                    .ThenInclude(od => od.Product)
+                    .ThenInclude(od => od.ImageProducts)
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
+        }
+
     }
 }

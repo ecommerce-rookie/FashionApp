@@ -23,7 +23,7 @@ public partial class Order : BaseAuditableEntity<Guid>, IAggregateRoot
 
     public virtual User? Customer { get; private set; }
 
-    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail>? OrderDetails { get; private set; }
 
 
     public Order() { }

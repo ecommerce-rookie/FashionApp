@@ -1,8 +1,6 @@
-﻿using Domain.Aggregates.ProductAggregate.ValuesObjects;
-
-namespace Application.Features.OrderFeatures.Models
+﻿namespace StoreFront.Domain.Models.OrderModels.Responses
 {
-    public class OrderDetailResponseModel
+    public class OrderDetailResponse
     {
         public int Id { get; set; }
 
@@ -17,6 +15,5 @@ namespace Application.Features.OrderFeatures.Models
         public string? NameProduct { get; set; }
 
         public string? Slug { get; set; }
-
     }
 }

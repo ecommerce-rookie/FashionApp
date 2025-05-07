@@ -228,8 +228,7 @@ namespace EcommerceApp.IdentityService.Pages.Login
 
             await _userManager.AddClaimsAsync(user,
                 [
-                    new(JwtClaimTypes.Email, user.Email!),
-                    new(JwtClaimTypes.Role, "Customer")
+                    new(JwtClaimTypes.Email, user.Email!)
                 ]);
 
             await _userManager.AddToRoleAsync(user, "Customer");

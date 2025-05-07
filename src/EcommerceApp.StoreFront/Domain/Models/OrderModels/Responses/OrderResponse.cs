@@ -1,10 +1,10 @@
-﻿using Application.Features.UserFeatures.Models;
-using Domain.Aggregates.OrderAggregate.Enums;
-using Infrastructure.Authentication.Settings;
+﻿
+using StoreFront.Domain.Models.UserModels.Responses;
+using static StoreFront.Domain.Enums.OrderEnum;
 
-namespace Application.Features.OrderFeatures.Models
+namespace StoreFront.Domain.Models.OrderModels.Responses
 {
-    public class OrderResponseModel
+    public class OrderResponse
     {
         public Guid Id { get; set; }
         public decimal TotalPrice { get; set; }
@@ -23,8 +23,8 @@ namespace Application.Features.OrderFeatures.Models
 
         public DateTime? UpdatedAt { get; set; }
 
-        public AuthorResponseModel? Customer { get; set; }
+        public AuthorResponse? Customer { get; set; }
 
-        public IEnumerable<OrderDetailResponseModel>? Details { get; set; }
+        public IEnumerable<OrderDetailResponse>? Details { get; set; }
     }
 }

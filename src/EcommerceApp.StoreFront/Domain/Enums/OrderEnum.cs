@@ -14,7 +14,15 @@ namespace StoreFront.Domain.Enums
             VnPay = 5,
         }
 
-
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public enum OrderStatus
+        {
+            Pending = 1,
+            Processing = 2,
+            Shipping = 3,
+            Delivered = 4,
+            Cancelled = 5
+        }
 
     }
 }

@@ -65,11 +65,17 @@ namespace Application.Mappings
 
             CreateMap<PagedList<User>, PagedList<UserPreviewResponseModel>>();
 
+            CreateMap<OrderDetail, OrderDetailResponseModel>()
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price!.Amount))
+                .ForMember(dest => dest.NameProduct, opt => opt.MapFrom(src => src.Product!.Name))
+                .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.Product!.Slug))
+                .ForMember(dest => dest.ImageProduct, opt => opt.MapFrom(src => src.Product!.ImageProducts!.FirstOrDefault()!.Image.Url));
+
             CreateMap<Order, OrderResponseModel>()
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice!.Amount))
                 .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.OrderDetails))
                 .ForMember(dest => dest.TotalItems, opt => opt.MapFrom(src => src.OrderDetails!.Count()));
-
 
             CreateMap<PagedList<Order>, PagedList<OrderResponseModel>>();
 
