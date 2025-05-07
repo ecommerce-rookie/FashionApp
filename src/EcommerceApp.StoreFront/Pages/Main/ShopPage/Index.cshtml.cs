@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using StoreFront.Application.Extensions;
 using StoreFront.Application.Helpers;
 using StoreFront.Application.Services;
 using StoreFront.Domain.Constants;
 using StoreFront.Domain.Enums;
+using StoreFront.Domain.Models.CategoryModels.Requests;
 using StoreFront.Domain.Models.CategoryModels.Responses;
 using StoreFront.Domain.Models.Common;
 using StoreFront.Domain.Models.ProductModels.Request;
@@ -38,7 +40,7 @@ namespace StoreFront.Pages.Main.ShopPage
 
         public IEnumerable<SelectListItem> Sizes { get; set; } = EnumExtension.ToSelectList<ProductSize>(useDescription: false);
 
-        public async Task OnGet()
+        public async Task OnGetAsync(string? message)
         {
             // Set default filter values
             Filter.Page = Filter.Page <= 0 ? 1 : Filter.Page;
@@ -47,7 +49,16 @@ namespace StoreFront.Pages.Main.ShopPage
             var response = await _productService.GetProducts(Filter);
             Products = response.ToPagedList();
             
-            Categories = await _categoryService.GetCategories();
+            Categories = await _categoryService.GetCategories(new CategoryRequestQuery()
+            {
+                Page = -1,
+                EachPage = 10
+            });
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                TempData.SetSuccess(message, "Checkout Success!");
+            }
         }
 
 

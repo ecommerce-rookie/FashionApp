@@ -1,10 +1,7 @@
-﻿using Application.Features.UserFeatures.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using StoreFront.Application.Extensions;
+﻿using StoreFront.Application.Extensions;
 using StoreFront.Application.Services;
 using StoreFront.Application.Services.CartService;
+using StoreFront.Domain.Models.UserModels.Responses;
 using static StoreFront.Domain.Enums.UserEnums;
 
 namespace StoreFront.Application.Middlewares

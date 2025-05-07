@@ -13,7 +13,6 @@
     <Folder Include="Aggregates\FeedbackAggregate\Enums\" />
     <Folder Include="Aggregates\FeedbackAggregate\ValuesObject\" />
     <Folder Include="Aggregates\OrderAggregate\Events\" />
-    <Folder Include="Aggregates\OrderAggregate\Constants\" />
   </ItemGroup>
 
   <ItemGroup>

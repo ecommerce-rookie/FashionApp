@@ -7,5 +7,6 @@ namespace Domain.Repositories
 {
     public interface IOrderRepository : ISqlRepository<Order>
     {
+        Task AddRangeOrderDetail(IEnumerable<OrderDetail> orderDetails);
     }
 }

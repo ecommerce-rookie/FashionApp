@@ -82,7 +82,7 @@ namespace API.Controllers
 
         [HttpPatch("{userId}/status")]
         [ProducesResponseType(typeof(APIResponse<Guid>), StatusCodes.Status200OK)]
-        //[Authorize(PolicyType.Moderator)]
+        [Authorize(PolicyType.Moderator)]
         public async Task<IActionResult> UpdateStatusUser([FromRoute] Guid userId, UpdateStatusUserCommand request, 
             CancellationToken cancellationToken)
         {

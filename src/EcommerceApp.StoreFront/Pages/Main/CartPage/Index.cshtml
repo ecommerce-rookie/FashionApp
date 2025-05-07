@@ -1,10 +1,12 @@
 ﻿@page "/carts"
 @model StoreFront.Pages.Main.CartPage.IndexModel
+@using Newtonsoft.Json
 @using StoreFront.Domain.Constants
 @using StoreFront.Domain.Models.PageModels
 
 @{
     ViewData["Title"] = "Cart";
+    TempData["carts"] = JsonConvert.SerializeObject(Model.Products);
 }
 
 <main class="main">
@@ -15,10 +17,9 @@
         Url = PageConstants.ShopPage,
         Title = "Product Detail"
     })
-    
+
     <!-- BEGIN CART -->
     <div class="cart-page wrapper">
-
         <div class="cart-page__cols">
 
             <!-- BEGIN LEFT COLUMN -->
@@ -26,80 +27,48 @@
 
                 <div class="cart-table wishlist">
 
-                    <article class="wishlist__item js-remove">
-                        <div class="wishlist__cols">
-                            <div class="wishlist__left">
-                                <a class="wishlist__image-link" href="product_page.html">
-                                    <img class="wishlist__image" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="https://via.placeholder.com/130x140" alt="">
-                                </a>
-                            </div>
-                            <div class="wishlist__right">
-                                <div class="wishlist__top wishlist__top_cart">
-                                    <div class="wishlist__col">
-                                        <h2 class="wishlist__title">
-                                            <a class="wishlist__link" href="product_page.html">Fashionee - catton shirt (S)</a>
-                                        </h2>
-                                    </div>
-                                    <div class="wishlist__col">
-                                        <button class="wishlist__remove remove-button js-remove-button"></button>
-                                    </div>
+                    @foreach (var product in Model.Products)
+                    {
+                        <article class="wishlist__item js-remove">
+                            <div class="wishlist__cols">
+                                <div class="wishlist__left">
+                                    <a class="wishlist__image-link" href="product_page.html">
+                                        <img class="wishlist__image" src="@product.Key.Image">
+                                    </a>
                                 </div>
-                                <div class="wishlist__bottom wishlist__bottom_cart">
-                                    <div class="wishlist__cart-col">
-                                        <span class="wishlist__old-price">$52.99</span>
-                                        <span class="wishlist__price wishlist__price_small">$35.99</span>
-                                    </div>
-                                    <div class="wishlist__cart-col">
-                                        <div class="wishlist__count count js-count">
-                                            <button class="count__button count__button_minus js-count-minus"></button>
-                                            <input class="count__input js-count-input" type="text" value="1" maxlength="4">
-                                            <button class="count__button count__button_plus js-count-plus"></button>
+                                <div class="wishlist__right">
+                                    <div class="wishlist__top wishlist__top_cart">
+                                        <div class="wishlist__col">
+                                            <h2 class="wishlist__title">
+                                                <a class="wishlist__link" href="product_page.html">@product.Key.Name</a>
+                                            </h2>
+                                        </div>
+                                        <div class="wishlist__col">
+                                            <button class="wishlist__remove remove-button js-remove-button"></button>
                                         </div>
                                     </div>
-                                    <div class="wishlist__cart-col">
-                                        <span class="wishlist__price wishlist__price_total">$35.99</span>
+                                    <div class="wishlist__bottom wishlist__bottom_cart">
+                                        <div class="wishlist__cart-col">
+                                            <span class="wishlist__old-price">@product.Key.UnitPrice.ToString("N0") đ</span>
+                                            <span class="wishlist__price wishlist__price_small">@product.Key.PurchasePrice.ToString("N0") đ</span>
+                                        </div>
+                                        <div class="wishlist__cart-col">
+                                            <div class="wishlist__count count js-count">
+                                                <button class="count__button count__button_minus js-count-minus"></button>
+                                                <input class="count__input js-count-input" type="text" value="@product.Value" maxlength="4">
+                                                <button class="count__button count__button_plus js-count-plus"></button>
+                                            </div>
+                                        </div>
+                                        <div class="wishlist__cart-col">
+                                            <span class="wishlist__price wishlist__price_total">@((product.Key.PurchasePrice * product.Value).ToString("N0")) đ</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    }
 
-                    <article class="wishlist__item js-remove">
-                        <div class="wishlist__cols">
-                            <div class="wishlist__left">
-                                <a class="wishlist__image-link" href="product_page.html">
-                                    <img class="wishlist__image" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-lazy="https://via.placeholder.com/130x140" alt="">
-                                </a>
-                            </div>
-                            <div class="wishlist__right">
-                                <div class="wishlist__top wishlist__top_cart">
-                                    <div class="wishlist__col">
-                                        <h2 class="wishlist__title">
-                                            <a class="wishlist__link" href="product_page.html">Spray wrap skirt</a>
-                                        </h2>
-                                    </div>
-                                    <div class="wishlist__col">
-                                        <button class="wishlist__remove remove-button js-remove-button"></button>
-                                    </div>
-                                </div>
-                                <div class="wishlist__bottom wishlist__bottom_cart">
-                                    <div class="wishlist__cart-col">
-                                        <span class="wishlist__price wishlist__price_small">$110.99</span>
-                                    </div>
-                                    <div class="wishlist__cart-col">
-                                        <div class="wishlist__count count js-count">
-                                            <button class="count__button count__button_minus js-count-minus"></button>
-                                            <input class="count__input js-count-input" type="text" value="1" maxlength="4">
-                                            <button class="count__button count__button_plus js-count-plus"></button>
-                                        </div>
-                                    </div>
-                                    <div class="wishlist__cart-col">
-                                        <span class="wishlist__price wishlist__price_total">$110.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+
 
                 </div>
 
@@ -142,6 +111,9 @@
             </div>
             <!-- LEFT COLUMN END -->
             <!-- BEGIN RIGHT COLUMN -->
+            @{
+                var total = @Model.Products.Sum(p => p.Key.PurchasePrice * p.Value);
+            }
             <aside class="cart-page__right">
                 <section class="your-order">
                     <h3 class="your-order__title">Your order</h3>
@@ -151,7 +123,7 @@
                                 <span class="your-order__text">Оrder price</span>
                             </div>
                             <div class="your-order__col">
-                                <span class="your-order__price">$146.98</span>
+                                <span class="your-order__price">@total.ToString("N0") đ</span>
                             </div>
                         </li>
                         <li class="your-order__item">
@@ -164,10 +136,10 @@
                         </li>
                         <li class="your-order__item">
                             <div class="your-order__col">
-                                <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(Aug 02 at 16:00)</span></span>
+                                <span class="your-order__text">Delivery&nbsp;&nbsp;<span>(@DateTime.UtcNow.AddDays(3).ToString("MMM dd 'at' HH:mm"))</span></span>
                             </div>
                             <div class="your-order__col">
-                                <span class="your-order__price">$16</span>
+                                <span class="your-order__price">0 đ</span>
                             </div>
                         </li>
                     </ul>
@@ -176,17 +148,18 @@
                             <span class="your-order__bottom-text">Total</span>
                         </div>
                         <div class="your-order__col">
-                            <span class="your-order__bottom-price">$162.98</span>
+                            <span class="your-order__bottom-price">@total.ToString("N0") đ</span>
                         </div>
                     </div>
                     <button class="your-order__button button">
-                        <span class="button__text">Checkout</span>
+                        <a class="button__text" href="/checkout">Checkout</a>
                     </button>
                 </section>
             </aside>
             <!-- RIGHT COLUMN END -->
 
         </div>
+        
 
     </div>
     <!-- CART END -->

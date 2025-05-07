@@ -103,6 +103,12 @@ public partial class Product : BaseAuditableEntity<Guid>, IAggregateRoot, ISoftD
         Slug = $"{SlugHelper.Generate(name)}-{id}";
     }
 
+    public void ClearImages()
+    {
+        ImageProducts?.Clear();
+    }
+
+
     #region Action Images
 
     public void AddImage(string imageUrl, int orderNumber)

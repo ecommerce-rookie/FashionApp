@@ -1,4 +1,4 @@
-﻿using Application.Features.UserFeatures.Models;
+﻿using StoreFront.Domain.Models.UserModels.Responses;
 
 namespace StoreFront.Domain.Models.FeedbackModels.Response
 {

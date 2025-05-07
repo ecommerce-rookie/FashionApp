@@ -33,7 +33,7 @@ namespace StoreFront.Application.Services.CartService
 
         public async Task<bool> RemoveItemFromCart(string userId, string productId, int quantity, bool? isDeleteAll)
         {
-            var key = GetKey(userId.ToString());
+            var key = GetKey(userId);
 
             if (isDeleteAll.HasValue && isDeleteAll.Value)
             {
@@ -51,6 +51,21 @@ namespace StoreFront.Application.Services.CartService
 
                 return true;
             }
+        }
+
+        public async Task<bool> ClearCart(string userId)
+        {
+            var key = GetKey(userId);
+
+            // Check if the cart exists
+            var exists = await _database.KeyExistsAsync(key);
+            if (!exists)
+            {
+                return true;
+            }
+            
+            // Delete the cart
+            return await _database.KeyDeleteAsync(key);
         }
 
         public async Task<int> CountProduct(string userId)

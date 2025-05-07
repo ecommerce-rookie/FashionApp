@@ -60,7 +60,7 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
             };
 
             var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
-            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
+            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetManageById(command.Id))
                 .ReturnsAsync(product);
 
             _mockUnitOfWork.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
@@ -71,6 +71,8 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
             // Assert
             result.Status.Should().Be(HttpStatusCode.OK);
             result.Message.Should().Be(MessageCommon.DeleteSuccessfully);
+            product.Id.Should().Be(command.Id);
+            product.IsDeleted.Should().BeTrue();
             _mockUnitOfWork.Verify(uow => uow.ProductRepository.Delete(It.IsAny<Product>()), Times.Never);
             _mockPublisher.Verify(p => p.Publish(It.IsAny<ModifiedProductEvent>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -86,7 +88,7 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
             };
 
             var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
-            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
+            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetManageById(command.Id))
                 .ReturnsAsync(product);
 
             _mockUnitOfWork.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
@@ -97,12 +99,15 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
             // Assert
             result.Status.Should().Be(HttpStatusCode.OK);
             result.Message.Should().Be(MessageCommon.DeleteSuccessfully);
+            result.Data.Should().Be(null);
+            product.IsDeleted.Should().BeFalse();
+
             _mockUnitOfWork.Verify(uow => uow.ProductRepository.Delete(It.IsAny<Product>()), Times.Once); 
             _mockPublisher.Verify(p => p.Publish(It.IsAny<ModifiedProductEvent>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnInternalServerError_WhenDeleteFails()
+        public async Task Handle_ShouldReturnNotFoundError_WhenDeleteFails()
         {
             // Arrange
             var command = new DeleteProductCommand
@@ -111,9 +116,9 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
                 Hard = false 
             };
 
-            var product = new Product(command.Id, "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
-            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetById(It.IsAny<Guid>()))
-                .ReturnsAsync(product);
+            var product = new Product(Guid.NewGuid(), "Product Name", 100, 90, "Description", ProductStatus.Available, 1, 10, new List<string> { "L", "M" }, Gender.Male, Guid.NewGuid());
+            product.AddImage("imageUrl", 1);
+            _mockUnitOfWork.Setup(uow => uow.ProductRepository.GetManageById(command.Id));
 
             _mockUnitOfWork.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
@@ -121,8 +126,8 @@ namespace Application.UnitTest.Features.ProductTest.DeleteProductTest
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            result.Status.Should().Be(HttpStatusCode.InternalServerError);
-            result.Message.Should().Be(MessageCommon.DeleteFailed);
+            result.Status.Should().Be(HttpStatusCode.NotFound);
+            result.Message.Should().Be(MessageCommon.NotFound);
         }
     }
 }

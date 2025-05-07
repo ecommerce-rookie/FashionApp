@@ -8,6 +8,7 @@ using AutoMapper;
 using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Aggregates.FeedbackAggregate.Entities;
 using Domain.Aggregates.OrderAggregate.Entities;
+using Domain.Aggregates.OrderAggregate.ValuesObject;
 using Domain.Aggregates.ProductAggregate.Entities;
 using Domain.Aggregates.UserAggregate.Entities;
 using Domain.Models.Common;
@@ -78,6 +79,9 @@ namespace Application.Mappings
             CreateMap<Category, CategoryResponseModel>();
 
             CreateMap<PagedList<Category>, PagedList<CategoryResponseModel>>();
+
+            CreateMap<CartRequestModel, Cart>()
+                .ReverseMap();
         }
     }
 }

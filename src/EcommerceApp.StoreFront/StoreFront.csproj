@@ -37,4 +37,8 @@
     <AdditionalFiles Include="Pages\Main\ShopPage\Components\ShopProductList.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Models\OrderModels\Responses\" />
+  </ItemGroup>
+
 </Project>

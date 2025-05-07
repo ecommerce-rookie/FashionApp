@@ -10,6 +10,9 @@ namespace StoreFront.Application.Services
         [Get("/products")]
         Task<ApiResponse<IEnumerable<ProductPreviewResponseModel>>> GetProducts([Query] ProductFilterParams filter);
 
+        [Get("/products/ids")]
+        Task<ApiResponse<IEnumerable<ProductPreviewResponseModel>>> GetProductIds([Query] ProductIdsRequest ids);
+
         [Get("/products/{slug}")]
         Task<APIResponse<ProductResponseModel>> GetProduct(string slug);
 

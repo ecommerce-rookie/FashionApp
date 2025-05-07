@@ -8,7 +8,7 @@ namespace StoreFront.Application.Services
     public interface ICategoryService
     {
         [Get("/categories")]
-        Task<IEnumerable<CategoryResponse>> GetCategories();
+        Task<IEnumerable<CategoryResponse>> GetCategories([Query] CategoryRequestQuery request);
        
         [Post("/categories")]
         Task<APIResponse> CreateCategory([Body] CategoryRequest request);

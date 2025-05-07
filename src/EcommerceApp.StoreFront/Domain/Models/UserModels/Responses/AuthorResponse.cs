@@ -1,4 +1,4 @@
-﻿namespace Application.Features.UserFeatures.Models
+﻿namespace StoreFront.Domain.Models.UserModels.Responses
 {
     public class AuthorResponse
     {

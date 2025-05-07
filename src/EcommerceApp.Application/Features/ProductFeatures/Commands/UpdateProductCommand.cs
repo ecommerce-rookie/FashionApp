@@ -11,6 +11,7 @@ using FluentValidation;
 using Infrastructure.Shared.Extensions;
 using Infrastructure.Storage;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text.Json.Serialization;
@@ -41,7 +42,7 @@ namespace Application.Features.ProductFeatures.Commands
 
         public Gender? Gender { get; set; }
 
-        public IEnumerable<ImageFileRequestModel> Files { get; set; } = new List<ImageFileRequestModel>(); // Use for upload image
+        public IEnumerable<IFormFile> Files { get; set; } = new List<IFormFile>(); // Use for upload image
 
         public IEnumerable<string> Images { get; set; } = new List<string>(); // Use for delete image
     }
@@ -61,7 +62,6 @@ namespace Application.Features.ProductFeatures.Commands
             RuleFor(v => v.Name)
                 .MinimumLength(3).WithMessage("Minimum length for name is 3 syllables")
                 .MaximumLength(50).WithMessage("Product name cannot exceed 50 syllables")
-                .MustAsync(CheckDuplicatedName).WithMessage("This product name already exist")
                 .When(v => v.Name != null);
 
             RuleFor(v => v.UnitPrice)
@@ -93,11 +93,6 @@ namespace Application.Features.ProductFeatures.Commands
             }
 
             return quantity == 0 && status != ProductStatus.Available;
-        }
-
-        private async Task<bool> CheckDuplicatedName(string name, CancellationToken cancellationToken)
-        {
-            return !await _unitOfWork.ProductRepository.CheckDuplicatedName(name);
         }
 
         private async Task<bool> CheckCategoryExist(int? categoryId, CancellationToken cancellationToken)
@@ -173,50 +168,92 @@ namespace Application.Features.ProductFeatures.Commands
             };
         }
 
-        private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<ImageFileRequestModel> files)
+        private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<IFormFile> files)
         {
-            // Delete old images in the database
-            await _unitOfWork.ProductRepository.DeleteImages(product.ImageProducts!);
+            var listDelete = product.ImageProducts
+                .Where(x => imagesDelete.Contains(x.Image.Url.ToString()))
+                .ToList();
 
-            // Delete old images in the storage
+            // Delete old images in the database
+            await _unitOfWork.ProductRepository.DeleteImages(listDelete);
             product.DeleteImages(imagesDelete);
 
-            // Get images and re-order them
-            var oldImages = product.ImageProducts?
-                .Where(x => !imagesDelete.Contains(x.Image.Url.ToString()))
-                .OrderBy(x => x.OrderNumber)
-                .Select(x => x.Image)
-                .ToList() ?? new List<ImageUrl>();
-
             // Upload new images
+            var oldImages = new List<ImageUrl>();
             for (int i = 0; i < files.Count(); i++)
             {
                 var file = files.ElementAt(i);
-                var image = await _storageService.UploadImage(file.File, ImageFolder.Product, 
-                    file.File.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
+                var image = await _storageService.UploadImage(file, ImageFolder.Product,
+                    file.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png, string.Empty);
 
-                // Check if the OrderNumber is within bounds
-                if (file.OrderNumber < oldImages.Count)
-                {
-                    // Insert at the given OrderNumber
-                    oldImages.Insert(file.OrderNumber, ImageUrl.Create(image.Url.ToString()));
-                } else
-                {
-                    // If OrderNumber is out of bounds, add at the end of the list
-                    oldImages.Add(ImageUrl.Create(image.Url.ToString()));
-                }
+                oldImages.Add(ImageUrl.Create(image.Url.ToString()));
             }
 
             // Add new images
+            var newImages = new List<ImageProduct>();
+            var numberOfImages = product.ImageProducts?.Count() ?? 0;
             for (int i = 0; i < oldImages?.Count(); i++)
             {
                 var image = oldImages.ElementAt(i);
-                product.AddImage(image.ToString(), i + 1);
+                newImages.Add(ImageProduct.Create(image.Url, product.Id, i + 1 + numberOfImages));
             }
 
             // Add new images to the database
-            await _unitOfWork.ProductRepository.AddRangeImage(product.ImageProducts!);
+            await _unitOfWork.ProductRepository.AddRangeImage(newImages);
         }
+
+        //private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<ImageFileRequestModel> files)
+        //{
+        //    // 1. Xóa toàn bộ ảnh khỏi DB (ImageProduct table)
+        //    await _unitOfWork.ProductRepository.DeleteImages(product.ImageProducts!);
+
+        //    // 2. Xóa khỏi navigation property
+        //    product.ClearImages();
+
+        //    // 3. Xóa khỏi Cloudinary (storage)
+        //    //product.DeleteImages(imagesDelete);
+
+        //    // 4. Build danh sách ảnh mới (nếu ảnh cũ còn dùng thì giữ lại)
+        //    var oldImages = new List<ImageUrl>();
+
+        //    // 🛠️ Nếu bạn dùng lại ảnh cũ không xóa, thì tái sử dụng:
+        //    // (chú ý: bước 1 đã xóa toàn bộ nên chỉ giữ nếu cần thực sự)
+        //    // Trong trường hợp này, bạn có thể bỏ qua phần giữ ảnh cũ
+
+        //    // 5. Upload và thêm ảnh mới
+        //    foreach (var file in files)
+        //    {
+        //        var uploaded = await _storageService.UploadImage(
+        //            file.File,
+        //            ImageFolder.Product,
+        //            file.File.ContentType.GetEnum<ImageFormat>() ?? ImageFormat.png,
+        //            string.Empty
+        //        );
+
+        //        var newImage = ImageUrl.Create(uploaded.Url.ToString());
+
+        //        // 🧠 Tránh trùng lặp
+        //        if (!oldImages.Any(x => x.Url.ToString() == newImage.Url.ToString()))
+        //        {
+        //            if (file.OrderNumber < oldImages.Count)
+        //            {
+        //                oldImages.Insert(file.OrderNumber, newImage);
+        //            } else
+        //            {
+        //                oldImages.Add(newImage);
+        //            }
+        //        }
+        //    }
+
+        //    // 6. Add lại vào Product
+        //    for (int i = 0; i < oldImages.Count; i++)
+        //    {
+        //        product.AddImage(oldImages[i].ToString(), i + 1);
+        //    }
+
+        //    // 7. Thêm lại vào DB
+        //    await _unitOfWork.ProductRepository.AddRangeImage(product.ImageProducts!);
+        //}
 
     }
 

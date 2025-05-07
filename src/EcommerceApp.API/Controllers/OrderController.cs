@@ -49,5 +49,15 @@ namespace API.Controllers
             return StatusCode((int)result.Status, result);
         }
 
+        [HttpPost("")]
+        [ProducesResponseType(typeof(APIResponse<OrderResponseModel>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(APIResponse<OrderResponseModel>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateOrder([FromBody] CheckoutCommand checkoutCommand, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(checkoutCommand, cancellationToken);
+
+            return StatusCode((int)result.Status, result);
+        }
+
     }
 }

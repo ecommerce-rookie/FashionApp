@@ -1,4 +1,4 @@
-﻿using Application.Features.UserFeatures.Models;
+﻿using StoreFront.Domain.Models.UserModels.Responses;
 using static StoreFront.Domain.Enums.ProductEnums;
 using static StoreFront.Domain.Enums.UserEnums;
 

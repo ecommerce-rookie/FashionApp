@@ -1,69 +1,48 @@
-﻿<form id="paymentMethodForm">
+﻿@model StoreFront.Pages.Main.CheckoutPage.IndexModel
+
+<form id="paymentMethodForm">
     <section class="checkout-form">
         <h2 class="checkout-form__title">payment method</h2>
         <div class="payment">
             <div class="payment__list">
                 <div class="payment__radio radio">
                     <label class="radio__label">
-                        <input class="radio__input" type="radio" name="payment" checked>
+                        <input class="radio__input" type="radio" value="Cash" asp-for="PaymentMethod" checked>
                         <span class="radio__icon"></span>
-                        <span class="radio__text">Visa/Mastercard</span>
+                        <span class="radio__text">Cash</span>
                     </label>
                 </div>
                 <div class="payment__radio radio">
                     <label class="radio__label">
-                        <input class="radio__input" name="payment" type="radio">
+                        <input class="radio__input" type="radio" name="payment" disabled>
                         <span class="radio__icon"></span>
-                        <span class="radio__text">Pay pal</span>
+                        <span class="radio__text">Momo</span>
                     </label>
                 </div>
                 <div class="payment__radio radio">
                     <label class="radio__label">
-                        <input class="radio__input" name="payment" type="radio">
+                        <input class="radio__input" name="payment" type="radio" disabled>
                         <span class="radio__icon"></span>
-                        <span class="radio__text">Payoneer</span>
+                        <span class="radio__text">Vnpay</span>
+                    </label>
+                </div>
+                <div class="payment__radio radio">
+                    <label class="radio__label">
+                        <input class="radio__input" name="payment" type="radio" disabled>
+                        <span class="radio__icon"></span>
+                        <span class="radio__text">Zalopay</span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card__left">
-                <div class="card-form">
-                    <label class="card-form__label" for="card-number">Сard number</label>
-                    <input class="card-form__input text-input js-mask-card" id="card-number"
-                           type="text" placeholder="xxxx-xxxx-xxxx-xxxx">
-                    <label class="card-form__label" for="card-date">Expiration date</label>
-                    <div class="card-form__cols">
-                        <div class="card-form__col">
-                            <input class="card-form__input text-input js-mask-date"
-                                   id="card-date" type="text" placeholder="mm">
-                        </div>
-                        <div class="card-form__col">
-                            <input class="card-form__input text-input js-mask-date"
-                                   type="text" placeholder="yy">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card__right">
-                <div class="card-form">
-                    <div class="card-form__code">
-                        <label class="card-form__label card-form__label_grey"
-                               for="card-code">Secret code</label>
-                        <input class="card-form__cvv round-input js-mask-code"
-                               id="card-code" type="text" placeholder="cvv">
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="checkout-form__buttons">
             <div class="checkout-form__button-col">
                 <a class="checkout-form__back back-button" id="backToStep1"
                    href="#">return</a>
             </div>
             <div class="checkout-form__button-col">
-                <button type="button" class="checkout-form__button button"
-                        id="continueToStep3">
+                <button type="submit" class="checkout-form__button button">
                     <span class="button__text">confirm order</span>
                 </button>
             </div>

@@ -1,25 +1,67 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using StoreFront.Application.Extensions;
 using StoreFront.Application.Helpers;
+using StoreFront.Application.Services;
 using StoreFront.Application.Services.CartService;
+using StoreFront.Domain.Models.Common;
+using StoreFront.Domain.Models.OrderModels.Requests;
 using StoreFront.Domain.Models.ProductModels.Request;
+using StoreFront.Domain.Models.ProductModels.Responses;
+using static StoreFront.Domain.Enums.OrderEnum;
 
 namespace StoreFront.Pages.Main.CheckoutPage
 {
     [IgnoreAntiforgeryToken]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ICartService _cartService;
+        private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
+        private readonly SafeApiCaller _safeApiCaller;
 
-        public IndexModel(ICartService cartService)
+        public IndexModel(ICartService cartService, IProductService productService, 
+            IOrderService orderService, SafeApiCaller safeApiCaller)
         {
             _cartService = cartService;
+            _productService = productService;
+            _orderService = orderService;
+            _safeApiCaller = safeApiCaller;
         }
 
-        public void OnGet()
+        public IDictionary<ProductPreviewResponseModel, int> Products { get; set; } = new Dictionary<ProductPreviewResponseModel, int>();
+
+        [BindProperty]
+        public string Address { get; set; } = string.Empty;
+        [BindProperty]
+        public string FirstName { get; set; } = string.Empty;
+        [BindProperty]
+        public string LastName { get; set; } = string.Empty;
+        [BindProperty]
+        public PaymentMethod PaymentMethod { get; set; }
+
+        public async Task OnGet(string? message)
         {
+            var userId = User.GetUserIdFromToken();
+
+            var carts = await _cartService.GetCarts(userId.ToString());
+
+            var products = await _productService.GetProductIds(new ProductIdsRequest()
+            {
+                ProductIds = carts.Keys.ToList()
+            });
+
+            Products = products.Content!.ToDictionary(x => x, x => carts[x.Id]);
+
+            if(!string.IsNullOrEmpty(message))
+            {
+                TempData.SetError(message, "Check out fail!");
+            }
+
         }
 
         public async Task<IActionResult> OnPostAddToCartAsync([FromBody] AddToCartRequest request)
@@ -67,6 +109,42 @@ namespace StoreFront.Pages.Main.CheckoutPage
             }
 
             return new JsonResult(result);
+        }
+
+        public async Task<IActionResult> OnPostCheckOut()
+        {
+            var userId = User.GetUserIdFromToken();
+
+            var carts = await _cartService.GetCarts(userId.ToString());
+
+            var request = new CheckoutRequest()
+            {
+                Address = Address,
+                NameReceiver = $"{FirstName} {LastName}",
+                PaymentMethod = PaymentMethod,
+                Carts = carts.Select(x => new CartRequest()
+                {
+                    ProductId = x.Key,
+                    Quantity = x.Value
+                })
+            };
+
+            var result = await _safeApiCaller.CallSafeAsync(
+                () => _orderService.CreateOrder(request));
+
+            if(result.IsSuccess)
+            {
+                // clear cart
+                await _cartService.ClearCart(userId.ToString());
+
+                // update session
+                HttpContext.Session.UpdateNumberOfProduct(0);
+
+                // redirect to order page
+                return Redirect($"/products?message={result.Message}");
+            }
+
+            return Redirect($"/checkout?message={result.Message}");
         }
 
     }

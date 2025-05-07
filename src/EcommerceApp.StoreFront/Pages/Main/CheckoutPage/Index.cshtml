@@ -34,29 +34,31 @@
 
         <div class="checkout-page__cols">
 
-            <div class="checkout-page__left">
-                <div id="step1" class="checkout-step active">
-                    @{
-                        await Html.RenderPartialAsync(PageConstants.CheckoutDetail);
-                    }
+            <form asp-page="@PageConstants.CheckoutPage" asp-page-handler="CheckOut" class="w-full">
+                <div class="checkout-page__left">
+                    <div id="step1" class="checkout-step active">
+                        @{
+                            await Html.RenderPartialAsync(PageConstants.CheckoutDetail);
+                        }
+                    </div>
+                    <div id="step2" class="checkout-step active">
+                        @{
+                            await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
+                        }
+                    </div>
+                    <div id="step3" class="checkout-step active">
+                        @{
+                            await Html.RenderPartialAsync(PageConstants.CheckoutComplete);
+                        }
+                    </div>
                 </div>
-                <div id="step2" class="checkout-step active">
-                    @{
-                        await Html.RenderPartialAsync(PageConstants.CheckoutPaymentmethod);
-                    }
-                </div>
-                <div id="step3" class="checkout-step active">
-                    @{
-                        await Html.RenderPartialAsync(PageConstants.CheckoutComplete);
-                    }
-                </div>
-            </div>
 
-            <aside class="checkout-page__right">
-                @{
-                    await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
-                }
-            </aside>
+                <aside class="checkout-page__right">
+                    @{
+                        await Html.RenderPartialAsync(PageConstants.CheckoutOverview);
+                    }
+                </aside>
+            </form>
             
 
         </div>

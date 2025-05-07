@@ -76,7 +76,7 @@ namespace API.Controllers
             return StatusCode((int)result.Status, result);
         }
 
-        [HttpPut("{slug}")]
+        [HttpPatch("{slug}")]
         [ProducesResponseType(typeof(APIResponse<APIResponse<Guid>>), StatusCodes.Status200OK)]
         [Authorize(PolicyType.Staff)]
         public async Task<IActionResult> UpdateProduct([FromRoute] string slug, [FromForm] UpdateProductCommand command, CancellationToken cancellationToken)
@@ -124,6 +124,15 @@ namespace API.Controllers
             }, cancellationToken);
 
             return StatusCode((int)result.Status, result);
+        }
+
+        [HttpGet("ids")]
+        [ProducesResponseType(typeof(APIResponse<IEnumerable<ProductPreviewResponseModel>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductIds([FromQuery] GetProductIdsQuery query, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(query, cancellationToken);
+
+            return Ok(result);
         }
 
     }

@@ -60,7 +60,7 @@ namespace StoreFront.Pages.Main.ProductPage
                 TempData.SetSuccess("Thank you!", "Feedback Success!");
             } else if(TempData["feedback"] != null && TempData["feedback"]!.Equals("false"))
             {
-
+                TempData.SetError("Network Error! Please, try again.", "Feedback Error!");
             }
 
             Product = response.Data!;

@@ -72,5 +72,12 @@ namespace Domain.Repositories
         /// <param name="images"></param>
         /// <returns></returns>
         Task AddRangeImage(IEnumerable<ImageProduct> images);
+
+        /// <summary>
+        /// Check if the product exists by id
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        Task<bool> CheckExistProducts(IEnumerable<Guid> ids);
     }
 }

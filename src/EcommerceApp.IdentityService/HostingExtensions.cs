@@ -1,5 +1,6 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Validation;
 using EcommerceApp.IdentityService.Data;
 using EcommerceApp.IdentityService.Models;
 using IdentityService;
@@ -49,10 +50,10 @@ namespace EcommerceApp.IdentityService
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddDeveloperSigningCredential(persistKey: false);
+                .AddAspNetIdentity<ApplicationUser>();
+                //.AddDeveloperSigningCredential(persistKey: false);
 
-            //builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomProfileService>();
+            builder.Services.AddScoped<IResourceOwnerPasswordValidator, CustomResourceOwnerPasswordValidator>();
             builder.Services.AddScoped<IProfileService, CustomProfileService>();
 
             builder.Services.AddCors();

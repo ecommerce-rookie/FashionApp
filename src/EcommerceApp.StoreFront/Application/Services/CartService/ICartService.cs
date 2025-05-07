@@ -7,5 +7,6 @@
         Task AddItemsToCart(string userId, IDictionary<Guid, int> productIds);
         Task<IDictionary<Guid, int>> GetCarts(string userId);
         Task<int> CountProduct(string userId);
+        Task<bool> ClearCart(string userId);
     }
 }

@@ -1,6 +1,6 @@
-﻿using Application.Features.UserFeatures.Models;
-using Refit;
+﻿using Refit;
 using StoreFront.Domain.Models.Common;
+using StoreFront.Domain.Models.UserModels.Responses;
 
 namespace StoreFront.Application.Services
 {

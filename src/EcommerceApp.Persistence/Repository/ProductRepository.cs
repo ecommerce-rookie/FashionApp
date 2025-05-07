@@ -149,5 +149,9 @@ namespace Persistence.Repository
             await _context.ImageProducts.AddRangeAsync(images);
         }
 
+        public async Task<bool> CheckExistProducts(IEnumerable<Guid> ids)
+        {
+            return await _dbSet.AnyAsync(p => ids.Contains(p.Id));
+        }
     }
 }

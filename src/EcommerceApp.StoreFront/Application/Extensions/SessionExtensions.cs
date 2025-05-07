@@ -1,6 +1,6 @@
-﻿using Application.Features.UserFeatures.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using StoreFront.Domain.Constants;
+using StoreFront.Domain.Models.UserModels.Responses;
 
 namespace StoreFront.Application.Extensions
 {
