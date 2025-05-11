@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Features.UserFeatures.Events
 {
-    internal class UpdatedImageUserHandler : INotificationHandler<ModifedUserEvent>
+    public class UpdatedImageUserHandler : INotificationHandler<ModifedUserEvent>
     {
         private readonly ICloudTaskProducer _cloudTaskProducer;
 

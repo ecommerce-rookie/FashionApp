@@ -86,9 +86,10 @@ namespace Application.Features.FeedbackFeatures.Commands
 
             var result = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            if(result)
+            if (result)
             {
-                await _publisher.Publish(new ModifiedFeedbackEvent() {
+                await _publisher.Publish(new ModifiedFeedbackEvent()
+                {
                     Id = feedback.Id
                 }, cancellationToken);
 

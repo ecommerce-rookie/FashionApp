@@ -170,13 +170,16 @@ namespace Application.Features.ProductFeatures.Commands
 
         private async Task UpdateImages(Product product, IEnumerable<string> imagesDelete, IEnumerable<IFormFile> files)
         {
-            var listDelete = product.ImageProducts
+            if(imagesDelete.Any())
+            {
+                var listDelete = product.ImageProducts
                 .Where(x => imagesDelete.Contains(x.Image.Url.ToString()))
                 .ToList();
 
-            // Delete old images in the database
-            await _unitOfWork.ProductRepository.DeleteImages(listDelete);
-            product.DeleteImages(imagesDelete);
+                // Delete old images in the database
+                await _unitOfWork.ProductRepository.DeleteImages(listDelete);
+                product.DeleteImages(imagesDelete);
+            }
 
             // Upload new images
             var oldImages = new List<ImageUrl>();

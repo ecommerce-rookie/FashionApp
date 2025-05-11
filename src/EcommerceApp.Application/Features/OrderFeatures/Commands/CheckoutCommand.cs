@@ -1,6 +1,5 @@
 ﻿using Application.Features.OrderFeatures.Models;
 using Application.Messages;
-using AutoMapper;
 using Domain.Aggregates.OrderAggregate.Entities;
 using Domain.Aggregates.OrderAggregate.Enums;
 using Domain.Aggregates.OrderAggregate.ValuesObject;
@@ -34,8 +33,8 @@ namespace Application.Features.OrderFeatures.Commands
         public void Config()
         {
             RuleFor(x => x.Carts)
-                .NotEmpty().WithMessage("Carts cannot be empty.")
                 .NotNull().WithMessage("Carts cannot be null.")
+                .NotEmpty().WithMessage("Carts cannot be empty.")
                 .ForEach(cart =>
                 {
                     cart.ChildRules(c =>
@@ -65,6 +64,11 @@ namespace Application.Features.OrderFeatures.Commands
 
         private async Task<bool> CheckExistProduct(IEnumerable<CartRequestModel> carts, CancellationToken cancellationToken)
         {
+            if(carts == null || !carts.Any())
+            {
+                return false;
+            }
+
             return await _unitOfWork.ProductRepository.CheckExistProducts(carts.Select(c => c.ProductId));
         }
 
@@ -74,6 +78,7 @@ namespace Application.Features.OrderFeatures.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticationService _authenticationService;
+
         public CheckoutCommandHandler(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;

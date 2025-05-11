@@ -6,6 +6,7 @@ using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 using FluentValidation;
 using Infrastructure.Authentication.Services;
+using Infrastructure.Shared.Extensions;
 using Infrastructure.Storage;
 using Microsoft.AspNetCore.Http;
 using System.Net;
@@ -57,7 +58,7 @@ namespace Application.Features.UserFeatures.Commands
             var role = _authenticationService.User.Role;
             var email = _authenticationService.User.Email;
             var userId = _authenticationService.User.UserId;
-            string url = string.Empty;
+            string url = request.LastName!.Trim().Split(" ").ElementAt(0).GetAvatar();
 
             if(request.Avatar != null)
             {

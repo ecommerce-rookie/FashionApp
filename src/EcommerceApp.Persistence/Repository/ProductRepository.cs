@@ -80,6 +80,8 @@ namespace Persistence.Repository
         public async Task<IEnumerable<Product>> GetBestSeller(int eachPage)
         {
             var best = await _context.OrderDetails
+                .AsNoTracking()
+                .AsSplitQuery()
                 .Where(od => od.ProductId != null)
                 .GroupBy(od => od.ProductId)
                 .Select(g => new

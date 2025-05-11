@@ -1,13 +1,10 @@
 ﻿using Application.Features.CategoryFeatures.Models;
-using Application.Messages;
 using AutoMapper;
 using Domain.Aggregates.CategoryAggregate.Entities;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
 using Infrastructure.Cache.Attributes;
-using Microsoft.IdentityModel.Tokens;
-using System.Net;
 
 namespace Application.Features.CategoryFeatures.Queries
 {

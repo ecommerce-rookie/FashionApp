@@ -42,18 +42,7 @@ namespace Application.Features.OrderFeatures.Queries
 
             if (roleId == UserRole.Customer)
             {
-                //orders = await _unitOfWork.OrderRepository.GetAll(o => 
-                //    (o.CustomerId.Equals(userId)) &&
-                //    (string.IsNullOrEmpty(request.Search) || o.Address!.Contains(request.Search)) &&
-                //    (request.PaymentMethods.IsNullOrEmpty() || request.PaymentMethods!.Any(p => p.Equals(o.PaymentMethod))) &&
-                //    (request.OrderStatuss.IsNullOrEmpty() || request.OrderStatuss!.Any(p => p.Equals(o.OrderStatus))),
-                //    request.Page, request.EachPage,
-                //    OrderSortBy.CreatedAt.ToString(),
-                //    true,
-                //    o => o.OrderDetails!
-                //);
                 orders = new PagedList<Order>(await _unitOfWork.OrderRepository.GetOrderCustomer(userId));
-
             } else if(roleId == UserRole.Admin || roleId == UserRole.Staff)
             {
                 orders = await _unitOfWork.OrderRepository.GetAll(o =>

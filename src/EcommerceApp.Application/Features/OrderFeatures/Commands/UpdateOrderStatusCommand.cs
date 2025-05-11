@@ -4,7 +4,6 @@ using Domain.Exceptions;
 using Domain.Models.Common;
 using Domain.Repositories.BaseRepositories;
 using Domain.Shared;
-using MediatR;
 using System.Net;
 using System.Text.Json.Serialization;
 
@@ -32,7 +31,11 @@ namespace Application.Features.OrderFeatures.Commands
 
             if (order == null)
             {
-                throw new ValidationException(MessageCommon.NotFound, nameof(request.OrderId));
+                return new APIResponse()
+                {
+                    Status = HttpStatusCode.NotFound,
+                    Message = MessageCommon.NotFound
+                };
             }
 
             order.UpdateStatus(request.NewStatus);

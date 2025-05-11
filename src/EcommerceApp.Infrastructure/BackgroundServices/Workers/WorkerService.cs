@@ -55,7 +55,7 @@ namespace Infrastructure.BackgroundServices.Workers
         }
 
         // Monitors the queue and scales workers up or down based on task demand
-        private async Task MonitorAndScaleAsync(CancellationToken stoppingToken)
+        public async Task MonitorAndScaleAsync(CancellationToken stoppingToken)
         {
             Console.WriteLine("[AutoScale] Monitoring and scaling workers...");
             while (!stoppingToken.IsCancellationRequested)
@@ -106,7 +106,7 @@ namespace Infrastructure.BackgroundServices.Workers
         }
 
         // Adds a new worker to process tasks from the queue
-        private void AddWorker(CancellationToken stoppingToken)
+        public void AddWorker(CancellationToken stoppingToken)
         {
             var cts = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken); // Create a linked token to allow individual cancellation
             var workerTask = Task.Run(async () =>
@@ -135,7 +135,7 @@ namespace Infrastructure.BackgroundServices.Workers
         }
 
         // Removes a worker from the collection and cancels its task
-        private async Task RemoveWorker()
+        public async Task RemoveWorker()
         {
             if (_workers.TryTake(out var worker)) // Safely remove a worker from the collection
             {

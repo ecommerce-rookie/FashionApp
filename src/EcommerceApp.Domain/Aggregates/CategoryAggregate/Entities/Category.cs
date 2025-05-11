@@ -13,6 +13,12 @@ public partial class Category : BaseAuditableEntity<int>, IAggregateRoot
 
     private Category() { }
 
+    public Category(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
     public Category(string name)
     {
         Name = name;
