@@ -1,9 +1,11 @@
 ﻿using Domain.Aggregates.CategoryAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class CategoryConfiguration : BaseConfiguration<Category, int>
     {
         public override void Configure(EntityTypeBuilder<Category> builder)

@@ -1,9 +1,11 @@
 ﻿using Domain.Aggregates.FeedbackAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class FeedbackConfiguration : BaseConfiguration<Feedback, Guid>
     {
         public override void Configure(EntityTypeBuilder<Feedback> builder)

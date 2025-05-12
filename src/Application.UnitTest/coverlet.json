@@ -1,0 +1,22 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms",
+    "[Infrastructure]*",
+    "[EcommerceApp.Application]DependencyInjection",
+    "[EcommerceApp.Persistence]AssemblyReference",
+    "[EcommerceApp.Persistence]DependencyInjection"
+  ],
+  "excludeByFile": [
+    "**/Infrastructure/*",
+    "**/Migrations/*"
+  ],
+  "excludeByAttribute": [
+    "GeneratedCodeAttribute",
+    "CompilerGeneratedAttribute"
+  ]
+}

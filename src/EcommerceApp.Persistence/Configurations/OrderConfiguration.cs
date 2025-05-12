@@ -3,9 +3,11 @@ using Domain.Aggregates.OrderAggregate.Enums;
 using Domain.Aggregates.ProductAggregate.ValuesObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class OrderConfiguration : BaseConfiguration<Order, Guid>
     {
         public override void Configure(EntityTypeBuilder<Order> builder)

@@ -4,9 +4,11 @@ using Domain.Aggregates.UserAggregate.Enums;
 using Domain.Aggregates.UserAggregate.ValuesObject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class UserConfiguration : BaseConfiguration<User, Guid>
     {
         public override void Configure(EntityTypeBuilder<User> builder)

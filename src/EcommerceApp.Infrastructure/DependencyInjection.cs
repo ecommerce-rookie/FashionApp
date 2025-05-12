@@ -7,12 +7,10 @@ using Infrastructure.Cache;
 using Infrastructure.Cache.Services;
 using Infrastructure.Configurations;
 using Infrastructure.DocumentApi.swagger;
-using Infrastructure.Email;
 using Infrastructure.HttpClients;
 using Infrastructure.ProducerTasks.CloudTaskProducers;
 using Infrastructure.ProducerTasks.EmailTaskProducers;
 using Infrastructure.Storage;
-using Infrastructure.Storage.Cloudinary.Services;
 using Infrastructure.Versions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,9 +36,6 @@ namespace Infrastructure
 
             // Set up Swagger
             builder.Services.AddSwagger(builder.Configuration);
-
-            // Set up email
-            builder.Services.AddFluentEmail(builder.Configuration);
 
             // Set up system
             builder.AddSystem();

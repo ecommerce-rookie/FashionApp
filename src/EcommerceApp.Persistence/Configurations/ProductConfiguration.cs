@@ -2,9 +2,11 @@
 using Domain.Aggregates.ProductAggregate.ValuesObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class ProductConfiguration : BaseConfiguration<Product, Guid>
     {
         public override void Configure(EntityTypeBuilder<Product> builder)

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SeedWorks.Implements;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations;
 
+[ExcludeFromCodeCoverage]
 public abstract class BaseConfiguration<T, TKey> : IEntityTypeConfiguration<T>
     where T : BaseAuditableEntity<TKey>
 {

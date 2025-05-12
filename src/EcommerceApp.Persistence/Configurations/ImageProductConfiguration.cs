@@ -2,9 +2,11 @@
 using Domain.Aggregates.ProductAggregate.ValuesObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class ImageProductConfiguration : IEntityTypeConfiguration<ImageProduct>
     {
         public void Configure(EntityTypeBuilder<ImageProduct> builder)

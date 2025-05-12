@@ -33,6 +33,7 @@ namespace Persistence.Repository
             var query = _dbSet
                 .Where(predicate)
                 .AsQueryable();
+
             if (includeProperties != null)
             {
                 foreach (var includeProperty in includeProperties)

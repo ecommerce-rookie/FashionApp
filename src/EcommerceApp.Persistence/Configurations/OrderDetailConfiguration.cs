@@ -2,11 +2,13 @@
 using Domain.Aggregates.ProductAggregate.ValuesObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Persistence.Configurations
 {
     public sealed class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
     {
+        [ExcludeFromCodeCoverage]
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.ToTable(nameof(OrderDetail));

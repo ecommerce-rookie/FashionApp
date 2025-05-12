@@ -27,9 +27,4 @@
     <ProjectReference Include="..\EcommerceApp.Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Quartz\Services\" />
-    <Folder Include="Quartz\Settings\" />
-  </ItemGroup>
-
 </Project>

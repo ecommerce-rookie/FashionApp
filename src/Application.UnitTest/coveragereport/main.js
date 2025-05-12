@@ -296,7 +296,6 @@ var assemblies = [
       { "name": "Application.Features.UserFeatures.Queries.GetListUserQueryHandler", "rp": "Application_GetListUserQueryHandler.html", "cl": 21, "ucl": 0, "cal": 21, "tl": 62, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Application.Mappings.MapperConfig", "rp": "Application_MapperConfig.html", "cl": 0, "ucl": 58, "cal": 58, "tl": 93, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Application.Utilities.Utils", "rp": "Application_Utils.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Cache.Attributes.CacheAttribute", "rp": "Application_CacheAttribute.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "RookieShop.Persistence.TxBehavior<T1, T2>", "rp": "Application_TxBehavior_2.html", "cl": 14, "ucl": 35, "cal": 49, "tl": 79, "cb": 1, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
@@ -342,69 +341,20 @@ var assemblies = [
       { "name": "SlugHelper", "rp": "Domain_SlugHelper.html", "cl": 26, "ucl": 2, "cal": 28, "tl": 53, "cb": 15, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
   {
-    "name": "Infrastructure",
-    "classes": [
-      { "name": "Infrastructure.Authentication.Configs.JWTConfig", "rp": "Infrastructure_JWTConfig.html", "cl": 0, "ucl": 16, "cal": 16, "tl": 30, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Authentication.Configs.PolicyConfig", "rp": "Infrastructure_PolicyConfig.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 21, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Authentication.Services.AuthenticationService", "rp": "Infrastructure_AuthenticationService.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 28, "cb": 0, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Authentication.Settings.UserAuthenModel", "rp": "Infrastructure_UserAuthenModel.html", "cl": 3, "ucl": 2, "cal": 5, "tl": 14, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.BackgroundServices.BackgroundTask.BackgroundTaskQueue", "rp": "Infrastructure_BackgroundTaskQueue.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 31, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.BackgroundServices.Workers.WorkerService<T>", "rp": "Infrastructure_WorkerService_1.html", "cl": 73, "ucl": 38, "cal": 111, "tl": 173, "cb": 11, "tb": 30, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Cache.RedisConfig", "rp": "Infrastructure_RedisConfig.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 29, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Cache.Services.CacheService", "rp": "Infrastructure_CacheService.html", "cl": 0, "ucl": 68, "cal": 68, "tl": 132, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Cache.Settings.RedisSetting", "rp": "Infrastructure_RedisSetting.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Configurations.SystemConfig", "rp": "Infrastructure_SystemConfig.html", "cl": 0, "ucl": 17, "cal": 17, "tl": 36, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.DependencyInjection", "rp": "Infrastructure_DependencyInjection.html", "cl": 0, "ucl": 26, "cal": 26, "tl": 81, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.DocumentApi.ScalarConfig", "rp": "Infrastructure_ScalarConfig.html", "cl": 0, "ucl": 25, "cal": 25, "tl": 38, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.DocumentApi.swagger.SwaggerConfig", "rp": "Infrastructure_SwaggerConfig.html", "cl": 0, "ucl": 70, "cal": 70, "tl": 84, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.DocumentApi.swagger.SwaggerGenConfig", "rp": "Infrastructure_SwaggerGenConfig.html", "cl": 0, "ucl": 22, "cal": 22, "tl": 40, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Email.MailConfig", "rp": "Infrastructure_MailConfig.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Email.Mailkit.MailkitService<T>", "rp": "Infrastructure_MailkitService_1.html", "cl": 0, "ucl": 39, "cal": 39, "tl": 65, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Email.Settings.MailMetadata", "rp": "Infrastructure_MailMetadata.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Email.Settings.MailModel<T>", "rp": "Infrastructure_MailModel_1.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Email.Settings.MailSetting", "rp": "Infrastructure_MailSetting.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.HttpClients.HttpClientConfig", "rp": "Infrastructure_HttpClientConfig.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 25, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.HttpClients.Services.HttpService", "rp": "Infrastructure_HttpService.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 34, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.ProducerTasks.CloudTaskProducers.CloudTaskProducer", "rp": "Infrastructure_CloudTaskProducer.html", "cl": 0, "ucl": 28, "cal": 28, "tl": 51, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.ProducerTasks.EmailTaskProducers.EmailTaskProducer", "rp": "Infrastructure_EmailTaskProducer.html", "cl": 0, "ucl": 14, "cal": 14, "tl": 31, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Quartz.QuartzConfig", "rp": "Infrastructure_QuartzConfig.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Search.AlgoliaService.Service.AlgoliaService", "rp": "Infrastructure_AlgoliaService.html", "cl": 0, "ucl": 32, "cal": 32, "tl": 60, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Search.AlgoliaService.Settings.AlgoliaSetting", "rp": "Infrastructure_AlgoliaSetting.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 15, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Shared.Extensions.AvatarExtensions", "rp": "Infrastructure_AvatarExtensions.html", "cl": 3, "ucl": 3, "cal": 6, "tl": 15, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Shared.Extensions.DateTimeExtensions", "rp": "Infrastructure_DateTimeExtensions.html", "cl": 0, "ucl": 34, "cal": 34, "tl": 94, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Shared.Extensions.EnumExtensions", "rp": "Infrastructure_EnumExtensions.html", "cl": 20, "ucl": 0, "cal": 20, "tl": 43, "cb": 13, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Shared.Extensions.IndentityExtension", "rp": "Infrastructure_IndentityExtension.html", "cl": 0, "ucl": 36, "cal": 36, "tl": 64, "cb": 0, "tb": 26, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Shared.Helpers.NameHelper", "rp": "Infrastructure_NameHelper.html", "cl": 15, "ucl": 0, "cal": 15, "tl": 25, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Storage.Cloudinary.Services.CloudinaryService", "rp": "Infrastructure_CloudinaryService.html", "cl": 0, "ucl": 46, "cal": 46, "tl": 76, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Storage.Cloudinary.Settings.CloudinarySetting", "rp": "Infrastructure_CloudinarySetting.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Storage.StorageConfig", "rp": "Infrastructure_StorageConfig.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 18, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Versions.APIVersionConfig", "rp": "Infrastructure_APIVersionConfig.html", "cl": 0, "ucl": 17, "cal": 17, "tl": 28, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-    ]},
-  {
     "name": "Persistence",
     "classes": [
-      { "name": "ASM.Application.Infrastructure.Persistence.Interceptors.AuditableEntityInterceptor", "rp": "Persistence_AuditableEntityInterceptor.html", "cl": 8, "ucl": 10, "cal": 18, "tl": 40, "cb": 4, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Infrastructure.Extensions.QueryableExtensions", "rp": "Persistence_QueryableExtensions.html", "cl": 53, "ucl": 7, "cal": 60, "tl": 147, "cb": 8, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Persistence.AssemblyReference", "rp": "Persistence_AssemblyReference.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.BaseConfiguration<T1, T2>", "rp": "Persistence_BaseConfiguration_2.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.CategoryConfiguration", "rp": "Persistence_CategoryConfiguration.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.FeedbackConfiguration", "rp": "Persistence_FeedbackConfiguration.html", "cl": 0, "ucl": 25, "cal": 25, "tl": 46, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.ImageProductConfiguration", "rp": "Persistence_ImageProductConfiguration.html", "cl": 0, "ucl": 20, "cal": 20, "tl": 38, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.OrderConfiguration", "rp": "Persistence_OrderConfiguration.html", "cl": 0, "ucl": 32, "cal": 32, "tl": 55, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.OrderDetailConfiguration", "rp": "Persistence_OrderDetailConfiguration.html", "cl": 0, "ucl": 29, "cal": 29, "tl": 51, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.ProductConfiguration", "rp": "Persistence_ProductConfiguration.html", "cl": 0, "ucl": 59, "cal": 59, "tl": 89, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Configurations.UserConfiguration", "rp": "Persistence_UserConfiguration.html", "cl": 0, "ucl": 40, "cal": 40, "tl": 65, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Contexts.EcommerceContext", "rp": "Persistence_EcommerceContext.html", "cl": 0, "ucl": 35, "cal": 35, "tl": 70, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Contexts.EcommerceContext", "rp": "Persistence_EcommerceContext.html", "cl": 3, "ucl": 32, "cal": 35, "tl": 70, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Persistence.DependencyInjection", "rp": "Persistence_DependencyInjection.html", "cl": 0, "ucl": 18, "cal": 18, "tl": 36, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Persistence.Extensions.AuditExtensions", "rp": "Persistence_AuditExtensions.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 14, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Persistence.Extensions.ModelBuilderExtensions", "rp": "Persistence_ModelBuilderExtensions.html", "cl": 23, "ucl": 0, "cal": 23, "tl": 43, "cb": 7, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.CategoryRepository", "rp": "Persistence_CategoryRepository.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.FeedbackRepository", "rp": "Persistence_FeedbackRepository.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.OrderRepository", "rp": "Persistence_OrderRepository.html", "cl": 0, "ucl": 16, "cal": 16, "tl": 34, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.ProductRepository", "rp": "Persistence_ProductRepository.html", "cl": 0, "ucl": 112, "cal": 112, "tl": 159, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.SqlRepository<T>", "rp": "Persistence_SqlRepository_1.html", "cl": 0, "ucl": 169, "cal": 169, "tl": 265, "cb": 0, "tb": 78, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.Repository.UserRepository", "rp": "Persistence_UserRepository.html", "cl": 0, "ucl": 26, "cal": 26, "tl": 50, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Persistence.UnitOfWork.UnitOfWork", "rp": "Persistence_UnitOfWork.html", "cl": 0, "ucl": 74, "cal": 74, "tl": 113, "cb": 0, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.CategoryRepository", "rp": "Persistence_CategoryRepository.html", "cl": 3, "ucl": 3, "cal": 6, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.FeedbackRepository", "rp": "Persistence_FeedbackRepository.html", "cl": 3, "ucl": 8, "cal": 11, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.OrderRepository", "rp": "Persistence_OrderRepository.html", "cl": 4, "ucl": 12, "cal": 16, "tl": 34, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.ProductRepository", "rp": "Persistence_ProductRepository.html", "cl": 4, "ucl": 108, "cal": 112, "tl": 159, "cb": 0, "tb": 14, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.SqlRepository<T>", "rp": "Persistence_SqlRepository_1.html", "cl": 115, "ucl": 54, "cal": 169, "tl": 266, "cb": 57, "tb": 78, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.Repository.UserRepository", "rp": "Persistence_UserRepository.html", "cl": 3, "ucl": 23, "cal": 26, "tl": 50, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Persistence.UnitOfWork.UnitOfWork", "rp": "Persistence_UnitOfWork.html", "cl": 51, "ucl": 23, "cal": 74, "tl": 113, "cb": 10, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -419,76 +369,16 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
-    "assembly": "Persistence", "class": "Persistence.Repository.SqlRepository<T>", "reportPath": "Persistence_SqlRepository_1.html", "methodName": "Delete()", "methodShortName": "Delete()", "fileIndex": 0, "line": 58,
-    "metrics": [
-      { "value": 506, "exceeded": true },
-      { "value": 22, "exceeded": true },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.Authentication.Services.AuthenticationService", "reportPath": "Infrastructure_AuthenticationService.html", "methodName": "get_User()", "methodShortName": "get_User()", "fileIndex": 0, "line": 18,
-    "metrics": [
-      { "value": 342, "exceeded": true },
-      { "value": 18, "exceeded": true },
-    ]},
-  {
-    "assembly": "Persistence", "class": "Persistence.Repository.SqlRepository<T>", "reportPath": "Persistence_SqlRepository_1.html", "methodName": "GetById()", "methodShortName": "GetById()", "fileIndex": 0, "line": 22,
-    "metrics": [
-      { "value": 272, "exceeded": true },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.Search.AlgoliaService.Service.AlgoliaService", "reportPath": "Infrastructure_AlgoliaService.html", "methodName": "AddOrUpdateRecord()", "methodShortName": "AddOrUpdateRecord()", "fileIndex": 0, "line": 24,
-    "metrics": [
-      { "value": 210, "exceeded": true },
-      { "value": 14, "exceeded": false },
-    ]},
-  {
     "assembly": "Persistence", "class": "Persistence.Repository.ProductRepository", "reportPath": "Persistence_ProductRepository.html", "methodName": "GetManageProducts()", "methodShortName": "GetManageProducts()", "fileIndex": 0, "line": 114,
     "metrics": [
       { "value": 156, "exceeded": true },
       { "value": 12, "exceeded": false },
     ]},
   {
-    "assembly": "Infrastructure", "class": "Infrastructure.Email.Mailkit.MailkitService<T>", "reportPath": "Infrastructure_MailkitService_1.html", "methodName": "SendEmails()", "methodShortName": "SendEmails()", "fileIndex": 0, "line": 38,
-    "metrics": [
-      { "value": 110, "exceeded": true },
-      { "value": 10, "exceeded": false },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.Shared.Extensions.IndentityExtension", "reportPath": "Infrastructure_IndentityExtension.html", "methodName": "GetUserIdFromToken(System.Security.Principal.IPrincipal)", "methodShortName": "GetUserIdFromToken(...)", "fileIndex": 0, "line": 11,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.Shared.Extensions.IndentityExtension", "reportPath": "Infrastructure_IndentityExtension.html", "methodName": "GetSessionIdFromToken(System.Security.Principal.IPrincipal)", "methodShortName": "GetSessionIdFromToken(...)", "fileIndex": 0, "line": 28,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
     "assembly": "Persistence", "class": "Persistence.Repository.UserRepository", "reportPath": "Persistence_UserRepository.html", "methodName": "GetUsers()", "methodShortName": "GetUsers()", "fileIndex": 0, "line": 20,
     "metrics": [
       { "value": 72, "exceeded": true },
       { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.BackgroundServices.Workers.WorkerService<T>", "reportPath": "Infrastructure_WorkerService_1.html", "methodName": "MonitorAndScaleAsync()", "methodShortName": "MonitorAndScaleAsync()", "fileIndex": 0, "line": 59,
-    "metrics": [
-      { "value": 70, "exceeded": true },
-      { "value": 14, "exceeded": false },
-    ]},
-  {
-    "assembly": "Persistence", "class": "ASM.Application.Infrastructure.Persistence.Interceptors.AuditableEntityInterceptor", "reportPath": "Persistence_AuditableEntityInterceptor.html", "methodName": "UpdateEntities(Microsoft.EntityFrameworkCore.DbContext)", "methodShortName": "UpdateEntities(...)", "fileIndex": 0, "line": 28,
-    "metrics": [
-      { "value": 43, "exceeded": true },
-      { "value": 12, "exceeded": false },
-    ]},
-  {
-    "assembly": "Infrastructure", "class": "Infrastructure.Shared.Extensions.IndentityExtension", "reportPath": "Infrastructure_IndentityExtension.html", "methodName": "GetEmailFromToken(System.Security.Principal.IPrincipal)", "methodShortName": "GetEmailFromToken(...)", "fileIndex": 0, "line": 45,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
     ]},
   {
     "assembly": "Persistence", "class": "Persistence.Extensions.AuditExtensions", "reportPath": "Persistence_AuditExtensions.html", "methodName": "HasChangedOwnedEntities(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)", "methodShortName": "HasChangedOwnedEntities(...)", "fileIndex": 0, "line": 9,
@@ -499,7 +389,7 @@ var riskHotspots = [
   {
     "assembly": "Persistence", "class": "Persistence.UnitOfWork.UnitOfWork", "reportPath": "Persistence_UnitOfWork.html", "methodName": "<ExecuteTransactionalAsync()", "methodShortName": "<ExecuteTransactionalAsync()", "fileIndex": 0, "line": 79,
     "metrics": [
-      { "value": 42, "exceeded": true },
+      { "value": 37, "exceeded": true },
       { "value": 6, "exceeded": false },
     ]},
   {
@@ -515,6 +405,12 @@ var riskHotspots = [
       { "value": 26, "exceeded": true },
     ]},
   {
+    "assembly": "Persistence", "class": "Persistence.Repository.SqlRepository<T>", "reportPath": "Persistence_SqlRepository_1.html", "methodName": "Delete()", "methodShortName": "Delete()", "fileIndex": 0, "line": 59,
+    "metrics": [
+      { "value": 22, "exceeded": false },
+      { "value": 22, "exceeded": true },
+    ]},
+  {
     "assembly": "Application", "class": "Application.Behaviors.CachingBehavior<T1, T2>", "reportPath": "Application_CachingBehavior_2.html", "methodName": "Handle()", "methodShortName": "Handle()", "fileIndex": 0, "line": 21,
     "metrics": [
       { "value": 16, "exceeded": false },
@@ -522,6 +418,12 @@ var riskHotspots = [
     ]},
   {
     "assembly": "Domain", "class": "SlugHelper", "reportPath": "Domain_SlugHelper.html", "methodName": "Generate(System.String)", "methodShortName": "Generate(...)", "fileIndex": 0, "line": 12,
+    "metrics": [
+      { "value": 16, "exceeded": false },
+      { "value": 16, "exceeded": true },
+    ]},
+  {
+    "assembly": "Persistence", "class": "Persistence.Repository.SqlRepository<T>", "reportPath": "Persistence_SqlRepository_1.html", "methodName": "GetById()", "methodShortName": "GetById()", "fileIndex": 0, "line": 22,
     "metrics": [
       { "value": 16, "exceeded": false },
       { "value": 16, "exceeded": true },
